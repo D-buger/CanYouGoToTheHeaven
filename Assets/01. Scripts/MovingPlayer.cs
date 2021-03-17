@@ -9,10 +9,14 @@ public class MovingPlayer : MonoBehaviour
     [SerializeField, Range(0f, 100f)]
     float maxAcceleration = 10f;
     Vector3 velocity, desiredVelocity;
+    [SerializeField, Range(0f, 10f)]
+    float jumpHeight = 2f;
     [SerializeField]
     Rect allowedArea = new Rect(-5f, -5f, 10f, 10f);
 
     Rigidbody2D body;
+
+    bool desiredJump;
 
     private void Awake()
     {
@@ -27,7 +31,10 @@ public class MovingPlayer : MonoBehaviour
         playerInput = Vector2.ClampMagnitude(playerInput, 1f);
 
         desiredVelocity = playerInput * maxSpeed;
+
+        desiredJump |= Input.GetButtonDown("Jump");
     }
+
     private void FixedUpdate()
     {
         velocity = body.velocity;
@@ -57,6 +64,18 @@ public class MovingPlayer : MonoBehaviour
             body.position = new Vector2(body.position.x, allowedArea.yMax);
             velocity.y = 0f;
         }
+
+        if (desiredJump)
+        {
+            desiredJump = false;
+            Jump();
+        }
+
         body.velocity = velocity;
+    }
+
+    void Jump()
+    {
+        velocity.y += 5f;
     }
 }
