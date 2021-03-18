@@ -13,18 +13,27 @@ public class MovingPlayer : MonoBehaviour
     float jumpHeight = 2f;
     [SerializeField]
     Rect allowedArea = new Rect(-5f, -5f, 10f, 10f);
+    [SerializeField]
+    bool activateAllowedArea;
     [SerializeField, Min(0)]
     int maxAirJumps = 0;
+    [SerializeField]
+    float currentSpeed = 0f;
 
     Rigidbody2D body;
 
     bool desiredJump;
     bool onGround;
     int jumpPhase;
+    int shotPhase = 0;
+
+    [SerializeField]
+    bool isShot;
 
     private void Awake()
     {
         body = GetComponent<Rigidbody2D>();
+        lastPosition = transform.position;
     }
 
     private void Update()
@@ -37,6 +46,8 @@ public class MovingPlayer : MonoBehaviour
         desiredVelocity = playerInput * maxSpeed;
 
         desiredJump |= Input.GetButtonDown("Jump");
+
+        isShot |= Input.GetKeyDown(KeyCode.Z);
     }
 
     private void FixedUpdate()
@@ -46,36 +57,52 @@ public class MovingPlayer : MonoBehaviour
         float maxSpeedChange = acceleration * Time.deltaTime;
         velocity.x =
             Mathf.MoveTowards(velocity.x, desiredVelocity.x, maxSpeedChange);
-
-        if (body.position.x < allowedArea.xMin)
+        if (activateAllowedArea)
         {
-            body.position = new Vector2(allowedArea.xMin, body.position.y);
-            velocity.x = 0f;
+            if (body.position.x < allowedArea.xMin)
+            {
+                body.position = new Vector2(allowedArea.xMin, body.position.y);
+                velocity.x = 0f;
+            }
+            if (body.position.x > allowedArea.xMax)
+            {
+                body.position = new Vector2(allowedArea.xMax, body.position.y);
+                velocity.x = 0f;
+            }
+            if (body.position.y < allowedArea.yMin)
+            {
+                body.position = new Vector2(body.position.x, allowedArea.yMin);
+                velocity.y = 0f;
+            }
+            if (body.position.y > allowedArea.yMax)
+            {
+                body.position = new Vector2(body.position.x, allowedArea.yMax);
+                velocity.y = 0f;
+            }
         }
-        if (body.position.x > allowedArea.xMax)
-        {
-            body.position = new Vector2(allowedArea.xMax, body.position.y);
-            velocity.x = 0f;
-        }
-        if (body.position.y < allowedArea.yMin)
-        {
-            body.position = new Vector2(body.position.x, allowedArea.yMin);
-            velocity.y = 0f;
-        }
-        if (body.position.y > allowedArea.yMax)
-        {
-            body.position = new Vector2(body.position.x, allowedArea.yMax);
-            velocity.y = 0f;
-        }
-
         if (desiredJump)
         {
             desiredJump = false;
             Jump();
         }
 
+        if (isShot)
+        {
+            isShot = false;
+            TestShot();
+        }
+
+        GetSpeed();
+
         body.velocity = velocity;
         onGround = false;
+    }
+
+    Vector3 lastPosition;
+    void GetSpeed()
+    {
+        currentSpeed = (transform.position - lastPosition).magnitude;
+        lastPosition = transform.position;
     }
 
     void UpdateState()
@@ -99,6 +126,14 @@ public class MovingPlayer : MonoBehaviour
             }
             velocity.y += jumpSpeed;
         }
+    }
+
+    void TestShot()
+    {
+        shotPhase++;
+        float rebound = Mathf.Sqrt( -1f * Physics2D.gravity.y * 1f / shotPhase);
+        velocity.y = rebound;
+
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
