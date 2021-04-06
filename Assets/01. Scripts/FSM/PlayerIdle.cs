@@ -20,7 +20,7 @@ public class PlayerIdle : FsmState<Player>
 
     public override void HandleInput(Player target)
     {
-        if (target.IsPushJumpBtn)
+        if (GameManager.Instance.input.GetKey(GameManager.Instance.input.AttackKey))
         {
             target.ChangeState(ePlayerState.Jump);
         }

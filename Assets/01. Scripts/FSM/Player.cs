@@ -17,8 +17,8 @@ public class Player : MonoBehaviour
     private Dictionary<ePlayerState, FsmState<Player>> stateByEnum;
 
     //게임매니저에서 어떤버튼인지 버튼을 받아올 것
-    public bool IsPushJumpBtn { get; set; }
-    public bool IsPushMoveBtn { get; set; }
+    public bool IsPushJumpBtn;
+    public bool IsPushMoveBtn;
 
     private void Awake()
     {
