@@ -4,14 +4,15 @@ using UnityEngine;
 public class PlayerMove : FsmState<Player>
 {
     PlayerStats stats;
-    Rigidbody2D body;
-    Vector3 velocity;
+    Vector2 playerInput;
 
     public override void Enter(Player target)
     {
+        Debug.Log("PlayerState : Move");
         stats = target.stats;
-        body = stats.body;
-        velocity = stats.velocity;
+        
+        playerInput = target.input.GetKey(target.input.MoveLeftKey) ? Vector2.left : Vector2.right;
+        target.stats.desiredVelocity =  playerInput * target.stats.GetMaxSpeed();
     }
 
     public override void Exit(Player target)
@@ -21,49 +22,51 @@ public class PlayerMove : FsmState<Player>
     
     public override void FixedUpdate(Player target)
     {
-        velocity = body.velocity;
+        stats.velocity.x = stats.body.velocity.x;
         float acceleration = stats.GetAcceleration();
         float maxSpeedChange = acceleration * Time.deltaTime;
-        velocity.x =
+        stats.velocity.x =
             Mathf.MoveTowards(stats.velocity.x, stats.desiredVelocity.x, maxSpeedChange);
         if (stats.GetActiveAllowedArea())
         {
             CheckInAllowedArea(stats.GetAllowedArea());
         }
         stats.CurrentYPos = target.transform.position.y;
+        stats.body.velocity = new Vector2( target.stats.velocity.x, stats.body.velocity.y );
     }
 
     private void CheckInAllowedArea(Rect area)
     {
-        if (body.position.x < area.xMin)
+        if (stats.body.position.x < area.xMin)
         {
-            body.position = new Vector2(area.xMin, body.position.y);
-            velocity.x = 0f;
+            stats.body.position = new Vector2(area.xMin, stats.body.position.y);
+            stats.velocity.x = 0f;
         }
-        if (body.position.x > area.xMax)
+        if (stats.body.position.x > area.xMax)
         {
-            body.position = new Vector2(area.xMax, body.position.y);
-            velocity.x = 0f;
+            stats.body.position = new Vector2(area.xMax, stats.body.position.y);
+            stats.velocity.x = 0f;
         }
-        if (body.position.y < area.yMin)
-        {
-            body.position = new Vector2(body.position.x, area.yMin);
-            velocity.y = 0f;
-        }
-        if (body.position.y > area.yMax)
-        {
-            body.position = new Vector2(body.position.x, area.yMax);
-            velocity.y = 0f;
+        if (stats.body.position.y < area.yMin)
+        {   
+            stats.body.position = new Vector2(stats.body.position.x, area.yMin);
+            stats.velocity.y = 0f;
+        }   
+        if (stats.body.position.y > area.yMax)
+        {   
+            stats.body.position = new Vector2(stats.body.position.x, area.yMax);
+            stats.velocity.y = 0f;
         }
     }
 
     public override void HandleInput(Player target)
     {
-        if (!target.IsPushMoveBtn)
+        if (playerInput == Vector2.left? !target.input.GetKey(target.input.MoveLeftKey)
+            : !target.input.GetKey(target.input.MoveRightKey)) //MoveKey
         {
             target.ChangeState(ePlayerState.Idle);
         }
-        else if (target.IsPushJumpBtn)
+        else if (target.input.GetKey(target.input.JumpKey))
         {
             target.ChangeState(ePlayerState.Jump);
         }

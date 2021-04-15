@@ -13,20 +13,20 @@ public class PlayerStats
     private float maxAcceleration = 10f, maxAirAcceleration = 1f;
     public float GetAcceleration() { return onGround ? maxAcceleration : maxAirAcceleration;  }
 
-    public Vector3 velocity, desiredVelocity;
+    public Vector3 velocity = Vector3.zero, desiredVelocity = Vector3.zero;
 
     [SerializeField, Range(0f, 10f)]
-    private float jumpHeight = 2f;
+    private float jumpHeight = 1f;
     public float GetJumpHeight() { return jumpHeight; }
 
     [SerializeField]
-    private Rect allowedArea = new Rect(-5f, -5f, 10f, 10f);
+    private Rect allowedArea = new Rect(-2.5f, -2.5f, 5f, 9f);
     public Rect GetAllowedArea() { return allowedArea; }
     [SerializeField]
-    private bool activateAllowedArea;
+    private bool activateAllowedArea = false;
     public bool GetActiveAllowedArea() { return activateAllowedArea; }
 
-    private int maxAirJumps = 0;
+    private int maxAirJumps =10;
     public int MaxAirJumps
     {
         get {

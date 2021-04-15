@@ -4,18 +4,19 @@ using UnityEngine;
 [System.Serializable]
 public class InputManager
 {
-    [SerializeField] KeyCode attackKey = KeyCode.Z;
+    [SerializeField] KeyCode moveLeftKey = KeyCode.LeftArrow;
+    [SerializeField] KeyCode moveRightKey = KeyCode.RightArrow;
     [SerializeField] KeyCode jumpKey = KeyCode.Space;
-
-    public KeyCode AttackKey => attackKey;
+ 
     public KeyCode JumpKey => jumpKey;
+    public KeyCode MoveLeftKey => moveLeftKey;
+    public KeyCode MoveRightKey => moveRightKey;
 
     //enum을 사용하면 int형으로 변환시킬 때 박싱이 일어나므로 구조체로 처리해봤다.
     public struct eKeyValue
     {
         public const byte
-            KEY_ATTACK  = 0x0001,
-            KEY_JUMP    = 0x0002,
+            KEY_JUMP    = 0x0001,
             KEY_LEFT    = 0x0010,
             KEY_RIGHT   = 0x0020
             ;
@@ -24,13 +25,15 @@ public class InputManager
     public byte GetKeyValue { get; private set; } = 0x0000;
 
     #region Dictionary
-    public Dictionary<KeyCode, byte> dKeyValues;
+    private Dictionary<KeyCode, byte> dKeyValues = new Dictionary<KeyCode, byte>();
     
     public void SetFirstValue()
     {
-        Dictionary<KeyCode, byte> dKeyValues = new Dictionary<KeyCode, byte>();
-        dKeyValues.Add(attackKey, eKeyValue.KEY_ATTACK);
+        //Dictionary<KeyCode, byte> dKeyValues = new Dictionary<KeyCode, byte>();
+
         dKeyValues.Add(jumpKey, eKeyValue.KEY_JUMP);
+        dKeyValues.Add(moveLeftKey, eKeyValue.KEY_LEFT);
+        dKeyValues.Add(moveRightKey, eKeyValue.KEY_RIGHT);
     }
 
     public bool GetKey(KeyCode _key)
@@ -60,8 +63,16 @@ public class InputManager
 
     public void GetKeyUpdate()
     {
-        InputKey(attackKey, eKeyValue.KEY_ATTACK);
-        InputKey(jumpKey, eKeyValue.KEY_JUMP);
+        if (dKeyValues == null)
+            Debug.Log("비어있다");
+
+        if (dKeyValues?.Count < 0)
+            return;
+
+        foreach (KeyValuePair<KeyCode, byte> pair in dKeyValues)
+        {
+            InputKey(pair.Key, pair.Value);
+        }
     }
 
     private void InputKey(KeyCode _key, byte _keyValue)

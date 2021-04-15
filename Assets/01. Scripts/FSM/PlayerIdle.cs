@@ -15,16 +15,16 @@ public class PlayerIdle : FsmState<Player>
 
     public override void FixedUpdate(Player target)
     {
-
+        target.stats.velocity = target.stats.body.velocity;
     }
 
     public override void HandleInput(Player target)
     {
-        if (GameManager.Instance.input.GetKey(GameManager.Instance.input.AttackKey))
+        if (target.input.GetKey(target.input.JumpKey))
         {
             target.ChangeState(ePlayerState.Jump);
         }
-        else if (target.IsPushMoveBtn)
+        else if (target.input.GetKey(target.input.MoveLeftKey) || target.input.GetKey(target.input.MoveRightKey)) //MoveKey
         {
             target.ChangeState(ePlayerState.Move);
         }

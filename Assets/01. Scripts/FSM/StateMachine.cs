@@ -25,7 +25,7 @@ public class StateMachine<T>
 
         _currentState = newState;
 
-        if (!_currentState.Equals(null))
+        if (_currentState != null)
             _currentState.Enter(_target);
     }
 
@@ -37,16 +37,16 @@ public class StateMachine<T>
 
     public void Update()
     {
-        if (!_currentState.Equals(null))
+        if (_currentState == null)
             return;
-
+        
         _currentState.Update(_target);
         _currentState.HandleInput(_target);
     }
 
     public void FixedUpdate()
     {
-        if (!_currentState.Equals(null))
+        if (_currentState == null)
             return;
 
         _currentState.FixedUpdate(_target);
@@ -54,7 +54,7 @@ public class StateMachine<T>
 
     public void StateRevert()
     {
-        if (!_previousState.Equals(null))
+        if (_previousState == null)
             return;
 
         ChangeState(_previousState);

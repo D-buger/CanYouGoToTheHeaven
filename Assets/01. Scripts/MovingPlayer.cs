@@ -43,11 +43,15 @@ public class MovingPlayer : MonoBehaviour
         playerInput.y = 0;
         playerInput = Vector2.ClampMagnitude(playerInput, 1f);
 
+        Debug.Log(playerInput.x);
+
         desiredVelocity = playerInput * maxSpeed;
 
         desiredJump |= Input.GetButtonDown("Jump");
 
         isShot |= Input.GetKeyDown(KeyCode.Z);
+
+        //Debug.Log(velocity.y);
     }
 
     private void FixedUpdate()
@@ -116,6 +120,7 @@ public class MovingPlayer : MonoBehaviour
 
     void Jump()
     {
+        Debug.Log(velocity.y);
         if (onGround || jumpPhase < maxAirJumps)
         {
             jumpPhase += 1;
@@ -125,6 +130,7 @@ public class MovingPlayer : MonoBehaviour
                 jumpSpeed = Mathf.Max(jumpSpeed - velocity.y, 0f);
             }
             velocity.y += jumpSpeed;
+            Debug.Log(velocity.y);
         }
     }
 
