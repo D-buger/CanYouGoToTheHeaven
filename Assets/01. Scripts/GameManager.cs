@@ -15,7 +15,6 @@ public class GameManager : SingletonBehavior<GameManager>
     protected override void OnAwake()
     {
         input = new InputManager();
-        input.SetFirstValue();
     }
 
     private void Update()

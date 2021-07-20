@@ -13,9 +13,19 @@ public class PlayerIdle : FsmState<Player>
 
     }
 
+    public override void Once(Player target)
+    {
+
+    }
+
+    public override void Update(Player target)
+    {
+
+    }
+
     public override void FixedUpdate(Player target)
     {
-        target.stats.velocity = target.stats.body.velocity;
+
     }
 
     public override void HandleInput(Player target)
@@ -24,14 +34,13 @@ public class PlayerIdle : FsmState<Player>
         {
             target.ChangeState(ePlayerState.Jump);
         }
-        else if (target.input.GetKey(target.input.MoveLeftKey) || target.input.GetKey(target.input.MoveRightKey)) //MoveKey
+        else if (target.input.IsMove()) //MoveKey
         {
             target.ChangeState(ePlayerState.Move);
         }
-    }
-
-    public override void Update(Player target)
-    {
-
+        else if (target.input.GetKey(target.input.AttackKey))
+        {
+            target.ChangeState(ePlayerState.Attack);
+        }
     }
 }

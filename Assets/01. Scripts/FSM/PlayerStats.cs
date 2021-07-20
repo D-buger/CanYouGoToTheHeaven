@@ -6,11 +6,11 @@ using UnityEngine;
 public class PlayerStats
 {
     [SerializeField, Range(0f, 100f)]
-    private float maxSpeed = 10f;
+    private float maxSpeed = 5f;
     public float GetMaxSpeed() { return maxSpeed; }
 
     [SerializeField, Range(0f, 100f)]
-    private float maxAcceleration = 10f, maxAirAcceleration = 1f;
+    private float maxAcceleration = 20f, maxAirAcceleration = 15f;
     public float GetAcceleration() { return onGround ? maxAcceleration : maxAirAcceleration;  }
 
     public Vector3 velocity = Vector3.zero, desiredVelocity = Vector3.zero;
@@ -18,14 +18,7 @@ public class PlayerStats
     [SerializeField, Range(0f, 10f)]
     private float jumpHeight = 1f;
     public float GetJumpHeight() { return jumpHeight; }
-
-    [SerializeField]
-    private Rect allowedArea = new Rect(-2.5f, -2.5f, 5f, 9f);
-    public Rect GetAllowedArea() { return allowedArea; }
-    [SerializeField]
-    private bool activateAllowedArea = false;
-    public bool GetActiveAllowedArea() { return activateAllowedArea; }
-
+    
     private int maxAirJumps =10;
     public int MaxAirJumps
     {
@@ -59,8 +52,11 @@ public class PlayerStats
 
 
     public Rigidbody2D body;
+    public Transform trans;
 
     public bool onGround;
+    
+    public int shotPhase = 0;
 
     public void EvauateCollision(Collision2D collision)
     {
@@ -69,5 +65,7 @@ public class PlayerStats
             Vector2 normal = collision.GetContact(i).normal;
             onGround |= normal.y >= 0.9f;
         }
+
+        shotPhase = onGround ? 0 : shotPhase;
     }
 }

@@ -227,7 +227,7 @@ Transform:
   m_GameObject: {fileID: 164461503}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -4.5, z: 0}
-  m_LocalScale: {x: 6, y: 1, z: 1}
+  m_LocalScale: {x: 46.7982, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
@@ -261,10 +261,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 820bd02904b3fe64e927cd5b22b9b7f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  input:
-    moveLeftKey: 276
-    moveRightKey: 275
-    jumpKey: 32
 --- !u!4 &201299586
 Transform:
   m_ObjectHideFlags: 0
@@ -374,8 +370,9 @@ GameObject:
   - component: {fileID: 513214263}
   - component: {fileID: 513214264}
   - component: {fileID: 513214261}
-  - component: {fileID: 513214265}
   - component: {fileID: 513214266}
+  - component: {fileID: 513214267}
+  - component: {fileID: 513214265}
   m_Layer: 0
   m_Name: Player_Test
   m_TagString: Untagged
@@ -397,20 +394,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats:
     maxSpeed: 10
-    maxAcceleration: 10
+    maxAcceleration: 17.2
     maxAirAcceleration: 1
     velocity: {x: 0, y: 0, z: 0}
     desiredVelocity: {x: 0, y: 0, z: 0}
     jumpHeight: 2
-    allowedArea:
-      serializedVersion: 2
-      x: -5
-      y: -5
-      width: 10
-      height: 10
-    activateAllowedArea: 0
     body: {fileID: 0}
+    trans: {fileID: 0}
     onGround: 0
+    shotPhase: 0
+  anim: {fileID: 0}
 --- !u!4 &513214262
 Transform:
   m_ObjectHideFlags: 0
@@ -420,7 +413,7 @@ Transform:
   m_GameObject: {fileID: 513214260}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -486,7 +479,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: c7d2aa929df0a57448e1fb31a6c88ba1, type: 3}
+  m_Sprite: {fileID: 6763867217689602333, guid: 17eaf190f7e544349bf41f8c6c202ba9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -497,8 +490,8 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!58 &513214265
-CircleCollider2D:
+--- !u!70 &513214265
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -510,9 +503,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.5
+  m_Offset: {x: 0.01, y: -0.04335946}
+  m_Size: {x: 0.15957126, y: 0.71328115}
+  m_Direction: 0
 --- !u!96 &513214266
 TrailRenderer:
   serializedVersion: 2
@@ -611,6 +604,25 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 1
+--- !u!95 &513214267
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 513214260}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a1b2c9b64d2abd348acf4fbaa0700fa5, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &586307067
 GameObject:
   m_ObjectHideFlags: 0
@@ -620,11 +632,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 586307071}
-  - component: {fileID: 586307069}
   - component: {fileID: 586307070}
   - component: {fileID: 586307068}
   - component: {fileID: 586307073}
   - component: {fileID: 586307072}
+  - component: {fileID: 586307069}
   m_Layer: 0
   m_Name: Circle
   m_TagString: Untagged
@@ -664,11 +676,11 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 6200000, guid: 8b3ef514db1c4324ab7dfb0f903e2d11, type: 2}
+  m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 0
 --- !u!212 &586307070
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -757,7 +769,7 @@ MonoBehaviour:
     width: 5
     height: 9
   activateAllowedArea: 0
-  maxAirJumps: 1000
+  maxAirJumps: 3
   currentSpeed: 0
   isShot: 0
 --- !u!96 &586307073

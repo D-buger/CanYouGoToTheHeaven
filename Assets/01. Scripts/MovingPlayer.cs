@@ -43,8 +43,6 @@ public class MovingPlayer : MonoBehaviour
         playerInput.y = 0;
         playerInput = Vector2.ClampMagnitude(playerInput, 1f);
 
-        Debug.Log(playerInput.x);
-
         desiredVelocity = playerInput * maxSpeed;
 
         desiredJump |= Input.GetButtonDown("Jump");
@@ -137,7 +135,7 @@ public class MovingPlayer : MonoBehaviour
     void TestShot()
     {
         shotPhase++;
-        float rebound = Mathf.Sqrt( -1f * Physics2D.gravity.y * 1f / shotPhase);
+        float rebound = Mathf.Sqrt( -1f * Physics2D.gravity.y / shotPhase);
         velocity.y = rebound;
 
     }

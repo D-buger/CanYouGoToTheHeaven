@@ -12,19 +12,26 @@ public enum ePlayerState
 public class Player : MonoBehaviour
 {
     public StateMachine<Player> StateMachine { get; private set; }
+    public PlayerPhysics physics;
     public PlayerStats stats;
 
     private Dictionary<ePlayerState, FsmState<Player>> stateByEnum;
 
     public InputManager input => GameManager.Instance.input;
 
+    public Animator anim;
+
     private void Awake()
     {
         stats = new PlayerStats()
         {
             body = transform.GetComponent<Rigidbody2D>(),
-            previousYPos = transform.position.y
+            previousYPos = transform.position.y,
+            trans = this.transform
         };
+        physics = new PlayerPhysics(stats);
+
+        anim = transform.GetComponent<Animator>();
 
         stateByEnum = new Dictionary<ePlayerState, FsmState<Player>>();
         stateByEnum.Add(ePlayerState.Idle , new PlayerIdle());
@@ -36,7 +43,7 @@ public class Player : MonoBehaviour
         StateMachine = new StateMachine<Player>();
         StateMachine.Init(this, new PlayerIdle());
     }
-
+    
     private void Update()
     {
         StateMachine.Update();
@@ -45,7 +52,7 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         StateMachine.FixedUpdate();
-        Debug.Log("current velocity : " + stats.velocity);
+        physics.PhysicsUpdate();
     }
 
     public void ChangeState(ePlayerState state)

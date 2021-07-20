@@ -35,13 +35,21 @@ public class StateMachine<T>
         ChangeState(initState);
     }
 
+
+    bool desired = true;
     public void Update()
     {
         if (_currentState == null)
             return;
-        
+
+        if (desired)
+        {
+            _currentState.Once(_target);
+            desired = false;
+        }
+
         _currentState.Update(_target);
-        _currentState.HandleInput(_target);
+        desired = true;
     }
 
     public void FixedUpdate()
@@ -50,6 +58,7 @@ public class StateMachine<T>
             return;
 
         _currentState.FixedUpdate(_target);
+        _currentState.HandleInput(_target);
     }
 
     public void StateRevert()
