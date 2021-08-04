@@ -30,7 +30,7 @@ public class PlayerIdle : FsmState<Player>
 
     public override void HandleInput(Player target)
     {
-        if (target.input.joystick.horizontalValue != 0)
+        if (target.input.IsMove)
         {
             target.ChangeState(ePlayerState.Move);
         }

@@ -23,6 +23,20 @@ public class PlayerStats
     private float rotateAmount = 45f;
     public float RotateAmount => rotateAmount;
 
+    [SerializeField]
+    private int waterAmount = 100;
+    public int WaterAmount
+    {
+        get
+        {
+            return waterAmount;
+        }
+        set
+        {
+            waterAmount = value;
+        }
+    }
+
     [SerializeField, Range(0f, 10f)]
     private float jumpHeight = 1f;
     public float GetJumpHeight => jumpHeight;

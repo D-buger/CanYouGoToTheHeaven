@@ -23,36 +23,44 @@ public class WaterTest : MonoBehaviour
 
     private void Awake()
     {
-        line = GetComponent<LineRenderer>();
-        points.Add(new Point(Vector2.up, transform.position));
-        SetLineRenderer();
-
-        line.enabled = false;
+        if (line == null)
+            line = GetComponent<LineRenderer>();
     }
 
-    private void Update()
+    private void OnEnable()
     {
-        if(Input.GetKey(KeyCode.Space) || Input.GetKeyUp(KeyCode.Space))
+        if (points.Count == 0)
         {
-            if (!isActive)
-            {
-                line.enabled = true;
-                isActive = true;
-            }
-            VertexSet();
+            points.Add(new Point(Vector2.up, Vector2.zero));
         }
+        else
+        {
+            points[0] = new Point(Vector2.up, transform.position);
+        }
+
+        SetLineRenderer();
+    }
+
+    public void UpdateWater()
+    {
+         if (!isActive)
+             isActive = true;
+         VertexSet();
     }
 
     private void FixedUpdate()
     {
-        if(isActive)
+        if (isActive)
+        {
             WaterUpdate();
+            Disable();
+        }
     }
     
 
-    private void VertexSet()
+    public void VertexSet()
     {
-        if (Vector2.Distance(points[points.Count - 1].PointPosition, transform.position) >= pointDist)
+        if (points[points.Count - 1].PointPosition.y - transform.position.y >= pointDist)
         {
             points.Add(new Point(Vector2.up, transform.position));
         }
@@ -88,6 +96,15 @@ public class WaterTest : MonoBehaviour
         for (int i = 0; i < points.Count; i++)
         {
             line.SetPosition(i, points[i].PointPosition);
+        }
+    }
+
+    private void Disable()
+    {
+        if (line.positionCount <= 0)
+        {
+            isActive = false;
+            ObjectPoolManager.Inst.pool.Push(this.gameObject);
         }
     }
 }
