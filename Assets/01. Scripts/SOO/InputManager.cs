@@ -52,8 +52,6 @@ public class InputManager
 
     }
 
-    private void Be
-
     public bool IsMove() => (joystick.horizontalValue != 0);
     
 
