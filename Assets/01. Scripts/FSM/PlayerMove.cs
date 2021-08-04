@@ -6,14 +6,10 @@ public class PlayerMove : FsmState<Player>
     public override void Enter(Player target)
     {
         Debug.Log("PlayerState : Move");
-
-        if(target.stats.onGround)
-            target.anim.SetBool("Run", true);
     }
 
     public override void Exit(Player target)
     {
-        target.anim.SetBool("Run", false);
     }
 
     public override void Once(Player target)
@@ -28,14 +24,14 @@ public class PlayerMove : FsmState<Player>
 
     public override void FixedUpdate(Player target)
     {
-        target.physics.Moving(target.input.MoveKeyInput());
+        target.physics.Moving(target.input.joystick.horizontalValue);
     }
     
     public override void HandleInput(Player target)
     {
-        if (target.input.GetKey(target.input.JumpKey))
+        if (target.input.joystick.horizontalValue == 0)
         {
-            target.ChangeState(ePlayerState.Jump);
+            target.ChangeState(ePlayerState.Idle);
         }
     }
 }

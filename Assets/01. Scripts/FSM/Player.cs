@@ -23,12 +23,7 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        stats = new PlayerStats()
-        {
-            body = transform.GetComponent<Rigidbody2D>(),
-            previousYPos = transform.position.y,
-            trans = this.transform
-        };
+        stats.Set(transform, transform.GetComponent<Rigidbody2D>(), transform.position.y);
         physics = new PlayerPhysics(stats);
 
         anim = transform.GetComponent<Animator>();
@@ -36,7 +31,6 @@ public class Player : MonoBehaviour
         stateByEnum = new Dictionary<ePlayerState, FsmState<Player>>();
         stateByEnum.Add(ePlayerState.Idle , new PlayerIdle());
         stateByEnum.Add(ePlayerState.Move , new PlayerMove());
-        stateByEnum.Add(ePlayerState.Jump , new PlayerJump());
         stateByEnum.Add(ePlayerState.Attack , new PlayerAttack());
 
 
@@ -58,6 +52,11 @@ public class Player : MonoBehaviour
     public void ChangeState(ePlayerState state)
     {
         StateMachine.ChangeState(stateByEnum[state]);
+    }
+
+    public void StateRevert()
+    {
+        StateMachine.StateRevert();
     }
 
 

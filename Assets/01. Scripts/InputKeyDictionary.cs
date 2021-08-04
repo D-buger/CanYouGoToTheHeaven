@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class InputKeyDictionary
 {
+    //비트 마스크를 이용한 연산
     public Dictionary<KeyCode, byte> dKeyValues = new Dictionary<KeyCode, byte>();
 
     public InputKeyDictionary(params KeyCode[] keys)
     {
         for(int i = 0; i < keys.Length; ++i)
         {
-            dKeyValues.Add(keys[i], (byte)(i + 1));
+            dKeyValues.Add(keys[i], (byte)(2^i * 1));
         }
     }
 

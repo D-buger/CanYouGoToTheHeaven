@@ -2,26 +2,59 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class InputManager : InputKeyDictionary
+public class InputManager
 {
-    [SerializeField] static KeyCode jumpKey = KeyCode.Space;
-    [SerializeField] static KeyCode attackKey = KeyCode.A;
+    public Joystick joystick;
+    public bool behaviourActive { get; set; }
+    public TouchManager touch;
 
-    public KeyCode JumpKey => jumpKey;
-    public KeyCode AttackKey => attackKey;
-
-    public InputManager() : base(jumpKey, attackKey) { }
-
-    public Vector2 MoveKeyInput()
+    public void SetFirst()
     {
-        Vector2 playerInput = Vector2.zero;
-        playerInput.x = Input.GetAxis("Horizontal");
-        playerInput = Vector2.ClampMagnitude(playerInput, 1f);
-        
-        return playerInput;
+        joystick.SetFirst();
     }
 
-    public bool IsMove() => (MoveKeyInput() != Vector2.zero);
+    public void InputUpdate()
+    {
+        touch.TouchUpdate();
+
+        if(touch.mouseState == eMouse.Down)
+        {
+            if(touch.touchPos.x < 0)
+            {
+                joystick.JoyStickSetActive(true, touch.mousePos);
+            }
+            else
+            {
+                behaviourActive = true;
+            }
+        }
+
+        if(touch.mouseState == eMouse.Drag)
+        {
+            joystick.OnDrag(touch.mousePos);
+        }
+        
+        if(touch.mouseState == eMouse.Up)
+        {
+            if (touch.touchPos.x < 0)
+            {
+                joystick.OnPointerUp();
+            }
+            else
+            {
+                behaviourActive = false;
+            }
+        }
+    }
+
+    private void Joystick()
+    {
+
+    }
+
+    private void Be
+
+    public bool IsMove() => (joystick.horizontalValue != 0);
     
 
 }

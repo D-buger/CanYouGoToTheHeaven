@@ -14,11 +14,11 @@ public class GameManager : SingletonBehavior<GameManager>
 
     protected override void OnAwake()
     {
-        input = new InputManager();
+        input.SetFirst();
     }
 
     private void Update()
     {
-        input.GetKeyUpdate();
+        input.InputUpdate();
     }
 }

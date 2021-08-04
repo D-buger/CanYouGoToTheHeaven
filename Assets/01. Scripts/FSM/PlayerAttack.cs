@@ -3,11 +3,7 @@ using UnityEngine;
 
 public class PlayerAttack : FsmState<Player>
 {
-    private float delay = 0f;
-    private float reloading = 0f;
 
-    private int maxShotPhase = 10;
-    private int shotPhase = 0;
 
     public override void Enter(Player target)
     {
@@ -35,11 +31,5 @@ public class PlayerAttack : FsmState<Player>
 
     public override void HandleInput(Player target)
     {
-        if (target.input.IsMove()) //moveKey
-        {
-            target.ChangeState(ePlayerState.Move);
-        }
-
-        target.ChangeState(ePlayerState.Idle);
     }
 }

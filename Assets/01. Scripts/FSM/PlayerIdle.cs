@@ -30,17 +30,9 @@ public class PlayerIdle : FsmState<Player>
 
     public override void HandleInput(Player target)
     {
-        if (target.input.GetKey(target.input.JumpKey))
-        {
-            target.ChangeState(ePlayerState.Jump);
-        }
-        else if (target.input.IsMove()) //MoveKey
+        if (target.input.joystick.horizontalValue != 0)
         {
             target.ChangeState(ePlayerState.Move);
-        }
-        else if (target.input.GetKey(target.input.AttackKey))
-        {
-            target.ChangeState(ePlayerState.Attack);
         }
     }
 }
