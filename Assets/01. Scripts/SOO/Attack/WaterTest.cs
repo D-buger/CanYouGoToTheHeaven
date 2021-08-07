@@ -13,7 +13,7 @@ public class WaterTest : MonoBehaviour
     private LineRenderer line;
 
     [SerializeField, Space(10), Header("Values")]
-    private float pointDist = 1f;
+    private float pointDist = 0.01f;
     [SerializeField]
     private int waterReflected = 1;
 
@@ -27,28 +27,7 @@ public class WaterTest : MonoBehaviour
             line = GetComponent<LineRenderer>();
     }
 
-    private void OnEnable()
-    {
-        if (points.Count == 0)
-        {
-            points.Add(new Point(Vector2.up, Vector2.zero));
-        }
-        else
-        {
-            points[0] = new Point(Vector2.up, transform.position);
-        }
-
-        SetLineRenderer();
-    }
-
-    public void UpdateWater()
-    {
-         if (!isActive)
-             isActive = true;
-         VertexSet();
-    }
-
-    private void FixedUpdate()
+    private void Update()
     {
         if (isActive)
         {
@@ -56,32 +35,67 @@ public class WaterTest : MonoBehaviour
             Disable();
         }
     }
-    
 
-    public void VertexSet()
+    public void SetFirst(Vector2 nowPos, Vector2 angle)
     {
-        if (points[points.Count - 1].PointPosition.y - transform.position.y >= pointDist)
+        if (points.Count == 0)
         {
-            points.Add(new Point(Vector2.up, transform.position));
+            points.Add(new Point(angle, Vector2.zero, 0.5f));
         }
-    }
-
-    private void WaterUpdate()
-    {
-        CheckTags();
-
-
-        for (int i = 0;i < points.Count; i++)
+        else if (points.Count == 1)
         {
-            PointUpdate(points[i]);  
+            points[0] = new Point(angle, nowPos, 0.5f);
         }
 
         SetLineRenderer();
     }
 
-    private void CheckTags()
+    public void UpdateWater(Vector2 nowPos, Vector2 angle)
     {
+         if (!isActive)
+             isActive = true;
+        VertexSet(nowPos, angle);
+    }
 
+    public void VertexSet(Vector2 nowPos, Vector2 angle)
+    {
+        if (points[points.Count - 1].PointPosition.y - nowPos.y >= pointDist)
+        {
+            points.Add(new Point(angle, nowPos, 0.5f));
+        }
+    }
+
+    private void WaterUpdate()
+    {
+        for (int i = 0;i < points.Count; i++)
+        {
+            PointUpdate(points[i]);
+            Raycast(points[i]);
+        }
+
+        SetLineRenderer();
+    }
+
+    RaycastHit2D ray;
+    private void Raycast(Point point)
+    {
+        ray = Physics2D.Raycast(point.PointPosition, point.Direction, 0.001f);
+        if(ray)
+        {
+            CheckTags(ray, point);
+        }
+    }
+
+    private void CheckTags(RaycastHit2D ray, Point point)
+    {
+        if (ray.transform.CompareTag(reflectTag))
+        {
+            Debug.Log("반사");
+        }
+        if (ray.transform.CompareTag(removeTag))
+        {
+            Debug.Log("삭제");
+        }
     }
 
     private void PointUpdate(Point point)
@@ -111,22 +125,20 @@ public class WaterTest : MonoBehaviour
 
 public class Point
 {
-    public Point(Vector2 dir, Vector2 pos)
+    public Point(Vector2 dir, Vector2 pos, float _speed)
     {
         Direction = dir;
         PointPosition = pos;
-        ray = Physics2D.Raycast(PointPosition, Vector2.up, 0.001f);
+        speed = _speed;
     }
 
     public Vector2 Direction { get; set; }
     public Vector2 PointPosition { get; set; }
-    public RaycastHit2D ray { get; set; }
+    private float speed;
 
     public void PointMove()
     {
-        PointPosition = Vector2.MoveTowards(PointPosition, PointPosition + Direction, 0.1f);
-        Debug.DrawRay(PointPosition, Vector2.up, Color.red, 0.001f);
+        PointPosition = Vector2.MoveTowards(PointPosition, PointPosition + Direction, 1 * speed);
     }
-
 
 }

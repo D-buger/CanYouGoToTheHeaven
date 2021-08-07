@@ -19,23 +19,9 @@ public class PlayerStats
 
     public Vector3 velocity = Vector3.zero, desiredVelocity = Vector3.zero;
 
-    [SerializeField, Range(0f, 90f)]
+    [SerializeField, Range(0f, 180f)]
     private float rotateAmount = 45f;
     public float RotateAmount => rotateAmount;
-
-    [SerializeField]
-    private int waterAmount = 100;
-    public int WaterAmount
-    {
-        get
-        {
-            return waterAmount;
-        }
-        set
-        {
-            waterAmount = value;
-        }
-    }
 
     [SerializeField, Range(0f, 10f)]
     private float jumpHeight = 1f;
@@ -75,6 +61,9 @@ public class PlayerStats
 
     public bool onGround;
 
+    public bool limitLeft;
+    public bool limitRight;
+
     public void EvauateCollision(Collision2D collision)
     {
         for(int i = 0; i < collision.contactCount; i++)
@@ -82,6 +71,21 @@ public class PlayerStats
             Vector2 normal = collision.GetContact(i).normal;
             onGround |= normal.y <= 0.9f;
         }
+
+        if (collision.collider.CompareTag("Wall"))
+        {
+            for (int i = 0; i < collision.contactCount; i++)
+            {
+                Vector2 normal = collision.GetContact(i).normal;
+                limitLeft |= normal.x >= 0.9f;
+            }
+            for (int i = 0; i < collision.contactCount; i++)
+            {
+                Vector2 normal = collision.GetContact(i).normal;
+                limitRight |= normal.x <= 0.9f;
+            }
+        }
+
     }
 
     public void Set(Transform _trans, Rigidbody2D rigid, float y)

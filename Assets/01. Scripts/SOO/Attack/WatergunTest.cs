@@ -4,14 +4,17 @@ using UnityEngine;
 
 public class WatergunTest : MonoBehaviour
 {
-    Transform playerPosition;
+    [SerializeField]
+    private int maxWaterAmount = 100;
+
+    private int waterAmount;
+    public int WaterAmount => waterAmount;
 
     WaterTest nowWater;
 
-    [SerializeField]
-    private float waterDotSec;
+    Vector2 angle => SOO.Util.AngleToVector(transform.rotation.eulerAngles.z);
 
-    private void Update()
+    public void Update()
     {
         if (GameManager.Instance.input.behaviourActive)
         {
@@ -19,18 +22,17 @@ public class WatergunTest : MonoBehaviour
             {
                 GameObject obj = ObjectPoolManager.Inst.pool.Pop();
                 nowWater = obj.GetComponent<WaterTest>();
+                nowWater.SetFirst(transform.position, angle);
             }
             else
             {
-                nowWater.UpdateWater();
+                nowWater.UpdateWater(transform.position, angle);
             }
         }
         else
         {
-            if (nowWater != null)
+            if (null != nowWater)
                 nowWater = null;
         }
-        
     }
-
 }
