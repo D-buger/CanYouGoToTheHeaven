@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 498560613444489672}
   - component: {fileID: 498560613444489671}
+  - component: {fileID: 6849426704605706846}
   - component: {fileID: 498560613444489670}
   m_Layer: 0
   m_Name: Water
@@ -130,6 +131,28 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
+--- !u!68 &6849426704605706846
+EdgeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 498560613444489669}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_EdgeRadius: 0
+  m_Points:
+  - {x: -0.5, y: 0}
+  - {x: 0.5, y: 0}
+  m_AdjacentStartPoint: {x: 0, y: 0}
+  m_AdjacentEndPoint: {x: 0, y: 0}
+  m_UseAdjacentStartPoint: 0
+  m_UseAdjacentEndPoint: 0
 --- !u!114 &498560613444489670
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,7 +166,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reflectTag: Wall
-  removeTag: Untagged
+  removeTag: Enemy
   line: {fileID: 498560613444489671}
+  coll: {fileID: 6849426704605706846}
   pointDist: 0.01
   waterReflected: 1

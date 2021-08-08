@@ -26,7 +26,7 @@ public class WatergunTest : MonoBehaviour
             }
             else
             {
-                nowWater.UpdateWater(transform.position, angle);
+                nowWater.VertexSet(transform.position, angle);
             }
         }
         else

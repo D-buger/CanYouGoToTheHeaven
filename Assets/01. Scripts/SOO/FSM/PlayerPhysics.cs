@@ -15,7 +15,6 @@ public class PlayerPhysics
         float maxSpeedChange = acceleration * Time.deltaTime;
         stat.velocity.x =
             Mathf.MoveTowards(stat.velocity.x, stat.desiredVelocity.x, maxSpeedChange);
-        Debug.Log(maxSpeedChange);
         stat.trans.rotation = Quaternion.Euler(0, 0, 
             -Mathf.MoveTowardsAngle(0, stat.RotateAmount , input * stat.RotateAmount)  
             );

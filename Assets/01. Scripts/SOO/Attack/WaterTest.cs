@@ -11,6 +11,8 @@ public class WaterTest : MonoBehaviour
 
     [SerializeField, Space(10), Header("Components")]
     private LineRenderer line;
+    [SerializeField]
+    private EdgeCollider2D coll;
 
     [SerializeField, Space(10), Header("Values")]
     private float pointDist = 0.01f;
@@ -25,6 +27,8 @@ public class WaterTest : MonoBehaviour
     {
         if (line == null)
             line = GetComponent<LineRenderer>();
+        if (coll == null)
+            coll = GetComponent<EdgeCollider2D>();
     }
 
     private void Update()
@@ -35,36 +39,39 @@ public class WaterTest : MonoBehaviour
             Disable();
         }
     }
+    
+    public void Duplicate(List<Point> point)
+    {
+        points = point;
+
+        isActive = true;
+        SetLineRenderer();
+    }
 
     public void SetFirst(Vector2 nowPos, Vector2 angle)
     {
         if (points.Count == 0)
         {
-            points.Add(new Point(angle, Vector2.zero, 0.5f));
+            points.Add(new Point(angle, Vector2.zero));
         }
         else if (points.Count == 1)
         {
-            points[0] = new Point(angle, nowPos, 0.5f);
+            points[0] = new Point(angle, nowPos);
         }
 
+        isActive = true;
         SetLineRenderer();
-    }
-
-    public void UpdateWater(Vector2 nowPos, Vector2 angle)
-    {
-         if (!isActive)
-             isActive = true;
-        VertexSet(nowPos, angle);
     }
 
     public void VertexSet(Vector2 nowPos, Vector2 angle)
     {
-        if (points[points.Count - 1].PointPosition.y - nowPos.y >= pointDist)
+        if (Vector2.Distance(points[points.Count - 1].PointPosition, nowPos) >= pointDist)
         {
-            points.Add(new Point(angle, nowPos, 0.5f));
+            points.Add(new Point(angle, nowPos));
         }
     }
 
+    //frame Update
     private void WaterUpdate()
     {
         for (int i = 0;i < points.Count; i++)
@@ -82,19 +89,16 @@ public class WaterTest : MonoBehaviour
         ray = Physics2D.Raycast(point.PointPosition, point.Direction, 0.001f);
         if(ray)
         {
-            CheckTags(ray, point);
+            Reflect(ray, point);
         }
     }
 
-    private void CheckTags(RaycastHit2D ray, Point point)
+    private void Reflect(RaycastHit2D ray, Point point)
     {
-        if (ray.transform.CompareTag(reflectTag))
+        if (ray.transform.CompareTag(reflectTag) && point.maxReflection-- > 0)
         {
-            Debug.Log("반사");
-        }
-        if (ray.transform.CompareTag(removeTag))
-        {
-            Debug.Log("삭제");
+            Vector2 inNormal = Vector2.right;
+            point.Direction = Vector2.Reflect(point.Direction, inNormal);
         }
     }
 
@@ -107,10 +111,8 @@ public class WaterTest : MonoBehaviour
     {
         line.SetVertexCount(points.Count);
 
-        for (int i = 0; i < points.Count; i++)
-        {
-            line.SetPosition(i, points[i].PointPosition);
-        }
+        coll.SetPoints(points.ConvertAll<Vector2>((Point p) => p.PointPosition));
+        line.SetPositions(points.ConvertAll<Vector3>((Point p) => p.PointPosition).ToArray());
     }
 
     private void Disable()
@@ -121,24 +123,44 @@ public class WaterTest : MonoBehaviour
             ObjectPoolManager.Inst.pool.Push(this.gameObject);
         }
     }
-}
 
-public class Point
-{
-    public Point(Vector2 dir, Vector2 pos, float _speed)
+    private void RemovePoint(Collision2D collision)
     {
-        Direction = dir;
-        PointPosition = pos;
-        speed = _speed;
+        Debug.Log("삭제");
+        Debug.Log(collision.contactCount);
+        List<Point> contacts = new List<Point>();
+        List<Vector2> pointsVec = points.ConvertAll<Vector2>((Point p) => p.PointPosition);
+        
+        if (collision.contacts[0].point == points[0].PointPosition)
+        {
+            points.RemoveAt(0);
+        }
+        else if (collision.contacts[0].point == points[points.Count].PointPosition)
+        {
+            points.RemoveAt(points.Count - 1);
+        }
+
+        //if (index == 0 || index == points.Count - 1)
+        //{
+        //    points.Remove(point);
+        //}
+
+        //else if (index > 0 && index < points.Count - 1)
+        //{
+        //    List<Point> newList = points.GetRange(0, index);
+        //    points.RemoveRange(0, index);
+
+        //    GameObject obj = ObjectPoolManager.Inst.pool.Pop();
+        //    obj.GetComponent<WaterTest>().Duplicate(newList);
+        //}
+        SetLineRenderer();
     }
 
-    public Vector2 Direction { get; set; }
-    public Vector2 PointPosition { get; set; }
-    private float speed;
-
-    public void PointMove()
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        PointPosition = Vector2.MoveTowards(PointPosition, PointPosition + Direction, 1 * speed);
+        if (collision.transform.CompareTag(removeTag))
+        {
+            RemovePoint(collision);
+        }
     }
-
 }
