@@ -130,6 +130,17 @@ public class WaterTest : MonoBehaviour
         Debug.Log(collision.contactCount);
         List<Point> contacts = new List<Point>();
         List<Vector2> pointsVec = points.ConvertAll<Vector2>((Point p) => p.PointPosition);
+        int index;
+
+        if (pointsVec.Contains(collision.contacts[0].point))
+        {
+            index = pointsVec.IndexOf(collision.contacts[0].point);
+        }
+        else
+        {
+
+        }
+
         
         if (collision.contacts[0].point == points[0].PointPosition)
         {
@@ -139,21 +150,21 @@ public class WaterTest : MonoBehaviour
         {
             points.RemoveAt(points.Count - 1);
         }
+        else
+        {
+            List<Point> newList = points.GetRange(0, index);
+            points.RemoveRange(0, index);
 
-        //if (index == 0 || index == points.Count - 1)
-        //{
-        //    points.Remove(point);
-        //}
-
-        //else if (index > 0 && index < points.Count - 1)
-        //{
-        //    List<Point> newList = points.GetRange(0, index);
-        //    points.RemoveRange(0, index);
-
-        //    GameObject obj = ObjectPoolManager.Inst.pool.Pop();
-        //    obj.GetComponent<WaterTest>().Duplicate(newList);
-        //}
+            GameObject obj = ObjectPoolManager.Inst.pool.Pop();
+            obj.GetComponent<WaterTest>().Duplicate(newList);
+        }
         SetLineRenderer();
+    }
+
+    //선형탐색이지만 정보를 버리지 않으므로 이진 탐색보다 빠르다.
+    private void Sweeping()
+    {
+
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
