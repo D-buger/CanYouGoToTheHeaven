@@ -127,19 +127,26 @@ public class WaterTest : MonoBehaviour
     private void RemovePoint(Collision2D collision)
     {
         Debug.Log("삭제");
-        List<Point> contacts = new List<Point>();
         List<Vector2> pointsVec = points.ConvertAll<Vector2>((Point p) => p.PointPosition);
+        List<Vector2> sortedPointsVec = pointsVec;
+        sortedPointsVec.Sort(new VectorBinarySearch());
         int index;
 
-        Debug.Log(BinarySearch(pointsVec, collision.contacts[0].point));
-        /*
-        index = pointsVec.IndexOf(collision.contacts[0].point);
+        int i = BinarySearch(sortedPointsVec, collision.contacts[0].point);
+
         if (pointsVec.Contains(collision.contacts[0].point))
         {
-
+            index = pointsVec.IndexOf(collision.contacts[0].point);
         }
         else
         {
+            index = BinarySearch(sortedPointsVec, collision.contacts[0].point);
+            index = pointsVec.IndexOf(sortedPointsVec[index]);
+            
+
+            //Vector2 direction = 
+            //points.Insert(index, new Point( , collision.contacts[0].point));
+
         }
 
         
@@ -160,23 +167,16 @@ public class WaterTest : MonoBehaviour
             obj.GetComponent<WaterTest>().Duplicate(newList);
         }
         SetLineRenderer();
-        */
+        
     }
 
-    private void iComparer()
+    private int BinarySearch(List<Vector2> pointsVec, Vector2 collision)
     {
-
-    }
-    
-    //가장 유사한 값 찾기
-    private int BinarySearch(List<Vector2> pointVec, Vector2 collision)
-    {
-        int i = pointVec.BinarySearch(collision);
-        if(i < 0)
+        int i = pointsVec.BinarySearch(collision, new VectorBinarySearch());
+        if (i < 0)
         {
             i = ~i;
             i--;
-            Debug.Log(i);
         }
 
         return i;
