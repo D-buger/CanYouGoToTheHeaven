@@ -128,11 +128,7 @@ public class WaterTest : MonoBehaviour
     {
         Debug.Log("ªË¡¶");
         List<Vector2> pointsVec = points.ConvertAll<Vector2>((Point p) => p.PointPosition);
-        List<Vector2> sortedPointsVec = pointsVec;
-        sortedPointsVec.Sort(new VectorBinarySearch());
         int index;
-
-        int i = BinarySearch(sortedPointsVec, collision.contacts[0].point);
 
         if (pointsVec.Contains(collision.contacts[0].point))
         {
@@ -140,14 +136,11 @@ public class WaterTest : MonoBehaviour
         }
         else
         {
-            index = BinarySearch(sortedPointsVec, collision.contacts[0].point);
-            index = pointsVec.IndexOf(sortedPointsVec[index]);
-            
-
-            //Vector2 direction = 
-            //points.Insert(index, new Point( , collision.contacts[0].point));
-
+            index = FindIndex(pointsVec, collision.contacts[0].point);
+            Vector2 direction = (points[index].Direction + points[index + 1].Direction).normalized;
+            //points.Insert(index, new Point(direction, collision.contacts[0].point));
         }
+        Debug.Break();
 
         
         if (collision.contacts[0].point == points[0].PointPosition)
@@ -169,20 +162,38 @@ public class WaterTest : MonoBehaviour
         SetLineRenderer();
         
     }
-
-    private int BinarySearch(List<Vector2> pointsVec, Vector2 collision)
+    
+    private int FindIndex(List<Vector2> pointsVec, Vector2 collision)
     {
-        int i = pointsVec.BinarySearch(collision, new VectorBinarySearch());
-        if (i < 0)
+        int i;
+        List<Vector2> sortedPointsVec = pointsVec.ConvertAll(v => v);
+        sortedPointsVec.Sort(new VectorBinarySearch(collision));
+        Debug.Log(collision);
+        Debug.Log(Mathf.Epsilon);
+        for (int j = 0; j < sortedPointsVec.Count - 1; j++)
         {
-            i = ~i;
-            i--;
+            Vector2 a = sortedPointsVec[j];
+            Vector2 b = sortedPointsVec[j + 1];
+            Vector2 c = collision;
+            
+            Debug.Log(SOO.Util.IsBetween(a, b, c));
         }
 
+        i = pointsVec.IndexOf(sortedPointsVec[0]);
         return i;
     }
 
+
+
     private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.transform.CompareTag(removeTag))
+        {
+            RemovePoint(collision);
+        }
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
     {
         if (collision.transform.CompareTag(removeTag))
         {

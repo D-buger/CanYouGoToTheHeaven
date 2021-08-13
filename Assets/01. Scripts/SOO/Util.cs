@@ -41,6 +41,26 @@ namespace SOO
         public static float Cross(Vector2 a, Vector2 b)
             => a.x * b.y - a.y * b.x;
 
+        public static float Cross(Vector2 a, Vector2 b, Vector2 c)
+            => (c.y - a.y) * (b.x - a.x) - (c.x - a.x) * (b.y - a.y);
+
+        public static float Dot(Vector2 a, Vector2 b)
+            => a.x * b.x + a.y * b.y;
+
+        public static float Dot(Vector2 a, Vector2 b, Vector2 c)
+            => (c.x - a.x) * (b.x - a.x) + (c.y - a.y) * (b.y - a.y);
+
+
+        public static float Distance(Vector2 a, Vector2 b)
+            => (a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y);
+
+        public static float IsBetween(Vector2 a, Vector2 b, Vector2 c)
+        {
+            float result = Distance(a, b) + Distance(b, c) - Distance(a, c);
+            return result;
+            //return -Mathf.Epsilon < result && result < Mathf.Epsilon;
+        }
+
         public static float distanceSq(Vector2 a, Vector2 b)
         {
             float dx = a.x - b.x;
