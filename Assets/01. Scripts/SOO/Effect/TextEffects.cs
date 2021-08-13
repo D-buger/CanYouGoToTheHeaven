@@ -5,8 +5,6 @@ using UnityEngine.UI;
 
 public static class TextEffects
 {
-
-
     static IEnumerator cTyping(Text _text, string _message, float _typingTime)
     {
         yield return new WaitForSeconds(2f);
