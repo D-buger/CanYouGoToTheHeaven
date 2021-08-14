@@ -485,6 +485,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textComponent: {fileID: 710221852}
+  gradient:
+    serializedVersion: 2
+    key0: {r: 1, g: 0, b: 0, a: 1}
+    key1: {r: 1, g: 0.5723677, b: 0, a: 1}
+    key2: {r: 1, g: 1, b: 0, a: 0}
+    key3: {r: 0.16666675, g: 1, b: 0, a: 0}
+    key4: {r: 0, g: 1, b: 0.9400835, a: 0}
+    key5: {r: 0.17626238, g: 0, b: 1, a: 0}
+    key6: {r: 0.29752064, g: 0, b: 1, a: 0}
+    key7: {r: 0.29752064, g: 0, b: 1, a: 0}
+    ctime0: 0
+    ctime1: 10879
+    ctime2: 21781
+    ctime3: 32768
+    ctime4: 43646
+    ctime5: 54525
+    ctime6: 65535
+    ctime7: 65535
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_NumColorKeys: 7
+    m_NumAlphaKeys: 2
   message: "\uC751\uC560 \uB098 \uC6C0\uC9C1\uC774\uB294 \uC560\uAE30 \uD14D\uC2A4\uD2B8"
 --- !u!1 &793988930
 GameObject:
@@ -627,6 +656,8 @@ MonoBehaviour:
     maxAirAcceleration: 2.7
     velocity: {x: 0, y: 0, z: 0}
     desiredVelocity: {x: 0, y: 0, z: 0}
+    aVelocity: 0
+    aDesiredVelocity: 0
     rotateAmount: 45
     jumpHeight: 1
     body: {fileID: 0}

@@ -18,6 +18,7 @@ public class PlayerStats
     public float GetAcceleration => onGround ? maxAcceleration : maxAirAcceleration; 
 
     public Vector3 velocity = Vector3.zero, desiredVelocity = Vector3.zero;
+    public float aVelocity = 0, aDesiredVelocity = 0;
 
     [SerializeField, Range(0f, 180f)]
     private float rotateAmount = 45f;

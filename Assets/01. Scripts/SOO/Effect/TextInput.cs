@@ -9,6 +9,7 @@ public class TextInput : MonoBehaviour
     [SerializeField]
     private TMP_Text textComponent;
 
+    public Gradient gradient;
     public string message;
 
     private IEnumerator moveEffect = null;
@@ -35,6 +36,10 @@ public class TextInput : MonoBehaviour
     private void Test(TMP_TextInfo textInfo)
     {
         TMP_CharacterInfo charInfo;
+
+        float min = textInfo.characterInfo[0].vertex_BL.position.x;
+        float max = textInfo.characterInfo[textInfo.characterCount - 1].vertex_TR.position.x;
+
         for (int i = 0; i < textInfo.characterCount; ++i)
         {
             charInfo = textInfo.characterInfo[i];
@@ -42,13 +47,18 @@ public class TextInput : MonoBehaviour
             if (!charInfo.isVisible)
                 continue;
 
-            Vector3[] verts = textInfo.meshInfo[charInfo.materialReferenceIndex].vertices;
-
+            TMP_MeshInfo meshInfo = textInfo.meshInfo[charInfo.materialReferenceIndex];
+            
             for(int j = 0; j < 4; ++j)
             {
-                Vector3 vec = verts[charInfo.vertexIndex + j];
-                verts[charInfo.vertexIndex + j] = vec +
-                    new Vector3(0, Mathf.Sin(Time.time * 2f + vec.x * 0.01f) * 10f, 0) ;
+                int index = charInfo.vertexIndex + j;
+                Vector3 vec = meshInfo.vertices[index];
+                meshInfo.vertices[index] = vec +
+                    new Vector3(0, Mathf.Sin(Time.time * 3f + vec.x * 1f) * 0.1f, 0);
+                float curXNormalized = 
+                    Mathf.InverseLerp(min, max, vec.x);
+                Color color = gradient.Evaluate(curXNormalized);
+                meshInfo.colors32[index] = new Color(color.r, color.g, color.b, 1);
             }
         }
 
@@ -56,6 +66,7 @@ public class TextInput : MonoBehaviour
         {
             TMP_MeshInfo meshInfo = textInfo.meshInfo[i];
             meshInfo.mesh.vertices = meshInfo.vertices;
+            meshInfo.mesh.colors32 = meshInfo.colors32;
             textComponent.UpdateGeometry(meshInfo.mesh, i);
         }
     }
