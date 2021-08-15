@@ -11,8 +11,6 @@ public class WaterTest : MonoBehaviour
 
     [SerializeField, Space(10), Header("Components")]
     private LineRenderer line;
-    [SerializeField]
-    private EdgeCollider2D coll;
 
     [SerializeField, Space(10), Header("Values")]
     private float pointDist = 0.01f;
@@ -27,8 +25,6 @@ public class WaterTest : MonoBehaviour
     {
         if (line == null)
             line = GetComponent<LineRenderer>();
-        if (coll == null)
-            coll = GetComponent<EdgeCollider2D>();
     }
 
     private void Update()
@@ -89,17 +85,50 @@ public class WaterTest : MonoBehaviour
         ray = Physics2D.Raycast(point.PointPosition, point.Direction, 0.001f);
         if(ray)
         {
-            Reflect(ray, point);
+            CheckTags(ray, point);
         }
     }
 
-    private void Reflect(RaycastHit2D ray, Point point)
+    private void CheckTags(RaycastHit2D ray, Point point)
     {
-        if (ray.transform.CompareTag(reflectTag) && point.maxReflection-- > 0)
+        if (ray.transform.CompareTag(reflectTag))
+        {
+            Reflect(point);
+        }
+        else if (ray.transform.CompareTag(removeTag))
+        {
+            RemovePoint(point);
+        }
+    }
+
+    private void Reflect(Point point)
+    {
+        if (point.maxReflection-- > 0)
         {
             Vector2 inNormal = Vector2.right;
             point.Direction = Vector2.Reflect(point.Direction, inNormal);
         }
+    }
+
+    private void RemovePoint(Point point)
+    {
+        Debug.Log("삭제");
+        List<Vector2> pointsVec = points.ConvertAll<Vector2>((Point p) => p.PointPosition);
+        int index = points.IndexOf(point);
+
+        if (index == 0 || index == points.Count)
+        {
+            points.Remove(point);
+        }
+        else
+        {
+            List<Point> newList = points.GetRange(0, index);
+            points.RemoveRange(0, index);
+
+            GameObject obj = ObjectPoolManager.Inst.pool.Pop();
+            obj.GetComponent<WaterTest>().Duplicate(newList);
+        }
+        SetLineRenderer();
     }
 
     private void PointUpdate(Point point)
@@ -110,8 +139,7 @@ public class WaterTest : MonoBehaviour
     private void SetLineRenderer()
     {
         line.SetVertexCount(points.Count);
-
-        coll.SetPoints(points.ConvertAll<Vector2>((Point p) => p.PointPosition));
+        
         line.SetPositions(points.ConvertAll<Vector3>((Point p) => p.PointPosition).ToArray());
     }
 
@@ -123,81 +151,5 @@ public class WaterTest : MonoBehaviour
             ObjectPoolManager.Inst.pool.Push(this.gameObject);
         }
     }
-
-    private void RemovePoint(Collision2D collision)
-    {
-        Debug.Log("삭제");
-        List<Vector2> pointsVec = points.ConvertAll<Vector2>((Point p) => p.PointPosition);
-        int index;
-
-        if (pointsVec.Contains(collision.contacts[0].point))
-        {
-            index = pointsVec.IndexOf(collision.contacts[0].point);
-        }
-        else
-        {
-            index = FindIndex(pointsVec, collision.contacts[0].point);
-            Vector2 direction = (points[index].Direction + points[index + 1].Direction).normalized;
-            //points.Insert(index, new Point(direction, collision.contacts[0].point));
-        }
-        Debug.Break();
-
-        
-        if (collision.contacts[0].point == points[0].PointPosition)
-        {
-            points.RemoveAt(0);
-        }
-        else if (collision.contacts[0].point == points[points.Count].PointPosition)
-        {
-            points.RemoveAt(points.Count - 1);
-        }
-        else
-        {
-            List<Point> newList = points.GetRange(0, index);
-            points.RemoveRange(0, index);
-
-            GameObject obj = ObjectPoolManager.Inst.pool.Pop();
-            obj.GetComponent<WaterTest>().Duplicate(newList);
-        }
-        SetLineRenderer();
-        
-    }
     
-    private int FindIndex(List<Vector2> pointsVec, Vector2 collision)
-    {
-        int i;
-        List<Vector2> sortedPointsVec = pointsVec.ConvertAll(v => v);
-        sortedPointsVec.Sort(new VectorBinarySearch(collision));
-        Debug.Log(collision);
-        Debug.Log(Mathf.Epsilon);
-        for (int j = 0; j < sortedPointsVec.Count - 1; j++)
-        {
-            Vector2 a = sortedPointsVec[j];
-            Vector2 b = sortedPointsVec[j + 1];
-            Vector2 c = collision;
-            
-            Debug.Log(SOO.Util.IsBetween(a, b, c));
-        }
-
-        i = pointsVec.IndexOf(sortedPointsVec[0]);
-        return i;
-    }
-
-
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.transform.CompareTag(removeTag))
-        {
-            RemovePoint(collision);
-        }
-    }
-
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        if (collision.transform.CompareTag(removeTag))
-        {
-            RemovePoint(collision);
-        }
-    }
 }

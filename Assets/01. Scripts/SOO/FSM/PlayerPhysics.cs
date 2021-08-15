@@ -16,8 +16,8 @@ public class PlayerPhysics
         stat.velocity.x =
             Mathf.MoveTowards(stat.velocity.x, stat.desiredVelocity.x, maxSpeedChange);
         stat.aVelocity = 
-            -Mathf.MoveTowardsAngle(stat.aVelocity, stat.aDesiredVelocity, maxSpeedChange * 10);
-        Debug.Log(stat.aVelocity);
+            -Mathf.MoveTowardsAngle(0, stat.RotateAmount, input * stat.RotateAmount);
+        //(stat.velocity.x / stat.GetMaxSpeed) * stat.RotateAmount
 
         stat.trans.rotation = Quaternion.Euler(0, 0, stat.aVelocity);
 
@@ -26,13 +26,6 @@ public class PlayerPhysics
     }
 
     public bool IsOnGround() => stat.onGround;
-
-    public void Turning(float _input)
-    {
-        input = _input;
-        stat.aDesiredVelocity = input * stat.RotateAmount;
-        
-    }
 
     public void Moving(float _input)
     {
