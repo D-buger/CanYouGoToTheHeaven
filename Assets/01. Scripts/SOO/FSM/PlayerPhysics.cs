@@ -16,8 +16,8 @@ public class PlayerPhysics
         stat.velocity.x =
             Mathf.MoveTowards(stat.velocity.x, stat.desiredVelocity.x, maxSpeedChange);
         stat.aVelocity = 
-            -Mathf.MoveTowardsAngle(0, stat.RotateAmount, input * stat.RotateAmount);
-        //(stat.velocity.x / stat.GetMaxSpeed) * stat.RotateAmount
+            -Mathf.MoveTowardsAngle(0, stat.RotateAmount,
+            (stat.velocity.x / stat.GetMaxSpeed) * stat.RotateAmount);
 
         stat.trans.rotation = Quaternion.Euler(0, 0, stat.aVelocity);
 

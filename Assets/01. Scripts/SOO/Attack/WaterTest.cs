@@ -82,7 +82,7 @@ public class WaterTest : MonoBehaviour
     RaycastHit2D ray;
     private void Raycast(Point point)
     {
-        ray = Physics2D.Raycast(point.PointPosition, point.Direction, 0.001f);
+        ray = Physics2D.Raycast(point.PointPosition, point.Direction, 0.01f);
         if(ray)
         {
             CheckTags(ray, point);

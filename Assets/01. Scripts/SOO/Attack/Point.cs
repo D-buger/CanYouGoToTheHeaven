@@ -16,7 +16,7 @@ public class Point
 
     public Vector2 Direction { get; set; }
     public Vector2 PointPosition { get; set; }
-    private float speed = 0.1f;
+    private float speed = 0.3f;
 
     public int maxReflection { get; set; }
 
