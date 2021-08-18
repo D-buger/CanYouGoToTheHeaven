@@ -27,9 +27,15 @@ public class TextInput : MonoBehaviour
             str = message;
     }
 
+    private void Start()
+    {
+        MoveEffect(TextEffects.Waving(textComponent));
+        ColorEffect(TextEffects.Gradient(textComponent, gradient));
+    }
+
     private void Update()
     {
-        textComponent.ForceMeshUpdate();
+        Debug.Log(moveEffect + " " + colorEffect);
         TextEffects.UpdateTexts(textComponent);
     }
 
