@@ -4,30 +4,70 @@ using UnityEngine;
 
 public class HTest_Monster01 : HTest_Monster
 {
-    private void Update()
-    {
-        if (DetectPlayer()) //일정 범위에 있는 동안이나 발견 후 일정 시간동안 지속적으로 따라오게 만들것
-        {
-            SetMovementBehavior(new HTest_IMovementBehavior_TrackingTarget());
-        }
-        else
-        {
-            SetMovementBehavior(new HTest_IMovementBehavior_Static());
-        }
-        currentMovement.OperateUpdate(rb2d, playersss, movementSpeed);
-    }
+    bool detectPlayer;
+    bool isTrackingPlayer;
+    [SerializeField] float interval;
+    [SerializeField] bool showDetectDistance;
 
     private void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
+        HTest_MonsterSpawnManager.instance.monsterList_Grade.Add((int)monsterGrade, gameObject);
     }
 
-    bool DetectPlayer()
+    private void Update()
     {
-        if (Vector2.Distance(playersss.transform.position, transform.position) <= detectDistance)
+        detectPlayer = DetectPlayer();
+
+        if (!isTrackingPlayer) //현재 문제: 코루틴이 이미 실행중일 때 플레이어가 감지 범위를 _나갔다가 들어와도_ 코루틴이 그 이전의 것이 반영됨
         {
-            return true;
+            //플레이어가 감지범위를 나간 순간에 코루틴을 실행시키면 될 것. 또한 감지범위에 들어올 때 코루틴을 중지시키면 될것
+
+            if (detectPlayer)
+            {
+                SetMovementBehavior(new HTest_IMovementBehavior_TrackingTarget());
+                isTrackingPlayer = true;
+            }
         }
-        return false;
+        else
+        {
+            if (!detectPlayer)
+            {
+                StartCoroutine(Re_CheckingPlayer(interval));
+            }
+            else
+            {
+                StopCoroutine("Re_CheckingPlayer");
+            }
+        }
+        currentMovement.OperateUpdate(rb2d, playersss, movementSpeed);
+    }
+
+    IEnumerator Re_CheckingPlayer(float _interval)
+    {
+        WaitForSeconds delay = new WaitForSeconds(_interval);
+        yield return delay;
+
+        detectPlayer = DetectPlayer();
+
+        if (detectPlayer)
+        {
+            StartCoroutine(Re_CheckingPlayer(interval));
+        }
+        else
+        {
+            SetMovementBehavior(new HTest_IMovementBehavior_Static());
+            isTrackingPlayer = false;
+            detectPlayer = false;
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (showDetectDistance)
+        {
+            Gizmos.color = new Color(1, 0, 0);
+            Gizmos.DrawWireSphere(transform.position, detectDistance);
+        }
     }
 }

@@ -13,6 +13,7 @@ class HTest_IMovementBehavior_Static : HTest_IMovementBehavior
 {
     void HTest_IMovementBehavior.OperateEnter(Rigidbody2D _rb2d, GameObject _target, float _speed)
     {
+        Debug.Log($"{_rb2d.gameObject.name}오브젝트가 'Static'상태를 시작합니다");
         _rb2d.velocity = new Vector2(0, 0);
     }
 
@@ -31,7 +32,7 @@ class HTest_IMovementBehavior_TrackingTarget : HTest_IMovementBehavior
 {
     void HTest_IMovementBehavior.OperateEnter(Rigidbody2D _rb2d, GameObject _target, float _speed)
     {
-
+        Debug.Log($"{_rb2d.gameObject.name}오브젝트가 {_target}오브젝트를 추적합니다.");
     }
 
     void HTest_IMovementBehavior.OperateUpdate(Rigidbody2D _rb2d, GameObject _target, float _speed)

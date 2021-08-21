@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HTest_Monster : MonoBehaviour
+public class HTest_Monster : HTest_Character
 {
     public enum MonsterGrade
     {
@@ -34,5 +34,19 @@ public class HTest_Monster : MonoBehaviour
         currentMovement.OperateExit(rb2d, playersss, movementSpeed);
         currentMovement = behavior;
         currentMovement.OperateEnter(rb2d, playersss, movementSpeed);
+    }
+
+    protected bool DetectPlayer()
+    {
+        if (Vector2.Distance(playersss.transform.position, transform.position) <= detectDistance)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    protected override void InflictDamage(float _damage)
+    {
+        throw new System.NotImplementedException();
     }
 }
