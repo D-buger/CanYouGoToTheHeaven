@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
     public PlayerPhysics physics;
     public PlayerStats stats;
 
-    public WatergunTest watergun;
+    public Watergun watergun;
 
     private Dictionary<ePlayerState, FsmState<Player>> stateByEnum;
 
@@ -27,7 +27,7 @@ public class Player : MonoBehaviour
     {
         stats.Set(transform, transform.GetComponent<Rigidbody2D>(), transform.position.y);
         physics = new PlayerPhysics(stats);
-        watergun = transform.GetChild(0).GetComponent<WatergunTest>();
+        watergun = transform.GetChild(0).GetComponent<Watergun>();
         anim = transform.GetComponent<Animator>();
 
         stateByEnum = new Dictionary<ePlayerState, FsmState<Player>>();
@@ -71,5 +71,4 @@ public class Player : MonoBehaviour
     {
         stats.EvauateCollision(collision);
     }
-    
 }

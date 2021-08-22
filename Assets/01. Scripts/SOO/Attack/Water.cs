@@ -2,14 +2,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(LineRenderer))]
-public class WaterTest : MonoBehaviour
+public class Water : MonoBehaviour
 {
     [SerializeField, Space(10), Header("Tags")]
     private string reflectTag = "Wall";
     [SerializeField]
     private string removeTag = "Untagged"; 
-
-    [SerializeField, Space(10), Header("Components")]
+    
     private LineRenderer line;
 
     [SerializeField, Space(10), Header("Values")]
@@ -20,6 +19,8 @@ public class WaterTest : MonoBehaviour
     private bool isActive = false;
 
     private List<Point> points = new List<Point>();
+
+    private int damage = 1;
 
     private void Awake()
     {
@@ -43,8 +44,8 @@ public class WaterTest : MonoBehaviour
         isActive = true;
         SetLineRenderer();
     }
-
-    public void SetFirst(Vector2 nowPos, Vector2 angle)
+    
+    public void SetFirst(Vector2 nowPos, Vector2 angle, int damage)
     {
         if (points.Count == 0)
         {
@@ -56,15 +57,19 @@ public class WaterTest : MonoBehaviour
         }
 
         isActive = true;
+        this.damage = damage;
         SetLineRenderer();
     }
 
-    public void VertexSet(Vector2 nowPos, Vector2 angle)
+    public bool VertexSet(Vector2 nowPos, Vector2 angle)
     {
         if (Vector2.Distance(points[points.Count - 1].PointPosition, nowPos) >= pointDist)
         {
             points.Add(new Point(angle, nowPos));
+
+            return true;
         }
+        return false;
     }
 
     //frame Update
@@ -126,7 +131,7 @@ public class WaterTest : MonoBehaviour
             points.RemoveRange(0, index);
 
             GameObject obj = ObjectPoolManager.Inst.pool.Pop();
-            obj.GetComponent<WaterTest>().Duplicate(newList);
+            obj.GetComponent<Water>().Duplicate(newList);
         }
         SetLineRenderer();
     }

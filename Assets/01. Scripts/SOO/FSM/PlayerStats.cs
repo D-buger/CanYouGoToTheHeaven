@@ -5,13 +5,26 @@ using UnityEngine;
 [System.Serializable]
 public class PlayerStats
 {
-    [SerializeField, Range(0f, 10f)]
-    private float maxSpeed = 5f;
-    public float GetMaxSpeed => maxSpeed;
+    public int MaxHP = 3;
+    private int currentHP;
+    public int CurrentHP
+    {
+        get
+        {
+            return currentHP;
+        }
+        set
+        {
+            currentHP = Mathf.Min(value, MaxHP);
+            currentHP = Mathf.Max(0, currentHP);
+        }
+    }
 
-    [SerializeField, Range(0f, 2f)]
-    private float moveSpeed = 1f;
-    public float GetMoveSpeed => moveSpeed;
+    [SerializeField, Range(0f, 10f), ReadOnly]
+    public readonly float maxSpeed = 5f;
+
+    [SerializeField, Range(0f, 2f), ReadOnly]
+    public readonly float moveSpeed = 1f;
 
     [SerializeField, Range(0f, 10f)]
     private float maxAcceleration = 20f, maxAirAcceleration = 15f;
@@ -20,26 +33,8 @@ public class PlayerStats
     public Vector3 velocity = Vector3.zero, desiredVelocity = Vector3.zero;
     public float aVelocity = 0, aDesiredVelocity = 0;
 
-    [SerializeField, Range(0f, 180f)]
-    private float rotateAmount = 45f;
-    public float RotateAmount => rotateAmount;
-
-    [SerializeField, Range(0f, 10f)]
-    private float jumpHeight = 1f;
-    public float GetJumpHeight => jumpHeight;
-    
-    private int maxAirJumps = 1;
-    public int MaxAirJumps
-    {
-        get {
-                return maxAirJumps;
-        }
-        set
-        {
-            if (value + maxAirJumps < 0) maxAirJumps = 0;
-            else { maxAirJumps += value; }
-        }
-    }
+    [SerializeField, Range(0f, 180f), ReadOnly]
+    public readonly float rotateAmount = 45f;
     
     private float currentYSpeed = 0f;
     public float previousYPos { get; set; }
@@ -55,7 +50,6 @@ public class PlayerStats
             previousYPos = value;
         }
     }
-
 
     public Rigidbody2D body;
     public Transform trans;
@@ -86,7 +80,6 @@ public class PlayerStats
                 limitRight |= normal.x <= 0.9f;
             }
         }
-
     }
 
     public void Set(Transform _trans, Rigidbody2D rigid, float y)
@@ -94,5 +87,6 @@ public class PlayerStats
         trans = _trans;
         body = trans.GetComponent<Rigidbody2D>();
         previousYPos = trans.position.y;
+        currentHP = MaxHP;
     }
 }

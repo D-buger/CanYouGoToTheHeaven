@@ -16,9 +16,9 @@ public class PlayerPhysics
         stat.velocity.x =
             Mathf.MoveTowards(stat.velocity.x, stat.desiredVelocity.x, maxSpeedChange);
         stat.aVelocity = 
-            -Mathf.MoveTowardsAngle(0, stat.RotateAmount,
-            (stat.velocity.x / stat.GetMaxSpeed) * stat.RotateAmount);
-
+            -Mathf.MoveTowardsAngle(0, stat.rotateAmount,
+            (stat.velocity.x / stat.maxSpeed) * stat.rotateAmount);
+        
         stat.trans.rotation = Quaternion.Euler(0, 0, stat.aVelocity);
 
         stat.body.velocity = stat.velocity;
@@ -30,7 +30,7 @@ public class PlayerPhysics
     public void Moving(float _input)
     {
         input = _input;
-        stat.desiredVelocity.x = input * stat.GetMaxSpeed;
+        stat.desiredVelocity.x = input * stat.maxSpeed;
     }
     
 }
