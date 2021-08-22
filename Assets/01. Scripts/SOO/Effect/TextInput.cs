@@ -1,7 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 
 public class TextInput : MonoBehaviour
@@ -29,14 +27,36 @@ public class TextInput : MonoBehaviour
 
     private void Start()
     {
-        MoveEffect(TextEffects.Waving(textComponent));
-        ColorEffect(TextEffects.Gradient(textComponent, gradient));
+        MoveEffect(TextEffects.Typing(textComponent, 0.1f));
+        //ColorEffect(TextEffects.Gradient(textComponent, gradient));
     }
 
     private void Update()
     {
-        Debug.Log(moveEffect + " " + colorEffect);
         TextEffects.UpdateTexts(textComponent);
+
+        Skip();
+    }
+
+    public void Skip()
+    {
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            StopCoroutine(moveEffect);
+            ChangeText(message);
+        }
+    }
+
+    public void Clear()
+    {
+        StopAllCoroutines();
+        textComponent.text = null;
+    }
+
+    private void ChangeText(string afterText)
+    {
+        message = afterText;
+        textComponent.text = message;
     }
 
     private void MoveEffect(IEnumerator effect)

@@ -6,6 +6,7 @@ using TMPro;
 
 public static class TextEffects
 {
+
     public static IEnumerator Waving(TMP_Text textComponent)
     {
         while (true)
@@ -35,14 +36,17 @@ public static class TextEffects
         }
     }
 
-    public static IEnumerator Typing(Text _text, string _message, float _typingTime)
+    public static IEnumerator Typing(TMP_Text textComponent, float time)
     {
-        yield return new WaitForSeconds(2f);
-        for (int i = 0; i < _message.Length; i++)
+        string text = textComponent.text;
+        textComponent.text = null;
+        for (int i = 0; i < text.Length; i++)
         {
-            _text.text = _message.Substring(0, i);
-            yield return new WaitForSeconds(_typingTime);
+            textComponent.text += text[i];
+            yield return new WaitForSecondsRealtime(time);
         }
+
+        yield return null;
     }
 
     public static IEnumerator Gradient(TMP_Text textComponent, Gradient gradient)
