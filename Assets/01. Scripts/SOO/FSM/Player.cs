@@ -61,7 +61,6 @@ public class Player : MonoBehaviour
         StateMachine.StateRevert();
     }
 
-
     public void OnCollisionEnter2D(Collision2D collision)
     {
         stats.EvauateCollision(collision);
@@ -71,4 +70,11 @@ public class Player : MonoBehaviour
     {
         stats.EvauateCollision(collision);
     }
+
+#if UNITY_EDITOR
+    private void OnDrawGizmos()
+    {
+        
+    }
+#endif
 }

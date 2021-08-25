@@ -26,14 +26,21 @@ public class Watergun : MonoBehaviour
 
     Vector2 angle => SOO.Util.AngleToVector(transform.rotation.eulerAngles.z);
 
+    Transform player;
+
     private void Awake()
     {
         waterAmount = maxWaterAmount;
     }
 
-    public void Update()
+    public Watergun()
     {
-        if (GameManager.Instance.input.behaviourActive && waterAmount > 0)
+        waterAmount = maxWaterAmount;
+    }
+
+    public void ShootWatergun()
+    {
+        if (waterAmount > 0)
         {
             WaterSet();
         }

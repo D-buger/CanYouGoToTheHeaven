@@ -4,29 +4,31 @@ using UnityEngine;
 
 public class CameraManager : MonoBehaviour
 {
-    Transform targetTransform;
-    Camera mainCamera;
+    public float dampTime = 0.15f;
+    private float velocity = 0;
 
-    [SerializeField]
-    float topCameraLine, bottomCameraLine;
+    private Transform targetTransform;
+    private Camera mainCamera;
 
-    Vector2 cameraSize;
+    private Vector2 cameraSize;
 
     private void Awake()
     {
         mainCamera = Camera.main;
         cameraSize = new Vector2(mainCamera.pixelWidth, mainCamera.pixelHeight);
+        targetTransform = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
-#if UNITY_EDITOR
-    private void OnDrawGizmos()
+    private void LateUpdate()
     {
-        Vector2 LeftPointVec =
-            new Vector2(transform.position.x - cameraSize.x / 2, transform.position.y + topCameraLine);
-        Vector2 RightPointVec =
-            new Vector2(transform.position.x + cameraSize.x / 2, transform.position.y + topCameraLine);
-        Gizmos.DrawLine(LeftPointVec, RightPointVec);
-        Gizmos.color = Color.white;
+        Vector3 point = mainCamera.WorldToViewportPoint(targetTransform.position);
+        Vector3 delta = targetTransform.position -
+            mainCamera.ViewportToWorldPoint(new Vector3(point.x, 0.5f, point.z));
+        Vector3 destination = transform.position + delta;
+
+        Vector3 value = new Vector3(transform.position.x,
+            Mathf.SmoothDamp(transform.position.y, destination.y, ref velocity, dampTime)
+            ,transform.position.z);
+        transform.position = value;
     }
-#endif
 }
