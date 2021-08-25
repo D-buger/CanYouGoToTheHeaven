@@ -34,9 +34,5 @@ public class PlayerIdle : FsmState<Player>
         {
             target.ChangeState(ePlayerState.Move);
         }
-        if (target.input.behaviourActive)
-        {
-            target.ChangeState(ePlayerState.Attack);
-        }
     }
 }

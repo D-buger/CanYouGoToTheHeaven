@@ -5,7 +5,6 @@ public enum ePlayerState
 {
     Idle,
     Move,
-    Jump,
     Attack,
 }
 
@@ -43,6 +42,8 @@ public class Player : MonoBehaviour
     private void Update()
     {
         StateMachine.Update();
+
+        anim.SetBool("isAttack", input.behaviourActive);
     }
 
     private void FixedUpdate()
@@ -71,10 +72,5 @@ public class Player : MonoBehaviour
         stats.EvauateCollision(collision);
     }
 
-#if UNITY_EDITOR
-    private void OnDrawGizmos()
-    {
-        
-    }
-#endif
+    
 }

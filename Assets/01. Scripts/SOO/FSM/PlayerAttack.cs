@@ -20,7 +20,7 @@ public class PlayerAttack : FsmState<Player>
 
     public override void Update(Player target)
     {
-        target.watergun.ShootWatergun();
+
     }
 
     public override void FixedUpdate(Player target)

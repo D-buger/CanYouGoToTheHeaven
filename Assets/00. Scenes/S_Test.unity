@@ -818,6 +818,7 @@ MonoBehaviour:
     limitLeft: 0
     limitRight: 0
   watergun: {fileID: 0}
+  watergunVec: {x: 0.1, y: -3.5, z: 0}
   anim: {fileID: 0}
 --- !u!50 &805035415
 Rigidbody2D:
@@ -839,7 +840,7 @@ Rigidbody2D:
   m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 0
+  m_Constraints: 2
 --- !u!212 &805035416
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -938,7 +939,7 @@ GameObject:
   m_Layer: 0
   m_Name: Watergun
   m_TagString: Untagged
-  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -950,7 +951,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 855221226}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.293, y: 1.126, z: 0}
+  m_LocalPosition: {x: -0.27, y: 0.68, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 805035417}
