@@ -8,11 +8,16 @@ public class HTest_Monster01 : HTest_Monster
     bool isTrackingPlayer;
     [SerializeField] float interval;
     [SerializeField] bool showDetectDistance;
+    [SerializeField] bool showShotAngle;
+
+    [SerializeField] GameObject projectilePrefab;
+    [SerializeField] float shotAngle;
+    [SerializeField] float projectileVelocity;
+    [SerializeField] int projectileCount;
 
     private void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
-        HTest_MonsterSpawnManager.instance.monsterList_Grade.Add((int)monsterGrade, gameObject);
     }
 
     private void Update()
@@ -43,6 +48,11 @@ public class HTest_Monster01 : HTest_Monster
         currentMovement.OperateUpdate(rb2d, playersss, movementSpeed);
     }
 
+    protected void FireProjectile(GameObject _projectile, float _shotAngle, float _velocity, int _projectileCount) //원거리 공격을 하는 적 및 아닌 적으로 클래스를 분리해서 넣을것
+    {
+
+    }
+
     IEnumerator Re_CheckingPlayer(float _interval)
     {
         WaitForSeconds delay = new WaitForSeconds(_interval);
@@ -68,6 +78,11 @@ public class HTest_Monster01 : HTest_Monster
         {
             Gizmos.color = new Color(1, 0, 0);
             Gizmos.DrawWireSphere(transform.position, detectDistance);
+        }
+        if (showShotAngle)
+        {
+            Gizmos.color = new Color(0, 0, 1);
+            Gizmos.DrawLine(transform.position, new Vector2(transform.position.x + 4, transform.position.y));
         }
     }
 }

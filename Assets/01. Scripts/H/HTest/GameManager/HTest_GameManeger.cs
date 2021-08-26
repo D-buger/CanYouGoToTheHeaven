@@ -7,7 +7,7 @@ public class HTest_GameManeger : MonoBehaviour
     public static HTest_GameManeger instance = null;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         if (instance != null)
         {

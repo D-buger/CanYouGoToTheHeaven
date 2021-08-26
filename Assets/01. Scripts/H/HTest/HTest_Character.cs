@@ -7,4 +7,9 @@ public abstract class HTest_Character : MonoBehaviour
     [SerializeField] protected float hitPoint;
 
     protected abstract void InflictDamage(float _damage);
+
+    public void KillCharacter()
+    {
+        Destroy(gameObject);
+    }
 }
