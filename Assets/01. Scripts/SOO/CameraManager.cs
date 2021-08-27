@@ -4,31 +4,53 @@ using UnityEngine;
 
 public class CameraManager : MonoBehaviour
 {
-    public float dampTime = 0.15f;
-    private float velocity = 0;
-
     private Transform targetTransform;
     private Camera mainCamera;
 
-    private Vector2 cameraSize;
+    [SerializeField]
+    private Vector3 offset;
+    [SerializeField]
+    private float camSpeed = 1;
+
+    [SerializeField, Range(0, 1)]
+    private float topY;
+    [SerializeField, Range(0, 1)]
+    private float bottomY;
 
     private void Awake()
     {
         mainCamera = Camera.main;
-        cameraSize = new Vector2(mainCamera.pixelWidth, mainCamera.pixelHeight);
         targetTransform = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     private void LateUpdate()
     {
-        Vector3 point = mainCamera.WorldToViewportPoint(targetTransform.position);
-        Vector3 delta = targetTransform.position -
-            mainCamera.ViewportToWorldPoint(new Vector3(point.x, 0.5f, point.z));
-        Vector3 destination = transform.position + delta;
+        CheckTargetPos();
+        CamMoveSmooth();
+    }
 
-        Vector3 value = new Vector3(transform.position.x,
-            Mathf.SmoothDamp(transform.position.y, destination.y, ref velocity, dampTime)
-            ,transform.position.z);
-        transform.position = value;
+    private void CheckTargetPos()
+    {
+        Vector3 targetPosToViewp = mainCamera.WorldToViewportPoint(targetTransform.position);
+        if (targetPosToViewp.y > topY)
+        {
+
+            //offset.y = mainCamera.ViewportToWorldPoint();
+        }
+        else if(targetPosToViewp.y < bottomY)
+        {
+
+        }
+        else
+        {
+        }
+
+    }
+    
+    private void CamMoveSmooth()
+    {
+        Vector3 desiredPos = targetTransform.position + offset;
+        Vector3 lerpPosition = Vector3.Lerp(transform.position, desiredPos, camSpeed);
+        transform.position = lerpPosition;
     }
 }
