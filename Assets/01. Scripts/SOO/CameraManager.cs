@@ -17,10 +17,14 @@ public class CameraManager : MonoBehaviour
     [SerializeField, Range(0, 1)]
     private float bottomY;
 
+    private Vector3 previousPos;
+    private Vector3 changedValue;
+
     private void Awake()
     {
         mainCamera = Camera.main;
         targetTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        previousPos = targetTransform.position;
     }
 
     private void LateUpdate()
@@ -29,24 +33,31 @@ public class CameraManager : MonoBehaviour
         CamMoveSmooth();
     }
 
+    private void CheckChanged()
+    {
+        changedValue = targetTransform.position - previousPos;
+        previousPos = targetTransform.position;
+    }
+
     private void CheckTargetPos()
     {
+        CheckChanged();
         Vector3 targetPosToViewp = mainCamera.WorldToViewportPoint(targetTransform.position);
         if (targetPosToViewp.y > topY)
         {
-
-            //offset.y = mainCamera.ViewportToWorldPoint();
+            camSpeed = 0;
         }
         else if(targetPosToViewp.y < bottomY)
         {
-
+            camSpeed = 0;
         }
         else
         {
+            camSpeed = 0.1f;
         }
 
     }
-    
+
     private void CamMoveSmooth()
     {
         Vector3 desiredPos = targetTransform.position + offset;
