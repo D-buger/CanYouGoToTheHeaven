@@ -7,10 +7,13 @@ public class CameraManager : MonoBehaviour
     private Transform targetTransform;
     private Camera mainCamera;
 
+    float velocity = 0;
+
     [SerializeField]
-    private Vector3 offset;
+    private float smoothTime = 0.5f;
+
     [SerializeField]
-    private float camSpeed = 1;
+    private float offsetY;
 
     [SerializeField, Range(0, 1)]
     private float topY;
@@ -30,7 +33,6 @@ public class CameraManager : MonoBehaviour
     private void LateUpdate()
     {
         CheckTargetPos();
-        CamMoveSmooth();
     }
 
     private void CheckChanged()
@@ -42,26 +44,30 @@ public class CameraManager : MonoBehaviour
     private void CheckTargetPos()
     {
         CheckChanged();
-        Vector3 targetPosToViewp = mainCamera.WorldToViewportPoint(targetTransform.position);
+        Vector3 targetPosToViewp = 
+            mainCamera.WorldToViewportPoint(targetTransform.position);
         if (targetPosToViewp.y > topY)
         {
-            camSpeed = 0;
+            transform.position += changedValue;
         }
         else if(targetPosToViewp.y < bottomY)
         {
-            camSpeed = 0;
+            transform.position += changedValue;
         }
         else
         {
-            camSpeed = 0.1f;
+            CamMoveSmooth();
         }
 
     }
 
     private void CamMoveSmooth()
     {
-        Vector3 desiredPos = targetTransform.position + offset;
-        Vector3 lerpPosition = Vector3.Lerp(transform.position, desiredPos, camSpeed);
-        transform.position = lerpPosition;
+        //lerp 대신 smoothdamp? => lerp보다 더 부드러움을 제공
+        Vector3 desiredPos = targetTransform.position;
+        Vector3 smoothedPosition = transform.position;
+        smoothedPosition.y = Mathf.SmoothDamp(
+            transform.position.y, desiredPos.y + offsetY, ref velocity, smoothTime);
+        transform.position = smoothedPosition;
     }
 }
