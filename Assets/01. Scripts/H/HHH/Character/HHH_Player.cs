@@ -9,21 +9,6 @@ public class HHH_Player : HHH_Character
 
     public override void InflictDamage()
     {
-        throw new System.NotImplementedException();
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        enemy = GameObject.Find("Enemy1").GetComponent<HHH_ramgy>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKey(KeyCode.Alpha6))
-        {
-            enemy.CheckingDamagedTime();
-        }
+        
     }
 }
