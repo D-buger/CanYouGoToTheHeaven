@@ -19,10 +19,13 @@ public class PlayerPhysics
             -Mathf.MoveTowardsAngle(0, stat.rotateAmount,
             (stat.velocity.x / stat.maxSpeed) * stat.rotateAmount);
         
-        stat.trans.rotation = Quaternion.Euler(0, 0, stat.aVelocity);
+        if(!stat.limitLeft || !stat.limitRight)
+            stat.trans.rotation = Quaternion.Euler(0, 0, stat.aVelocity);
 
         stat.body.velocity = stat.velocity;
         stat.onGround = false;
+        stat.limitLeft = false;
+        stat.limitRight = false;
     }
 
     public bool IsOnGround() => stat.onGround;
@@ -31,6 +34,14 @@ public class PlayerPhysics
     {
         input = _input;
         stat.desiredVelocity.x = input * stat.maxSpeed;
+        if (stat.limitLeft)
+        {
+            stat.desiredVelocity.x = Mathf.Max(0 , stat.desiredVelocity.x);
+        }
+        else if (stat.limitRight)
+        {
+            stat.desiredVelocity.x = Mathf.Min(0, stat.desiredVelocity.x);
+        }
     }
     
 }

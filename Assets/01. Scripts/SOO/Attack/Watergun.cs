@@ -37,6 +37,11 @@ public class Watergun : MonoBehaviour
         {
             ShootWatergun();
         }
+        else
+        {
+            if (null != nowWater)
+                nowWater = null;
+        }
     }
 
     public void ShootWatergun()
@@ -44,11 +49,6 @@ public class Watergun : MonoBehaviour
         if (waterAmount > 0)
         {
             WaterSet();
-        }
-        else
-        {
-            if (null != nowWater)
-                nowWater = null;
         }
     }
 
@@ -58,12 +58,10 @@ public class Watergun : MonoBehaviour
         {
             GameObject obj = ObjectPoolManager.Inst.pool.Pop();
             nowWater = obj.GetComponent<Water>();
-            nowWater.SetFirst(transform.position, angle, damage);
+            nowWater.SetFirst(damage);
         }
-        else
-        {
-            if (nowWater.VertexSet(transform.position, angle))
-                waterAmount -= 1;
-        }
+
+        if (nowWater.VertexSet(transform.position, angle))
+           waterAmount -= 1;
     }
 }

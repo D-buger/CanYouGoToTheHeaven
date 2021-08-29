@@ -61,23 +61,21 @@ public class PlayerStats
 
     public void EvauateCollision(Collision2D collision)
     {
-        for(int i = 0; i < collision.contactCount; i++)
+        Vector2 normal;
+        for (int i = 0; i < collision.contactCount; i++)
         {
-            Vector2 normal = collision.GetContact(i).normal;
+            normal = collision.GetContact(i).normal;
             onGround |= normal.y <= 0.9f;
         }
 
-        if (collision.collider.CompareTag("Wall"))
+        if (collision.collider.CompareTag(GameManager.Instance.tags.WallTag))
         {
             for (int i = 0; i < collision.contactCount; i++)
             {
-                Vector2 normal = collision.GetContact(i).normal;
-                limitLeft |= normal.x >= 0.9f;
-            }
-            for (int i = 0; i < collision.contactCount; i++)
-            {
-                Vector2 normal = collision.GetContact(i).normal;
-                limitRight |= normal.x <= 0.9f;
+                normal = collision.GetContact(i).normal;
+                Debug.Log(normal.x);
+                limitLeft |= normal.x >= 0.7f;
+                limitRight |= normal.x <= -0.7f;
             }
         }
     }

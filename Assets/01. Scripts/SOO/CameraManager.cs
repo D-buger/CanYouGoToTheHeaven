@@ -37,8 +37,8 @@ public class CameraManager : MonoBehaviour
 
     private void CheckChanged()
     {
-        changedValue = targetTransform.position - previousPos;
-        previousPos = targetTransform.position;
+        changedValue.y = targetTransform.position.y - previousPos.y;
+        previousPos.y = targetTransform.position.y;
     }
 
     private void CheckTargetPos()

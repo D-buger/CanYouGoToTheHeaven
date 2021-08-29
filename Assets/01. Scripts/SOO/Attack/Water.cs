@@ -4,18 +4,14 @@ using UnityEngine;
 [RequireComponent(typeof(LineRenderer))]
 public class Water : MonoBehaviour
 {
-    [SerializeField, Space(10), Header("Tags")]
-    private string reflectTag = "Wall";
-    [SerializeField]
-    private string removeTag = "Untagged"; 
-    
-    private LineRenderer line;
-
-    [SerializeField, Space(10), Header("Values")]
     private float pointDist = 0.01f;
-    [SerializeField]
     private int waterReflected = 1;
 
+    private string reflectTag = GameManager.Instance.tags.WallTag;
+    private string removeTag = GameManager.Instance.tags.EnemyTag; 
+    
+    private LineRenderer line;
+    
     private bool isActive = false;
 
     private List<Point> points = new List<Point>();
@@ -37,25 +33,8 @@ public class Water : MonoBehaviour
         }
     }
     
-    public void Duplicate(List<Point> point)
+    public void SetFirst(int damage)
     {
-        points = point;
-
-        isActive = true;
-        SetLineRenderer();
-    }
-    
-    public void SetFirst(Vector2 nowPos, Vector2 angle, int damage)
-    {
-        if (points.Count == 0)
-        {
-            points.Add(new Point(angle, Vector2.zero));
-        }
-        else if (points.Count == 1)
-        {
-            points[0] = new Point(angle, nowPos);
-        }
-
         isActive = true;
         this.damage = damage;
         SetLineRenderer();
@@ -63,9 +42,9 @@ public class Water : MonoBehaviour
 
     public bool VertexSet(Vector2 nowPos, Vector2 angle)
     {
-        if (Vector2.Distance(points[points.Count - 1].PointPosition, nowPos) >= pointDist)
+        if (points.Count == 0 || Vector2.Distance(points[points.Count - 1].PointPosition, nowPos) >= pointDist)
         {
-            points.Add(new Point(angle, nowPos));
+            points.Add(new Point(angle, nowPos, waterReflected));
 
             return true;
         }
@@ -113,11 +92,14 @@ public class Water : MonoBehaviour
             Vector2 inNormal = Vector2.right;
             point.Direction = Vector2.Reflect(point.Direction, inNormal);
         }
+        else
+        {
+            RemovePoint(point);
+        }
     }
 
     private void RemovePoint(Point point)
     {
-        Debug.Log("ªË¡¶");
         List<Vector2> pointsVec = points.ConvertAll<Vector2>((Point p) => p.PointPosition);
         int index = points.IndexOf(point);
 
@@ -133,6 +115,14 @@ public class Water : MonoBehaviour
             GameObject obj = ObjectPoolManager.Inst.pool.Pop();
             obj.GetComponent<Water>().Duplicate(newList);
         }
+        SetLineRenderer();
+    }
+
+    public void Duplicate(List<Point> point)
+    {
+        points = point;
+
+        isActive = true;
         SetLineRenderer();
     }
 

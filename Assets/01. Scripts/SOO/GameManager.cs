@@ -3,6 +3,7 @@ using UnityEngine;
 public class GameManager : SingletonBehavior<GameManager>
 {
     public InputManager input;
+    public TagManager tags = new TagManager();
 
     private struct eSettings
     {
