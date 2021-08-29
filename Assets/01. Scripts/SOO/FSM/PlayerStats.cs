@@ -73,7 +73,6 @@ public class PlayerStats
             for (int i = 0; i < collision.contactCount; i++)
             {
                 normal = collision.GetContact(i).normal;
-                Debug.Log(normal.x);
                 limitLeft |= normal.x >= 0.7f;
                 limitRight |= normal.x <= -0.7f;
             }
