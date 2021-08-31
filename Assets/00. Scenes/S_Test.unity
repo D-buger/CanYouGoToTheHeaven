@@ -650,7 +650,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &744013328
 Transform:
   m_ObjectHideFlags: 0
@@ -1308,6 +1308,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ItemImage: {fileID: 21300000, guid: fa881e6f80feb184ca64d13a1f6e42a8, type: 3}
+  HP: 0
 --- !u!212 &1257276091
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1828,16 +1829,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 1962272762}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f1bdff9b1189d254baed900b9ecee1a8, type: 3}
+  m_Script: {fileID: 11500000, guid: f3af17e5ae35aa846b62e435effc4c61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rooms:
-  - {fileID: 2862845007873488063, guid: bf26175ceed08a444b503ad142efa405, type: 3}
-  - {fileID: 9015513052065996857, guid: 2d794d13e78a713449aecbb18c7ae2fa, type: 3}
-  - {fileID: 5096752189834691896, guid: f4e2a8ae8a3d7e04bbc485ff3bee76bd, type: 3}
-  - {fileID: 4994161751940940212, guid: dfeebec717fc2f644afdcdc36bb270ae, type: 3}
-  roomInStage: 5
-  tilemaps: []
+  levelGenerations:
+  - rooms:
+    - {fileID: 2862845007873488063, guid: bf26175ceed08a444b503ad142efa405, type: 3}
+    - {fileID: 9015513052065996857, guid: 2d794d13e78a713449aecbb18c7ae2fa, type: 3}
+    - {fileID: 5096752189834691896, guid: f4e2a8ae8a3d7e04bbc485ff3bee76bd, type: 3}
+    - {fileID: 4994161751940940212, guid: dfeebec717fc2f644afdcdc36bb270ae, type: 3}
+    generatorPos: {x: 0, y: 0}
+    distXBetwnStages: 15
+  roomInStage: 6
+  levelInStage: 3
+  distXBetwnStages: 0
+  firstStagePos: {x: 0, y: 0}
 --- !u!4 &1962272764
 Transform:
   m_ObjectHideFlags: 0

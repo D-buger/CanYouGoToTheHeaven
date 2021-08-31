@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class LevelGeneration : MonoBehaviour
+[System.Serializable]
+public class LevelGeneration
 {
-    [SerializeField]
-    private GameObject[] rooms;
-    [SerializeField]
-    private int roomInStage;
-    [SerializeField]
+    public GameObject[] rooms;
+    public Vector2 generatorPos;
+    public float distXBetwnStages;
+
     private Tilemap[] tilemaps;
     private float cellSize;
 
-    private void Start()
+    public void FirstSetting()
     {
         tilemaps = new Tilemap[rooms.Length];
         for(int i = 0; i < rooms.Length; i++)
@@ -21,25 +21,31 @@ public class LevelGeneration : MonoBehaviour
             tilemaps[i] = rooms[i].transform.GetChild(0)
                 .transform.GetChild(0).GetComponent<Tilemap>();
         }
-        cellSize = rooms[0].transform.GetChild(0).GetComponent<Grid>().cellSize.y;
-
-        Generation();
+        cellSize = rooms[0].transform.GetChild(0).GetComponent<Grid>().cellSize.y;  
     }
 
-    private void Generation()
+    public LevelGeneration Generation(int _rmInStg, int _lvelInStg)
     {
-        int random;
-        GameObject room;
+        FirstSetting();
+        do
+        {
+            int random;
+          GameObject room;
         float ySize;
-        Vector2 nextPos = transform.position;
+        Vector2 nextPos = generatorPos;
 
-        for (int i = 0; i < roomInStage; i++)
+        for (int i = 0; i < _rmInStg; i++)
         {
             random = Random.Range(0, rooms.Length);
-            room = Instantiate(rooms[random], nextPos, Quaternion.identity);
+            room = GameObject.Instantiate(rooms[random], nextPos, Quaternion.identity);
             ySize = tilemaps[random].size.y * cellSize;
             nextPos = room.transform.GetChild(0).position;
             nextPos.y += ySize;
         }
+
+            generatorPos.x += distXBetwnStages;
+        } while (_lvelInStg-- > 0);
+
+        return this;
     }
 }

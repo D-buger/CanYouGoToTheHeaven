@@ -44,6 +44,9 @@ public class Player : MonoBehaviour
         StateMachine.Update();
 
         anim.SetBool("isAttack", input.behaviourActive);
+
+        if (input.behaviourActive)
+            physics.TestShot();
     }
 
     private void FixedUpdate()

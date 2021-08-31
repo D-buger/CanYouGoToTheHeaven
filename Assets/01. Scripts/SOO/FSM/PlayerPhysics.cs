@@ -30,6 +30,13 @@ public class PlayerPhysics
 
     public bool IsOnGround() => stat.onGround;
 
+    public void TestShot()
+    {
+        float rebound = Mathf.Sqrt(-1f * Physics2D.gravity.y );
+        stat.velocity.y = rebound;
+        stat.body.velocity = stat.velocity;
+    }
+
     public void Moving(float _input)
     {
         input = _input;
