@@ -7,13 +7,18 @@ public abstract class ItemModel : MonoBehaviour
     private SpriteRenderer renderer;
 
     [SerializeField]
-    protected Sprite ItemImage;
-    protected void ItemImageSet(Sprite sprite) => renderer.sprite = ItemImage = sprite;
+    protected Sprite ItemImage { get; private set; }
 
-    private void Awake()
+
+    private void OnEnable()
     {
         if (renderer == null)
             renderer = gameObject.GetComponent<SpriteRenderer>();
+    }
+
+    public void ItemImageSet(Sprite sprite)
+    {
+        ItemImage = sprite;
         renderer.sprite = ItemImage;
     }
 

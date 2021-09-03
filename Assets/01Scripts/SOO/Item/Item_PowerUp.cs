@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Item_PowerUp : ItemModel
 {
+    protected override Sprite ItemImageSet() =>
+        GameManager.Instance.image.sprites.TryGetValue("powerup", out Sprite sprite) ? sprite : null;
+
     protected override void ItemEffect(GameObject player)
     {
         player.GetComponent<Player>().watergun.damage = 2;

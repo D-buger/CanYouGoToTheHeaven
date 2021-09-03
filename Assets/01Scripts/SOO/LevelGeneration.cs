@@ -7,7 +7,6 @@ using UnityEngine.Tilemaps;
 public class LevelGeneration
 {
     public GameObject[] rooms;
-    public Vector2 generatorPos;
     public float distXBetwnStages;
 
     private Tilemap[] tilemaps;
@@ -24,28 +23,30 @@ public class LevelGeneration
         cellSize = rooms[0].transform.GetChild(0).GetComponent<Grid>().cellSize.y;  
     }
 
-    public LevelGeneration Generation(int _rmInStg, int _lvelInStg)
+    public GameObject[] Generation(Vector2 gnratrPos, int _rmInStg, int _lvelInStg)
     {
         FirstSetting();
+
+        GameObject[] firstRoom = new GameObject[_lvelInStg];
         do
         {
             int random;
-          GameObject room;
-        float ySize;
-        Vector2 nextPos = generatorPos;
+            GameObject room;
+            float ySize;
+            Vector2 nextPos = gnratrPos;
 
-        for (int i = 0; i < _rmInStg; i++)
-        {
-            random = Random.Range(0, rooms.Length);
-            room = GameObject.Instantiate(rooms[random], nextPos, Quaternion.identity);
-            ySize = tilemaps[random].size.y * cellSize;
-            nextPos = room.transform.GetChild(0).position;
-            nextPos.y += ySize;
-        }
+            for (int i = 0; i < _rmInStg; i++)
+            {
+                random = Random.Range(0, rooms.Length);
+                room = GameObject.Instantiate(rooms[random], nextPos, Quaternion.identity);
+                ySize = tilemaps[random].size.y * cellSize;
+                nextPos = room.transform.GetChild(0).position;
+                nextPos.y += ySize;
+            }
 
-            generatorPos.x += distXBetwnStages;
+                gnratrPos.x += distXBetwnStages;
         } while (_lvelInStg-- > 0);
 
-        return this;
+        return firstRoom;
     }
 }
