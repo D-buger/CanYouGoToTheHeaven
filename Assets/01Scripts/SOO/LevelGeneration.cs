@@ -23,7 +23,7 @@ public class LevelGeneration
         cellSize = rooms[0].transform.GetChild(0).GetComponent<Grid>().cellSize.y;  
     }
 
-    public GameObject[] Generation(Vector2 gnratrPos, int _rmInStg, int _lvelInStg)
+    public GameObject[] Generation(Vector2 gnratrPos, int _rmInStg, int _lvelInStg, Transform parent)
     {
         FirstSetting();
 
@@ -38,7 +38,7 @@ public class LevelGeneration
             for (int i = 0; i < _rmInStg; i++)
             {
                 random = Random.Range(0, rooms.Length);
-                room = GameObject.Instantiate(rooms[random], nextPos, Quaternion.identity);
+                room = GameObject.Instantiate(rooms[random], nextPos, Quaternion.identity, parent);
                 ySize = tilemaps[random].size.y * cellSize;
                 nextPos = room.transform.GetChild(0).position;
                 nextPos.y += ySize;

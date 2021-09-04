@@ -12,10 +12,13 @@ public class ImageLoader
 
     public ImageLoader(string spritePath)
     {
-        string[] guids = AssetDatabase.FindAssets("t:Texture2D", new[] { SOO.Util.StringBuilder() });
+        string[] guids = AssetDatabase.FindAssets("t:Texture2D", new[] { SOO.Util.StringBuilder(FILE_PATH, spritePath) });
         for (int i = 0; i < guids.Length; i++) {
             Sprite sprite = AssetDatabase.LoadAssetAtPath<Sprite>(AssetDatabase.GUIDToAssetPath(guids[i]));
             sprites.Add(sprite.name, sprite);
+            Debug.Log(sprite.name);
         }
     }
+
+    public Sprite GetImage(string name) => sprites[name];
 }

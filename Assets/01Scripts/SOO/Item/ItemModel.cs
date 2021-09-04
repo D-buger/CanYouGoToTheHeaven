@@ -8,7 +8,18 @@ public abstract class ItemModel : MonoBehaviour
 
     [SerializeField]
     protected Sprite ItemImage { get; private set; }
+    protected int option;
 
+    public int price;
+    public string effect;
+
+    //monobehaviour를 상속하면 생성자를 사용할 수 없기때문에 대신할 함수
+    public void SetFirst(int option, int price, string effect)
+    {
+        this.option = option;
+        this.price = price;
+        this.effect = effect;
+    }
 
     private void OnEnable()
     {

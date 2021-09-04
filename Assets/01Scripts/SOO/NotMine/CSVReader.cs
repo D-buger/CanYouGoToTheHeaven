@@ -8,12 +8,14 @@ public class CSVReader
     static string LINE_SPLIT_RE = @"\r\n|\n\r|\n|\r";
     static char[] TRIM_CHARS = { '\"' };
 
-    public static List<Dictionary<string, string>> Read(string file)
+    public static List<Dictionary<string, string>> Read(string file, out int size)
     {
         var list = new List<Dictionary<string, string>>();
         TextAsset data = Resources.Load(file) as TextAsset;
 
         var lines = Regex.Split(data.text, LINE_SPLIT_RE);
+
+        size = lines.Length;
 
         if (lines.Length <= 1) return list;
 

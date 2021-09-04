@@ -28,7 +28,7 @@ public class StageGenerator : MonoBehaviour
         for(int i = 0; i < levelGenerations.Count; i++)
         {
             firstStagePos.x += i * distXBetwnStages;
-            levelGenerations[i].Generation(firstStagePos,roomInStage, levelInStage);
+            levelGenerations[i].Generation(firstStagePos,roomInStage, levelInStage, transform);
         }
     }
 
