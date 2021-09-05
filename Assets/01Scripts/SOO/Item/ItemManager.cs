@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class ItemManager : MonoBehaviour
 {
-    [SerializeField]
     private List<Dictionary<string, string>> itemInfo;
 
     private ImageLoader image;
@@ -33,6 +32,7 @@ public class ItemManager : MonoBehaviour
                 model.SetFirst(option, price, itemInfo[i]["Effective"]);
                 model.ItemImageSet(image.GetImage(itemInfo[i]["Icon"]));
             }
+            ins.SetActive(false);
         }
     }
     

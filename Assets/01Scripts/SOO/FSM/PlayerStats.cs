@@ -51,6 +51,8 @@ public class PlayerStats
         }
     }
 
+    public Watergun watergun;
+
     public Rigidbody2D body;
     public Transform trans;
 
@@ -79,11 +81,12 @@ public class PlayerStats
         }
     }
 
-    public void Set(Transform _trans, Rigidbody2D rigid, float y)
+    public void Set(Transform _trans, Rigidbody2D rigid, float y, Watergun watergun)
     {
         trans = _trans;
         body = trans.GetComponent<Rigidbody2D>();
         previousYPos = trans.position.y;
         currentHP = MaxHP;
+        this.watergun = watergun;
     }
 }

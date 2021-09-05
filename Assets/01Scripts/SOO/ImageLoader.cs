@@ -16,7 +16,6 @@ public class ImageLoader
         for (int i = 0; i < guids.Length; i++) {
             Sprite sprite = AssetDatabase.LoadAssetAtPath<Sprite>(AssetDatabase.GUIDToAssetPath(guids[i]));
             sprites.Add(sprite.name, sprite);
-            Debug.Log(sprite.name);
         }
     }
 

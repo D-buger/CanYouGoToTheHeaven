@@ -61,7 +61,28 @@ public class Watergun : MonoBehaviour
             nowWater.SetFirst(damage);
         }
 
-        if (nowWater.VertexSet(transform.position, angle))
+        if (nowWater.VertexSet(transform.position, angle, TimeSet()))
            waterAmount -= 1;
+    }
+
+    private float TimeSet()
+    {
+        if (maxWaterAmount / 100 * 20 > waterAmount)
+        {
+            return 0.3f;
+        }
+        else if (maxWaterAmount / 100 * 50 > waterAmount)
+        {
+            return 0.5f;
+        }
+        else if(maxWaterAmount / 100 * 50 <= waterAmount)
+        {
+            return 1f;
+        }
+        else
+        {
+            Debug.Log("해당 되지 않는 양");
+            return 0;
+        }
     }
 }

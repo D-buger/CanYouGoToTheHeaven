@@ -40,11 +40,11 @@ public class Water : MonoBehaviour
         SetLineRenderer();
     }
 
-    public bool VertexSet(Vector2 nowPos, Vector2 angle)
+    public bool VertexSet(Vector2 nowPos, Vector2 angle, float time)
     {
         if (points.Count == 0 || Vector2.Distance(points[points.Count - 1].PointPosition, nowPos) >= pointDist)
         {
-            points.Add(new Point(angle, nowPos, waterReflected));
+            points.Add(new Point(angle, nowPos, waterReflected, time));
 
             return true;
         }
@@ -57,7 +57,6 @@ public class Water : MonoBehaviour
         for (int i = 0;i < points.Count; i++)
         {
             PointUpdate(points[i]);
-            Raycast(points[i]);
         }
 
         SetLineRenderer();
@@ -128,7 +127,10 @@ public class Water : MonoBehaviour
 
     private void PointUpdate(Point point)
     {
-        point.PointMove();
+        if (!point.PointMove())
+            RemovePoint(point);
+        else
+            Raycast(point);
     }
 
     private void SetLineRenderer()

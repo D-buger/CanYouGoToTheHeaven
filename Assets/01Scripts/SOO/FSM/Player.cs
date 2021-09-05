@@ -14,8 +14,6 @@ public class Player : MonoBehaviour
     public PlayerPhysics physics;
     public PlayerStats stats;
 
-    public Watergun watergun;
-
     private Dictionary<ePlayerState, FsmState<Player>> stateByEnum;
 
     public InputManager input => GameManager.Instance.input;
@@ -24,9 +22,12 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        stats.Set(transform, transform.GetComponent<Rigidbody2D>(), transform.position.y);
+        stats.Set(
+            transform, 
+            transform.GetComponent<Rigidbody2D>(), 
+            transform.position.y,
+            transform.GetChild(0).GetComponent<Watergun>());
         physics = new PlayerPhysics(stats);
-        watergun = transform.GetChild(0).GetComponent<Watergun>();
         anim = transform.GetComponent<Animator>();
 
         stateByEnum = new Dictionary<ePlayerState, FsmState<Player>>();

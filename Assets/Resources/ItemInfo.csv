@@ -1,4 +1,4 @@
-Index,ItemName,ItemID,ItemPrice,Option,Icon,Effective
+﻿Index,ItemName,ItemID,ItemPrice,Option,Icon,Effective
 1,붉은하트1,Item_RedHeart,5,1,heart1,하트를 한 칸 회복합니다
 2,붉은하트2,Item_RedHeart,10,2,heart2,하트를 두 칸 회복합니다
 3,붉은하트3,Item_RedHeart,15,3,heart3,하트를 세 칸 회복합니다

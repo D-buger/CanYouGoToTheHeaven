@@ -1,18 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class StageManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField]
+    private Slider remainingWater;
+
+    private PlayerStats stat;
+
+    private void Awake()
     {
-        
+        stat = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().stats;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        SetWater();
+    }
+
+    public void SetWater()
+    {
+        remainingWater.maxValue = stat.watergun.maxWaterAmount;
+        remainingWater.value = stat.watergun.WaterAmount;
     }
 }
