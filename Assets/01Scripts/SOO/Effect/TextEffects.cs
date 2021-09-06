@@ -6,6 +6,13 @@ using TMPro;
 
 public static class TextEffects
 {
+    public static char[] move = 
+    {
+        'W',
+        'T'
+    };
+    public static string COLOR = "rainbow";
+
 
     public static IEnumerator Waving(TMP_Text textComponent)
     {

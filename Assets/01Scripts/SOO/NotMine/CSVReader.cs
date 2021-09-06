@@ -38,4 +38,8 @@ public class CSVReader
         }
         return list;
     }
+    public static List<Dictionary<string, string>> Read(string file)
+    {
+        return Read(file, out int size);
+    }
 }
