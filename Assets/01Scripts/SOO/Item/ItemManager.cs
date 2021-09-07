@@ -23,6 +23,7 @@ public class ItemManager : MonoBehaviour
         for(int i = 0; i < size; i++)
         {
             GameObject ins = Instantiate(itemModel, transform);
+            ins.name = itemInfo[i]["ItemName"];
             ins.AddComponent(System.Type.GetType(itemInfo[i]["ItemID"]));
             ItemModel model = ins.GetComponent<ItemModel>();
             if (model)
@@ -32,8 +33,12 @@ public class ItemManager : MonoBehaviour
                 model.SetFirst(option, price, itemInfo[i]["Effective"]);
                 model.ItemImageSet(image.GetImage(itemInfo[i]["Icon"]));
             }
+            items.Add(ins);
             ins.SetActive(false);
         }
     }
+
+    public GameObject GetRandomItem() => items[Random.Range(0, items.Count)];
+    
     
 }
