@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChickenAI : Patrol
+public class ChickenAI : WalkMonster
 {
     [SerializeField] GameObject chickPrefab;
     [SerializeField] float chickSpawnDelay;

@@ -32,7 +32,7 @@ public class BombBirdAI : HMonster
     {
         if (!detectPlayer)
         {
-            CheckPlayer();
+            //CheckPlayer();
         }
         if (Input.GetKeyDown(KeyCode.Keypad0))
         {
@@ -42,8 +42,8 @@ public class BombBirdAI : HMonster
 
     void CheckPlayer() //circle의 radius만큼 지나서 시작: 본인에게 닿는 문제 해결
     {
-        RaycastHit2D rightRay = Physics2D.Raycast(new Vector2(transform.position.x + radius, transform.position.y), Vector2.right);
-        RaycastHit2D leftRay = Physics2D.Raycast(new Vector2(transform.position.x + -radius, transform.position.y), Vector2.left);
+        RaycastHit2D rightRay = Physics2D.Raycast(new Vector2(transform.position.x + radius, transform.position.y), Vector2.right, detectPlayerRange);
+        RaycastHit2D leftRay = Physics2D.Raycast(new Vector2(transform.position.x + -radius, transform.position.y), Vector2.left, detectPlayerRange);
         Debug.DrawRay(new Vector2(transform.position.x + radius, transform.position.y), Vector2.right * detectPlayerRange, Color.magenta);
         Debug.DrawRay(new Vector2(transform.position.x + -radius, transform.position.y), Vector2.left * detectPlayerRange, Color.magenta);
         if (rightRay.collider.gameObject == player || leftRay.collider.gameObject == player)

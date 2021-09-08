@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: cef8971ce84361149bfcd3e9dd3cbd85, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2ce9dda168d197d46a7e7d2c4f78bf0a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 1
@@ -109,7 +109,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.6, y: 1}
   m_EdgeRadius: 0
 --- !u!50 &6284551066953829820
 Rigidbody2D:
@@ -145,7 +145,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitPoint: 0
-  damagedTime: 0
   movementSpeed: 2
+  checkRayAddLength: 0.45
   chickPrefab: {fileID: 8307769380026285632, guid: ba547abfbca143f4f953edfd1a00b518, type: 3}
   chickSpawnDelay: 2
