@@ -3,15 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StageManager : MonoBehaviour
+public class StageManager : SingletonBehavior<StageManager>
 {
+    public ItemManager item;
+
     [SerializeField]
     private Slider remainingWater;
 
     private PlayerStats stat;
 
-    private void Awake()
+
+    protected override void OnAwake()
     {
+        item = new ItemManager();
         stat = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().stats;
     }
 

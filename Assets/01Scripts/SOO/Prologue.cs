@@ -10,7 +10,7 @@ public class Prologue : MonoBehaviour
 
     private List<Dictionary<string, string>> prologue;
 
-    private ImageLoader image;
+    private FileLoader<Sprite> image;
 
     public TMP_Text textShow;
     public Image imageShow;
@@ -18,7 +18,7 @@ public class Prologue : MonoBehaviour
     private void Awake()
     {
         prologue = CSVReader.Read("Prologue", out int size);
-        image = new ImageLoader("02Sprites/prologue");
+        image = new FileLoader<Sprite>("02Sprites/prologue");
 
         string[] split = prologue[0]["story"].Split(SPLIT_SEPARATOR);
         for(int i = 0; i < split.Length; i++)
