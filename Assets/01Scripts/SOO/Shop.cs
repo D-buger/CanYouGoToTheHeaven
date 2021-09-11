@@ -5,24 +5,27 @@ using TMPro;
 
 public class Shop : MonoBehaviour
 {
+    [SerializeField]
+    private float CheckDistance = 2f;
+    
     private Transform[] itemShelves;
     private GameObject[] items;
     private ItemManager itemManager;
 
     private TMP_Text text;
 
-    private int count;
+    private int shelvesCount;
 
     private void Awake()
     {
         itemManager = StageManager.Instance.item;
 
         Transform itemShelvesParent = transform.GetChild(0);
-        count = itemShelvesParent.childCount;
+        shelvesCount = itemShelvesParent.childCount;
 
-        itemShelves = new Transform[count];
-        items = new GameObject[count];
-        for (int i = 0; i < count; i++)
+        itemShelves = new Transform[shelvesCount];
+        items = new GameObject[shelvesCount];
+        for (int i = 0; i < shelvesCount; i++)
         {
             itemShelves[i] = itemShelvesParent.GetChild(i);
         }

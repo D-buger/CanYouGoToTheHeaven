@@ -6,6 +6,6 @@ public class Item_IncreaseMaxWater : ItemModel
 {
     protected override void ItemEffect(GameObject player)
     {
-        player.GetComponent<Player>().stats.watergun.maxWaterAmount += option;
+        player.GetComponent<Player>().stats.watergun.MaxWaterAmount += option;
     }
 }

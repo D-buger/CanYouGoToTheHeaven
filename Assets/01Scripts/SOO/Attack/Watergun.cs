@@ -4,31 +4,13 @@ using UnityEngine;
 
 public class Watergun : MonoBehaviour
 {
-    public int maxWaterAmount = 100;
-    [SerializeField]
-    private int waterAmount;
-    public int WaterAmount
-    {
-        get
-        {
-            return waterAmount;
-        }
-        set
-        {
-            waterAmount = Mathf.Min(value, maxWaterAmount);
-            waterAmount = Mathf.Max(waterAmount, 0);
-        }
-    }
+    private WaterGunModel model;
 
-    public int damage = 1;
-
-    Water nowWater;
-
-    Vector2 angle => SOO.Util.AngleToVector(transform.rotation.eulerAngles.z);
+    private Vector2 Angle => SOO.Util.AngleToVector(transform.rotation.eulerAngles.z);
 
     private void Awake()
     {
-        waterAmount = maxWaterAmount;
+        model = new WaterGunModel(100);
     }
 
     private void Update()
@@ -39,14 +21,14 @@ public class Watergun : MonoBehaviour
         }
         else
         {
-            if (null != nowWater)
-                nowWater = null;
+            if (null != model.NowWater)
+                model.NowWater = null;
         }
     }
 
     public void ShootWatergun()
     {
-        if (waterAmount > 0)
+        if (model.WaterAmount > 0)
         {
             WaterSet();
         }
@@ -54,28 +36,28 @@ public class Watergun : MonoBehaviour
 
     private void WaterSet()
     {
-        if (nowWater == null)
+        if (model.NowWater == null)
         {
             GameObject obj = ObjectPoolManager.Inst.pool.Pop();
-            nowWater = obj.GetComponent<Water>();
-            nowWater.SetFirst(damage);
+            model.NowWater = obj.GetComponent<Water>();
+            model.NowWater.SetFirst(model.Damage);
         }
 
-        if (nowWater.VertexSet(transform.position, angle, TimeSet()))
-           waterAmount -= 1;
+        if (model.NowWater.VertexSet(transform.position, Angle, TimeSet()))
+           model.WaterAmount -= 1;
     }
 
     private float TimeSet()
     {
-        if (maxWaterAmount / 100 * 20 > waterAmount)
+        if (model.MaxWaterAmount / 100 * 20 > model.WaterAmount)
         {
             return 0.3f;
         }
-        else if (maxWaterAmount / 100 * 50 > waterAmount)
+        else if (model.MaxWaterAmount / 100 * 50 > model.WaterAmount)
         {
             return 0.5f;
         }
-        else if(maxWaterAmount / 100 * 50 <= waterAmount)
+        else if(model.MaxWaterAmount / 100 * 50 <= model.WaterAmount)
         {
             return 1f;
         }
