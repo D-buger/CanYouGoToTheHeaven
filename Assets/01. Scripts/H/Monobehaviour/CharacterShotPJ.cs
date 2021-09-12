@@ -28,8 +28,14 @@ public class CharacterShotPJ : MonoBehaviour
         {
             Vector3 mousePos = Input.mousePosition;
             mousePos = cam.ScreenToWorldPoint(mousePos);
-            InstantiateProjectile(pj, damage, velocity, mousePos);
-            Debug.Log($"Destination is {mousePos}");
+            Vector2 dir = mousePos - transform.position;
+            float angle = (Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg);
+            float currentRotZ = angle;
+            for (int i = 0; i < 5; i++)
+            {
+                InstantiateProjectile(pj, damage, velocity, mousePos, currentRotZ);
+                currentRotZ += 30f;
+            }
         }
     }
 
@@ -46,10 +52,10 @@ public class CharacterShotPJ : MonoBehaviour
         }
     }
 
-    void InstantiateProjectile(GameObject _projectile, int _damage, float _velocity, Vector2 _destination)
+    void InstantiateProjectile(GameObject _projectile, int _damage, float _velocity, Vector2 _destination, float aaann)
     {
         GameObject pj = Instantiate(_projectile);
         pj.transform.position = transform.position;
-        pj.GetComponent<MonsterProjectile>().Initialize(_damage, _velocity, _destination);
+        pj.GetComponent<MonsterProjectile>().Initialize(_damage, _velocity, aaann);
     }
 }

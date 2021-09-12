@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 7691452040765324937}
   - component: {fileID: 6284551066953829820}
   - component: {fileID: 8690212256204037869}
-  m_Layer: 9
+  - component: {fileID: 1637575628}
+  m_Layer: 10
   m_Name: Chicken
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -145,7 +146,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitPoint: 0
+  isGoldenMonster: 0
   movementSpeed: 2
-  checkRayAddLength: 0.45
+  checkRayAddLength: 0.35
+  visualRange: 4
+  chasingTime: 0
   chickPrefab: {fileID: 8307769380026285632, guid: ba547abfbca143f4f953edfd1a00b518, type: 3}
-  chickSpawnDelay: 2
+  chickSpawnDelay: 5
+  debugOption:
+    showVisualRange: 1
+--- !u!95 &1637575628
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2185849960792005978}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b6d21b25e47f12c4ab5fde0103190c94, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

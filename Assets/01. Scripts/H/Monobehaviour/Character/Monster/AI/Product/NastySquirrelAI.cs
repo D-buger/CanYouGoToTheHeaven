@@ -6,8 +6,11 @@ public class NastySquirrelAI : PatrolMonster
 {
     [SerializeField] GameObject projectile;
     [SerializeField] int projectileDamage;
-    [SerializeField] float velocity;
+    [SerializeField] float projectileVelocity;
+    [SerializeField] int projectileCount = 1;
+    [SerializeField] float totalAngle = 0f;
     bool isAttacking;
+    Coroutine attackCoroutine = null;
     [SerializeField] float prepareAttackDelay;
     WaitForSeconds waitPrepareAttackDelay;
 
@@ -30,9 +33,9 @@ public class NastySquirrelAI : PatrolMonster
         }
         else
         {
-            if (!isAttacking)
+            if (attackCoroutine == null)
             {
-                StartCoroutine(ThrowAcorn());
+                attackCoroutine = StartCoroutine(ThrowAcorn());
             }
         }
     }
@@ -66,19 +69,26 @@ public class NastySquirrelAI : PatrolMonster
         }
     }
 
+    WaitForSeconds wait100MilliSeconds = new WaitForSeconds(0.1f);
+
     IEnumerator ThrowAcorn()
     {
         isAttacking = true;
+        animator.SetBool("isPrepareAttack", true);
         yield return waitPrepareAttackDelay;
-        /*while (!(animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)) //던지는 모션 종료?
+        animator.SetBool("isPrepareAttack", false);
+        animator.SetBool("isDonePrepareAttack", true);
+        yield return wait100MilliSeconds;
+        animator.SetBool("isDonePrepareAttack", false);
+        while (animator.GetCurrentAnimatorStateInfo(0).normalizedTime <= 0.99f) //애니메이션이 완전히 끝났는가?
         {
-            if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.7f) //던지는 모션이 거의 끝날 때 쯤
-            {
-                ShotProjectile(projectile, projectileDamage, 1, velocity, 0);
-            }
             yield return waitForEndOfFrame;
-        }*/
-        ShotProjectile(projectile, projectileDamage, 1, velocity, 0);
+        }
+        ShotProjectile(projectile, projectileDamage, projectileCount, projectileVelocity, totalAngle); //발사
+        animator.SetBool("attackIsEnd", true);
+        yield return wait100MilliSeconds;
+        animator.SetBool("attackIsEnd", false);
+        attackCoroutine = null;
         isAttacking = false;
     }
 

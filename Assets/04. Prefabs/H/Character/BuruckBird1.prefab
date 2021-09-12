@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 2331454088833507681}
   - component: {fileID: 2331454088833507677}
   - component: {fileID: 2331454088833507676}
-  m_Layer: 9
+  - component: {fileID: 1491875532}
+  m_Layer: 10
   m_Name: BuruckBird1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -98,6 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitPoint: 33
+  isGoldenMonster: 0
   movementSpeed: 3
   checkRayAddLength: 0.2
   visualRange: 7
@@ -157,3 +159,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!95 &1491875532
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2331454088833507680}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 27b66170eeca17f449c445b6433d93c6, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

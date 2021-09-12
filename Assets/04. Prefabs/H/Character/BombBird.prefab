@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 7279705893069921560}
   - component: {fileID: 7279705893069921572}
   - component: {fileID: 7279705893069921575}
-  m_Layer: 9
+  - component: {fileID: 1119017619}
+  m_Layer: 10
   m_Name: BombBird
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -119,7 +120,7 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.06}
+  m_Offset: {x: 0, y: 0.3}
   serializedVersion: 2
   m_Radius: 0.425
 --- !u!114 &7279705893069921575
@@ -135,10 +136,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitPoint: 0
-  explosionDelay: 1.2
-  detectPlayerRange: 1
+  isGoldenMonster: 0
+  explosionDelay: 0.2
+  detectPlayerRange: 3
   fragment: {fileID: 5877258647630904168, guid: c005c5d96968d7c4cac20e183845d6e2, type: 3}
-  fragmentDamage: 4
+  fragmentDamage: 2
   fragmentVelocity: 40
-  testPj: {fileID: 3334731556816952437, guid: eb2aa381b4443c347af647c0956b65b6, type: 3}
-  velo: 9
+--- !u!95 &1119017619
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7279705893069921574}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1b5f5014a60c1b84a86b8ac58f6d6464, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

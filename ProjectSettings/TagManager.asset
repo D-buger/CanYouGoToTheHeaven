@@ -14,10 +14,10 @@ TagManager:
   - UI
   - 
   - 
-  - Tile
+  - Wall
+  - Platform
   - Monster
-  - 
-  - 
+  - ThroughTileMonster
   - 
   - 
   - 

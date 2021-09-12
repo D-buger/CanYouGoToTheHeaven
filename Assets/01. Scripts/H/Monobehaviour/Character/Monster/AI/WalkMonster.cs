@@ -36,32 +36,32 @@ public class WalkMonster : HMonster
 
     protected void CheckFront()
     {
-        CheckFrontWall();
         CheckFrontGround();
+        CheckFrontWall();
     }
 
     protected void CheckFrontGround()
     {
         Vector2 front = new Vector2(transform.position.x + (moveDir * transform.localScale.x) + (0.1f * moveDir) + (checkRayAddLength * -moveDir), transform.position.y);
-        RaycastHit2D platformCheckRay = Physics2D.Raycast(front, Vector2.up, 1, LayerMask.GetMask("Tile"));
+        RaycastHit2D platformCheckRay = Physics2D.Raycast(front, Vector2.up, 1, LayerMask.GetMask("Platform"));
         Debug.DrawRay(front, Vector2.up, Color.cyan);
         if (platformCheckRay.collider == null)
         {
             isRight = !isRight;
         }
         moveDir = isRight ? 1 : -1;
-        sprite.flipX = isRight;
+        sprite.flipX = !isRight;
     }
 
     protected void CheckFrontWall()
     {
-        RaycastHit2D wallCheckRay = Physics2D.Raycast(new Vector2(transform.position.x + (checkRayAddLength * -moveDir), transform.position.y), Vector2.right * moveDir, (1 * transform.localScale.x), LayerMask.GetMask("Tile"));
+        RaycastHit2D wallCheckRay = Physics2D.Raycast(new Vector2(transform.position.x + (checkRayAddLength * -moveDir), transform.position.y), Vector2.right * moveDir, (1 * transform.localScale.x), LayerMask.GetMask("Wall"));
         Debug.DrawRay(new Vector2(transform.position.x + (checkRayAddLength * -moveDir), transform.position.y), Vector2.right * moveDir * transform.localScale.x, Color.cyan);
         if (wallCheckRay)
         {
             isRight = !isRight;
         }
         moveDir = isRight ? 1 : -1;
-        sprite.flipX = isRight;
+        sprite.flipX = !isRight;
     }
 }

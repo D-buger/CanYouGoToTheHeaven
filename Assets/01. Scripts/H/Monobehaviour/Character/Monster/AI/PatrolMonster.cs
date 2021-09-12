@@ -46,6 +46,10 @@ public class PatrolMonster : WalkMonster
 
     protected void SearchPlayer()
     {
+        if (player == null)
+        {
+            player = MonsterManager.instance.player;
+        }
         if (Vector2.Distance(player.transform.position, transform.position) <= visualRange)
         {
             if (chasingCoroutine != null)

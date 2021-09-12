@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 1766384978965600501}
   - component: {fileID: 1766384978965600502}
   - component: {fileID: 1543492977}
-  m_Layer: 9
+  - component: {fileID: 633733471}
+  m_Layer: 10
   m_Name: SkySquirrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -145,6 +146,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitPoint: 0
+  isGoldenMonster: 0
   movementSpeed: 4.5
   checkRayAddLength: 0
   visualRange: 7
@@ -156,3 +158,22 @@ MonoBehaviour:
   debugOption:
     showVisualRange: 1
     showDashDistance: 1
+--- !u!95 &633733471
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1766384978965600496}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e40632fa4f7e41b46bafe16d3d030977, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

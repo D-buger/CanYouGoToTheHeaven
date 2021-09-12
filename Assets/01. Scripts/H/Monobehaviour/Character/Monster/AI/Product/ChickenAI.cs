@@ -2,34 +2,57 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChickenAI : WalkMonster
+public class ChickenAI : PatrolMonster
 {
     [SerializeField] GameObject chickPrefab;
     [SerializeField] float chickSpawnDelay;
     WaitForSeconds SpawnDelayCount;
     Coroutine spawnChick;
+    bool alreadyDetectPlayer = false;
 
     // Start is called before the first frame update
     void Start()
     {
         OperateStart();
         SpawnDelayCount = new WaitForSeconds(chickSpawnDelay);
-        spawnChick = StartCoroutine(SpawnChick());
+        StartCoroutine(RemoveGravity());
+    }
+
+    IEnumerator RemoveGravity()
+    {
+        yield return waitFor1Seconds;
+        rb2d.gravityScale = 0f;
     }
 
     // Update is called once per frame
     void Update()
     {
-        OperateUpdate();
+        CheckFront();
+        if (spawnChick != null) //이미 소환 작업에 들어갔다면
+        {
+            return;
+        }
+        if (!alreadyDetectPlayer)
+        {
+            SearchPlayer();
+            if (detectPlayer)
+            {
+                alreadyDetectPlayer = true;
+                transform.position = (new Vector2(transform.position.x, transform.position.y - 0.3f));
+                movementSpeed = movementSpeed * 0.5f;
+                spawnChick = StartCoroutine(SpawnChick());
+            }
+        }
     }
 
     private void FixedUpdate()
     {
-        OperateFixedUpdate();
+        MoveForward();
     }
 
     IEnumerator SpawnChick()
     {
+        animator.SetBool("detectPlayer", true);
         while (true)
         {
             yield return SpawnDelayCount;
@@ -53,6 +76,22 @@ public class ChickenAI : WalkMonster
             Debug.LogWarning($"{gameObject.name}: 플레이어 충돌 메소드를 플레이어 스크립트로 옮기기 바람");
             _collision.gameObject.GetComponent<HHH_Player>().currentHitPoint -= 2;
             Destroy(gameObject);
+        }
+    }
+
+    [System.Serializable]
+    struct DebugOption
+    {
+        public bool showVisualRange;
+    }
+    [SerializeField] DebugOption debugOption;
+
+    private void OnDrawGizmos()
+    {
+        if (debugOption.showVisualRange)
+        {
+            Gizmos.DrawWireSphere(transform.position, visualRange);
+            Gizmos.color = Color.cyan;
         }
     }
 }

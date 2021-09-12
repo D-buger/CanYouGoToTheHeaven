@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 2668540992419345522}
   - component: {fileID: 2668540992419345527}
   - component: {fileID: 2668540992419345487}
-  m_Layer: 9
+  - component: {fileID: 1011637066}
+  m_Layer: 10
   m_Name: NastySquirrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -145,13 +146,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitPoint: 0
-  movementSpeed: 2
+  isGoldenMonster: 0
+  movementSpeed: 3
   checkRayAddLength: 0
   visualRange: 4
-  chasingTime: 0
-  projectile: {fileID: 2853162243808925760, guid: c308c89b647518746af6dc0700cb1ee4, type: 3}
+  chasingTime: 3
+  projectile: {fileID: 3334731556816952437, guid: eb2aa381b4443c347af647c0956b65b6, type: 3}
   projectileDamage: 1
-  velocity: 2
-  prepareAttackDelay: 2.4
+  projectileVelocity: 2
+  projectileCount: 3
+  totalAngle: 120
+  prepareAttackDelay: 2.3
   debugOption:
     showVisualRange: 1
+--- !u!95 &1011637066
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2668540992419345484}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: aba0793030160ca4ab4c2a865f7bcc53, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

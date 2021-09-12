@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 5042816215450494400}
   - component: {fileID: 5042816215450494401}
   - component: {fileID: 5042816215450494405}
-  m_Layer: 9
+  - component: {fileID: 913919124}
+  m_Layer: 10
   m_Name: Squirrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -119,6 +120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitPoint: 0
+  isGoldenMonster: 0
   movementSpeed: 3
   checkRayAddLength: 0.2
 --- !u!61 &5042816215450494405
@@ -147,3 +149,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.66471004, y: 0.8749418}
   m_EdgeRadius: 0
+--- !u!95 &913919124
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5042816215450494462}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a29a322d21209af43bcc22823fe3e3a2, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

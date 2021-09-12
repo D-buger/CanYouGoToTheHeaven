@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4027006324339488526}
   - component: {fileID: 676591506527869512}
   - component: {fileID: 6127109543065106883}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: BombBirdFragment
   m_TagString: Untagged
   m_Icon: {fileID: 0}
