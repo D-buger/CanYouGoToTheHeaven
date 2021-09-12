@@ -3,14 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-<<<<<<< HEAD
-  - Wall
-  - Enemy
-  - CameraBorderline
-=======
-  - Enemy
->>>>>>> origin/Hyun
+  tags: []
   layers:
   - Default
   - TransparentFX
@@ -20,10 +13,10 @@ TagManager:
   - UI
   - 
   - 
-  - Wall
-  - Platform
-  - Monster
-  - ThroughTileMonster
+  - 
+  - 
+  - 
+  - 
   - 
   - 
   - 
