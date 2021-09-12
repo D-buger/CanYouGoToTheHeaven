@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1491875532}
   m_Layer: 10
   m_Name: BuruckBird1
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
