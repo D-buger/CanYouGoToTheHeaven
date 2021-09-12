@@ -23,21 +23,25 @@ public class LevelGeneration
         cellSize = rooms[0].transform.GetChild(0).GetComponent<Grid>().cellSize.y;  
     }
 
-    public GameObject[] Generation(Vector2 gnratrPos, int _rmInStg, int _lvelInStg, Transform parent)
+    public Vector2[] Generation(Vector2 gnratrPos, int _rmInStg, int _lvelInStg, Transform parent)
     {
         FirstSetting();
 
-        GameObject[] firstRoom = new GameObject[_lvelInStg];
+        Vector2[] pointPosition = new Vector2[_lvelInStg * 2];
+
+        int random, index = 0;
+        GameObject room;
+        float ySize;
+        Vector2 nextPos;
+        
         do
         {
-            int random;
-            GameObject room;
-            float ySize;
-            Vector2 nextPos = gnratrPos;
+            nextPos = gnratrPos;
+            pointPosition[index++] = nextPos;
 
             for (int i = 0; i < _rmInStg - 1; i++)
             {
-                random = Random.Range(0, rooms.Length);
+                random = Random.Range(0, rooms.Length - 1);
                 room = GameObject.Instantiate(rooms[random], nextPos, Quaternion.identity, parent);
                 ySize = tilemaps[random].size.y * cellSize;
                 nextPos = room.transform.GetChild(0).position;
@@ -45,10 +49,11 @@ public class LevelGeneration
             }
 
             room = GameObject.Instantiate(rooms[rooms.Length - 1], nextPos, Quaternion.identity, parent);
+            pointPosition[index++] = nextPos;
 
             gnratrPos.x += distXBetwnStages;
-        } while (_lvelInStg-- > 0);
-
-        return firstRoom;
+        } while (--_lvelInStg > 0);
+        
+        return pointPosition;
     }
 }

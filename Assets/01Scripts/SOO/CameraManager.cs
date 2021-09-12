@@ -23,10 +23,12 @@ public class CameraManager : MonoBehaviour
     private Vector3 previousPos;
     private Vector3 changedValue;
 
+    public bool CameraLock { get; set; } = false;
+
     private void Awake()
     {
         mainCamera = Camera.main;
-        targetTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        targetTransform = StageManager.Instance.Player.transform;
         previousPos = targetTransform.position;
     }
 
@@ -37,22 +39,23 @@ public class CameraManager : MonoBehaviour
 
     private void CheckTargetPos()
     {
-        CheckChanged();
-        Vector3 targetPosToViewp = 
-            mainCamera.WorldToViewportPoint(targetTransform.position);
-        if (targetPosToViewp.y > topY)
-        {
-            transform.position += changedValue;
+        if (!CameraLock) {
+            CheckChanged();
+            Vector3 targetPosToViewp =
+                mainCamera.WorldToViewportPoint(targetTransform.position);
+            if (targetPosToViewp.y > topY)
+            {
+                transform.position += changedValue;
+            }
+            else if (targetPosToViewp.y < bottomY)
+            {
+                transform.position += changedValue;
+            }
+            else
+            {
+                CamMoveSmooth();
+            }
         }
-        else if(targetPosToViewp.y < bottomY)
-        {
-            transform.position += changedValue;
-        }
-        else
-        {
-            CamMoveSmooth();
-        }
-
     }
 
     private void CheckChanged()

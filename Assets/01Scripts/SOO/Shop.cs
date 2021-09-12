@@ -18,7 +18,7 @@ public class Shop : MonoBehaviour
 
     private void Awake()
     {
-        itemManager = StageManager.Instance.item;
+        itemManager = StageManager.Instance.Item;
 
         Transform itemShelvesParent = transform.GetChild(0);
         shelvesCount = itemShelvesParent.childCount;

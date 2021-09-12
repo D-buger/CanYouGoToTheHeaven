@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+//UI 분리 안함
 public class StageManager : SingletonBehavior<StageManager>
 {
-    public ItemManager item { get; private set; }
+    public ItemManager Item { get; private set; }
 
     public PlayerStats Stat { get; private set; }
     public GameObject Player { get; private set; }
+
+    public StageGenerator StageGenerator { get; private set; }
 
     [SerializeField]
     private Slider remainingWater;
@@ -18,7 +21,8 @@ public class StageManager : SingletonBehavior<StageManager>
         Player = GameObject.FindGameObjectWithTag("Player");
         Stat = Player.GetComponent<Player>().stats;
 
-        item = new ItemManager();
+        StageGenerator = GameObject.FindObjectOfType<StageGenerator>();
+        Item = new ItemManager();
     }
 
     private void Update()
