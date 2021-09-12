@@ -6,8 +6,13 @@ public class WaterGunModel
 {
     public WaterGunModel(int max)
     {
-        maxWaterAmount = max;
-        waterAmount = maxWaterAmount;
+        MaxWaterAmount = max;
+        WaterAmount = MaxWaterAmount;
+    }
+
+    public WaterGunModel(int max, int damage) : this(max)
+    {
+        Damage = damage;
     }
 
     private int maxWaterAmount;

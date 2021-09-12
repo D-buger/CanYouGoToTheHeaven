@@ -35,12 +35,6 @@ public class CameraManager : MonoBehaviour
         CheckTargetPos();
     }
 
-    private void CheckChanged()
-    {
-        changedValue.y = targetTransform.position.y - previousPos.y;
-        previousPos.y = targetTransform.position.y;
-    }
-
     private void CheckTargetPos()
     {
         CheckChanged();
@@ -59,6 +53,12 @@ public class CameraManager : MonoBehaviour
             CamMoveSmooth();
         }
 
+    }
+
+    private void CheckChanged()
+    {
+        changedValue.y = targetTransform.position.y - previousPos.y;
+        previousPos.y = targetTransform.position.y;
     }
 
     private void CamMoveSmooth()

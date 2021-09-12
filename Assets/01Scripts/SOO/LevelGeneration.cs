@@ -35,7 +35,7 @@ public class LevelGeneration
             float ySize;
             Vector2 nextPos = gnratrPos;
 
-            for (int i = 0; i < _rmInStg; i++)
+            for (int i = 0; i < _rmInStg - 1; i++)
             {
                 random = Random.Range(0, rooms.Length);
                 room = GameObject.Instantiate(rooms[random], nextPos, Quaternion.identity, parent);
@@ -44,7 +44,9 @@ public class LevelGeneration
                 nextPos.y += ySize;
             }
 
-                gnratrPos.x += distXBetwnStages;
+            room = GameObject.Instantiate(rooms[rooms.Length - 1], nextPos, Quaternion.identity, parent);
+
+            gnratrPos.x += distXBetwnStages;
         } while (_lvelInStg-- > 0);
 
         return firstRoom;

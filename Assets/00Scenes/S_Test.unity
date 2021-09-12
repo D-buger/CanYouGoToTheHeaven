@@ -3816,6 +3816,52 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.29939222, y: 2.6925492}
   m_EdgeRadius: 0
+--- !u!1 &526001562 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4994161751940940212, guid: dfeebec717fc2f644afdcdc36bb270ae, type: 3}
+  m_PrefabInstance: {fileID: 4994161752205715334}
+  m_PrefabAsset: {fileID: 0}
+--- !u!61 &526001563
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 526001562}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 6.8}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 6, y: 1}
+  m_EdgeRadius: 0
+--- !u!114 &526001564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 526001562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27764b238e63caf4cbd3f274eab13403, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  teleportPosition: {fileID: 549675325}
+  cameraLock: 0
+  cameraLockPosition: {fileID: 0}
 --- !u!1 &549675324
 GameObject:
   m_ObjectHideFlags: 0
@@ -3893,6 +3939,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bce80f895a868724dbf279b245787773, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CheckDistance: 2
 --- !u!1 &708314540
 GameObject:
   m_ObjectHideFlags: 0
@@ -4367,7 +4414,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &744013328
 Transform:
   m_ObjectHideFlags: 0
@@ -4715,9 +4762,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f727b4dd9276df4bb58ae1d4f068285, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxWaterAmount: 100
-  waterAmount: 0
-  damage: 1
 --- !u!1 &910325702
 GameObject:
   m_ObjectHideFlags: 0
@@ -5760,7 +5804,7 @@ GameObject:
   - component: {fileID: 2082381498}
   - component: {fileID: 2082381499}
   m_Layer: 5
-  m_Name: Slider
+  m_Name: Water
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12073,7 +12117,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4994161751940940212, guid: dfeebec717fc2f644afdcdc36bb270ae, type: 3}
       propertyPath: m_Name
-      value: Room_4
+      value: Room_End
       objectReference: {fileID: 0}
     - target: {fileID: 4994161751940940213, guid: dfeebec717fc2f644afdcdc36bb270ae, type: 3}
       propertyPath: m_RootOrder
