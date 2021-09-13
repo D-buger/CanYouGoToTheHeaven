@@ -1,41 +1,54 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-//UI 분리 안함
+[RequireComponent(typeof(StageGenerator))]
 public class StageManager : SingletonBehavior<StageManager>
 {
-    public ItemManager Item { get; private set; }
+    public CameraManager CameraManager { get; private set; }
+    public UIManager UiManager { get; private set; }
+    public ItemManager ItemManager { get; private set; } 
 
     public PlayerStats Stat { get; private set; }
     public GameObject Player { get; private set; }
 
     public StageGenerator StageGenerator { get; private set; }
 
-    [SerializeField]
-    private Slider remainingWater;
+    public Vector2 ShopPosition { get; private set; }
+    public Vector2 ShopDoorPosition { get; private set; }
+
+    private int playerRoom = 1;
+    public int PlayerRoom() => playerRoom++;
 
     protected override void OnAwake()
     {
         Player = GameObject.FindGameObjectWithTag("Player");
         Stat = Player.GetComponent<Player>().stats;
-
-        StageGenerator = GameObject.FindObjectOfType<StageGenerator>();
-        Item = new ItemManager();
+        
+        CameraManager = Camera.main.gameObject.GetComponent<CameraManager>();
+        StageGenerator = GetComponent<StageGenerator>();
+        ItemManager = new ItemManager();
+        UiManager = new UIManager();
     }
 
     private void Update()
     {
+        if (Player.transform.position.y 
+            >= StageGenerator.EdgePositions[playerRoom].y)
+        {
+            Player.transform.position = ShopDoorPosition;
+            playerRoom++;
+        }
+
+        if (Player.transform.position.y - (GameManager.Instance.windowSize.x / 2)
+            >= StageGenerator.EdgePositions[playerRoom].y)
+        {
+            CameraManager.CameraLock = true;
+        }
     }
 
-    public void SetMaxWater(float maxValue)
+    public void PlayerTeleportToStage()
     {
-        remainingWater.maxValue = maxValue;
-    }
-
-    public void SetWater(float value)
-    {
-        remainingWater.value = value;
+        Player.transform.position = StageGenerator.EdgePositions[playerRoom++];
     }
 }

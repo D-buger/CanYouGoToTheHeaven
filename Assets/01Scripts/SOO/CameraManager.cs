@@ -7,7 +7,7 @@ public class CameraManager : MonoBehaviour
     private Transform targetTransform;
     private Camera mainCamera;
 
-    float velocity = 0;
+    private float velocity = 0;
 
     [SerializeField]
     private float smoothTime = 0.5f;
@@ -34,27 +34,26 @@ public class CameraManager : MonoBehaviour
 
     private void LateUpdate()
     {
-        CheckTargetPos();
+        if(!CameraLock)
+            CheckTargetPos();
     }
 
     private void CheckTargetPos()
     {
-        if (!CameraLock) {
-            CheckChanged();
-            Vector3 targetPosToViewp =
-                mainCamera.WorldToViewportPoint(targetTransform.position);
-            if (targetPosToViewp.y > topY)
-            {
-                transform.position += changedValue;
-            }
-            else if (targetPosToViewp.y < bottomY)
-            {
-                transform.position += changedValue;
-            }
-            else
-            {
-                CamMoveSmooth();
-            }
+        CheckChanged();
+        Vector3 targetPosToViewp =
+            mainCamera.WorldToViewportPoint(targetTransform.position);
+        if (targetPosToViewp.y > topY)
+        {
+            transform.position += changedValue;
+        }
+        else if (targetPosToViewp.y < bottomY)
+        {
+            transform.position += changedValue;
+        }
+        else
+        {
+            CamMoveSmooth();
         }
     }
 
@@ -73,4 +72,7 @@ public class CameraManager : MonoBehaviour
             transform.position.y, desiredPos.y + offsetY, ref velocity, smoothTime);
         transform.position = smoothedPosition;
     }
+
+    public void CamPositionChange(Vector2 position) 
+        => transform.position = position; 
 }

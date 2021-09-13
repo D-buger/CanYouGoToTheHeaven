@@ -5,6 +5,7 @@ public enum ePlayerState
 {
     Idle,
     Move,
+    MovingAttack,
     Attack,
 }
 
@@ -24,17 +25,15 @@ public class Player : MonoBehaviour
     {
         stats.Set(
             transform, 
-            transform.GetComponent<Rigidbody2D>(), 
-            transform.position.y,
             transform.GetChild(0).GetComponent<Watergun>());
-        physics = new PlayerPhysics(stats);
+        physics = new PlayerPhysics(stats.physicsStat);
         anim = transform.GetComponent<Animator>();
 
         stateByEnum = new Dictionary<ePlayerState, FsmState<Player>>();
         stateByEnum.Add(ePlayerState.Idle , new PlayerIdle());
         stateByEnum.Add(ePlayerState.Move , new PlayerMove());
         stateByEnum.Add(ePlayerState.Attack , new PlayerAttack());
-
+        stateByEnum.Add(ePlayerState.MovingAttack , new PlayerMovingAttack());
 
         StateMachine = new StateMachine<Player>();
         StateMachine.Init(this, new PlayerIdle());
@@ -43,11 +42,6 @@ public class Player : MonoBehaviour
     private void Update()
     {
         StateMachine.Update();
-
-        anim.SetBool("isAttack", input.behaviourActive);
-
-        if (input.behaviourActive)
-            physics.TestShot();
     }
 
     private void FixedUpdate()
@@ -68,12 +62,12 @@ public class Player : MonoBehaviour
 
     public void OnCollisionEnter2D(Collision2D collision)
     {
-        stats.EvauateCollision(collision);
+        stats.physicsStat.EvauateCollision(collision);
     }
 
     public void OnCollisionStay2D(Collision2D collision)
     {
-        stats.EvauateCollision(collision);
+        stats.physicsStat.EvauateCollision(collision);
     }
 
     

@@ -7,8 +7,8 @@ public class Water : MonoBehaviour
     private float pointDist = 0.01f;
     private int waterReflected = 1;
 
-    private string reflectTag = GameManager.Instance.tags.WallTag;
-    private string removeTag = GameManager.Instance.tags.EnemyTag; 
+    private string reflectTag = TagManager.WallTag;
+    private string removeTag = TagManager.EnemyTag; 
     
     private LineRenderer line;
     

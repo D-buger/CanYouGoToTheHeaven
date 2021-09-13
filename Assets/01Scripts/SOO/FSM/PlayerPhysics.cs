@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class PlayerPhysics
 {
-    public PlayerPhysics(PlayerStats stat) => this.stat = stat;
-    PlayerStats stat;
-    float input;
+    public PlayerPhysics(PhysicsStats _stat) => stat = _stat;
+
+    private PhysicsStats stat;
+    private float input;
 
     public void PhysicsUpdate()
     {
@@ -30,7 +31,7 @@ public class PlayerPhysics
 
     public bool IsOnGround() => stat.onGround;
 
-    public void TestShot()
+    public void Shot()
     {
         float rebound = Mathf.Sqrt(-1f * Physics2D.gravity.y );
         stat.velocity.y = rebound;

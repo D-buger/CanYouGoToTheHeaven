@@ -29,9 +29,23 @@ public class PlayerMove : FsmState<Player>
     
     public override void HandleInput(Player target)
     {
-        if (!target.input.IsMove)
+        if (target.input.behaviourActive)
         {
-            target.ChangeState(ePlayerState.Idle);
+            if (!target.input.IsMove)
+            {
+                target.ChangeState(ePlayerState.Attack);
+            }
+            else
+            {
+                target.ChangeState(ePlayerState.MovingAttack);
+            }
+        }
+        else
+        {
+            if (!target.input.IsMove)
+            {
+                target.ChangeState(ePlayerState.Idle);
+            }
         }
     }
 }

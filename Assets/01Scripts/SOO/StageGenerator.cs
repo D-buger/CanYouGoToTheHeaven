@@ -18,27 +18,15 @@ public class StageGenerator : MonoBehaviour
     [SerializeField]
     private Vector2 firstStagePos;
 
-    [SerializeField]
-    private GameObject shopPrefab;
-
-    private int playerStage = 0;
-
-    public List<Vector2[]> Rooms { get; private set; }
+    public List<Vector2> EdgePositions { get; private set; }
 
     private void Awake()
     {
-        Rooms = new List<Vector2[]>();
+        EdgePositions = new List<Vector2>();
         for(int i = 0; i < levelGenerations.Count; i++)
         {
             firstStagePos.x += i * distXBetwnStages;
-            Rooms.Add(levelGenerations[i].Generation(firstStagePos,roomInStage, levelInStage, transform));
+            EdgePositions.AddRange(levelGenerations[i].Generation(firstStagePos,roomInStage, levelInStage, transform));
         }
     }
-
-    private void Update()
-    {
-        //TODO : stage 끝을 넘어갈 시 shop으로 이동, shop에서 나갔을 때 다음 스테이지로 플레이어 이동
-    }
-
-
 }
