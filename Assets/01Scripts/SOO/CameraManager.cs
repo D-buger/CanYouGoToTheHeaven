@@ -25,6 +25,9 @@ public class CameraManager : MonoBehaviour
 
     public bool CameraLock { get; set; } = false;
 
+    public Vector3 WorldToViewportPoint(Vector3 vec) => mainCamera.WorldToViewportPoint(vec);
+    public float WorldToViewportPoint(float f) => mainCamera.WorldToViewportPoint(new Vector3(f, 0)).x;
+
     private void Awake()
     {
         mainCamera = Camera.main;
@@ -42,7 +45,7 @@ public class CameraManager : MonoBehaviour
     {
         CheckChanged();
         Vector3 targetPosToViewp =
-            mainCamera.WorldToViewportPoint(targetTransform.position);
+            WorldToViewportPoint(targetTransform.position);
         if (targetPosToViewp.y > topY)
         {
             transform.position += changedValue;
@@ -74,5 +77,5 @@ public class CameraManager : MonoBehaviour
     }
 
     public void CamPositionChange(Vector2 position) 
-        => transform.position = position; 
+        => transform.position = new Vector3(position.x, position.y, transform.position.z); 
 }

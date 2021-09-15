@@ -7,6 +7,7 @@ TagManager:
   - Wall
   - CameraBorderline
   - Enemy
+  - Shop
   layers:
   - Default
   - TransparentFX
@@ -43,4 +44,16 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: BackGround
+    uniqueID: 1518787285
+    locked: 0
+  - name: Item
+    uniqueID: 2879456463
+    locked: 0
+  - name: Player
+    uniqueID: 1245591875
+    locked: 0
+  - name: Monster
+    uniqueID: 2772894239
     locked: 0

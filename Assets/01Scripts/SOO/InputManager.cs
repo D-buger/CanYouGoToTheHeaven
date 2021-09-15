@@ -5,8 +5,15 @@ using UnityEngine;
 public class InputManager
 {
     public Joystick joystick;
-    public bool behaviourActive { get; set; }
     public TouchManager touch;
+    public bool behaviourActive { get; private set; }
+
+    private float buttonExtent = 0.5f;
+    public float ButtonExtent
+    {
+        get => buttonExtent;
+        set => buttonExtent = Mathf.Lerp(0, 1, value);
+    }
 
     public void SetFirst()
     {

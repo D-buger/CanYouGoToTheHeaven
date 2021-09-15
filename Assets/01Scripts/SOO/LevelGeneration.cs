@@ -49,6 +49,8 @@ public class LevelGeneration
             }
 
             room = GameObject.Instantiate(rooms[rooms.Length - 1], nextPos, Quaternion.identity, parent);
+            ySize = tilemaps[rooms.Length - 1].size.y * cellSize;
+            nextPos.y += ySize / 2;
             pointPosition[index++] = nextPos;
 
             gnratrPos.x += distXBetwnStages;

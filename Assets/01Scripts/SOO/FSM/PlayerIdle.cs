@@ -5,7 +5,6 @@ public class PlayerIdle : FsmState<Player>
 {
     public override void Enter(Player target)
     {
-        Debug.Log("PlayerState : Idle");
     }
 
     public override void Exit(Player target)

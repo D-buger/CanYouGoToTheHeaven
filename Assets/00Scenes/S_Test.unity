@@ -300,54 +300,11 @@ RectTransform:
   m_AnchoredPosition: {x: -1, y: 2.5}
   m_SizeDelta: {x: 2, y: -5}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &549675324 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6418070491791331073, guid: 235480d706be360498b65bb84a30b433, type: 3}
-  m_PrefabInstance: {fileID: 6418070492323835453}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &549675325 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6418070491791331072, guid: 235480d706be360498b65bb84a30b433, type: 3}
   m_PrefabInstance: {fileID: 6418070492323835453}
   m_PrefabAsset: {fileID: 0}
---- !u!61 &549675326
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 549675324}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -1.43, y: -0.45322824}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1.2944641, y: 2.7049973}
-  m_EdgeRadius: 0
---- !u!114 &549675327
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 549675324}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bea242cef1728b40b7efb066e1ec078, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &611995079 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6418070491715249146, guid: 235480d706be360498b65bb84a30b433, type: 3}
@@ -885,8 +842,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1245591875
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 6388389237426139460, guid: f37bcf988d30723419730673f823f6ae, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1555,8 +1512,8 @@ MonoBehaviour:
     joystick:
       backgroundObject: {fileID: 793988930}
       handleObject: {fileID: 1920196450}
-      backGroundImage: {fileID: 0}
-      handleImage: {fileID: 0}
+      backGroundImage: {fileID: -2413806693520163455, guid: c7d2aa929df0a57448e1fb31a6c88ba1, type: 3}
+      handleImage: {fileID: -2413806693520163455, guid: c7d2aa929df0a57448e1fb31a6c88ba1, type: 3}
       horizontalValue: 0
       vecMove: {x: 0, y: 0}
       vecNormal: {x: 0, y: 0}
@@ -8359,10 +8316,6 @@ PrefabInstance:
     - target: {fileID: 6418070491715249147, guid: 235480d706be360498b65bb84a30b433, type: 3}
       propertyPath: m_Name
       value: Shop
-      objectReference: {fileID: 0}
-    - target: {fileID: 6418070491791331072, guid: 235480d706be360498b65bb84a30b433, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -2.46
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 235480d706be360498b65bb84a30b433, type: 3}

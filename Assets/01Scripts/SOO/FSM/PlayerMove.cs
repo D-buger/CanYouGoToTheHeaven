@@ -5,7 +5,6 @@ public class PlayerMove : FsmState<Player>
 {
     public override void Enter(Player target)
     {
-        Debug.Log("PlayerState : Move");
     }
 
     public override void Exit(Player target)

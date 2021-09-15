@@ -5,7 +5,6 @@ public class PlayerAttack : FsmState<Player>
 {
     public override void Enter(Player target)
     {
-        Debug.Log("PlayerState : Attack");
         target.anim.SetBool("isAttack", true);
     }
 
