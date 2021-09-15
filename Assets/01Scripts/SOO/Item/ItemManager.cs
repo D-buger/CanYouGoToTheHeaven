@@ -55,7 +55,7 @@ public class ItemManager
     {
         ItemModel randomItem = items[Random.Range(0, items.Count)];
         items.Remove(randomItem);
-        randomItem.gameObject?.SetActive(true);
+        randomItem?.gameObject.SetActive(true);
         return randomItem;
     }
 
@@ -65,9 +65,7 @@ public class ItemManager
         {
             obj[i].transform.position = Vector3.zero;
             items.Add(obj[i]);
-            obj[i].gameObject?.SetActive(false);
+            obj[i]?.gameObject.SetActive(false);
         }
     }
-    
-    
 }

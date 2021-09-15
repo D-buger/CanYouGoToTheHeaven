@@ -23,14 +23,24 @@ public class CameraManager : MonoBehaviour
     private Vector3 previousPos;
     private Vector3 changedValue;
 
-    public bool CameraLock { get; set; } = false;
+    private bool cameraLock = false;
+    public bool CameraLock
+    {
+        get => cameraLock;
+        set
+        {
+            cameraLock = value;
+            previousPos = targetTransform.position;
+        }
+    }
 
-    public Vector3 WorldToViewportPoint(Vector3 vec) => mainCamera.WorldToViewportPoint(vec);
-    public float WorldToViewportPoint(float f) => mainCamera.WorldToViewportPoint(new Vector3(f, 0)).x;
+    private Vector3 World2Viewport(Vector3 vec) => mainCamera.WorldToViewportPoint(vec);
+    public Vector3 Screen2World(Vector3 vec) => mainCamera.ScreenToWorldPoint(vec);
 
     private void Awake()
     {
         mainCamera = Camera.main;
+
         targetTransform = StageManager.Instance.Player.transform;
         previousPos = targetTransform.position;
     }
@@ -45,7 +55,7 @@ public class CameraManager : MonoBehaviour
     {
         CheckChanged();
         Vector3 targetPosToViewp =
-            WorldToViewportPoint(targetTransform.position);
+            World2Viewport(targetTransform.position);
         if (targetPosToViewp.y > topY)
         {
             transform.position += changedValue;

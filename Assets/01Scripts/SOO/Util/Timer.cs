@@ -18,7 +18,6 @@ public class Timer
         timer = startSec;
     }
 
-
     public bool TimerUpdate()
     {
         timer += Time.deltaTime;

@@ -5,7 +5,8 @@ public class GameManager : SingletonBehavior<GameManager>
     [SerializeField]
     public InputManager input;
 
-    public Vector2 windowSize { get; private set; }
+    public Vector2 ScreenSize { get; private set; }
+                = new Vector2(Screen.width, Screen.height);
 
     private struct eSettings
     {
@@ -18,7 +19,6 @@ public class GameManager : SingletonBehavior<GameManager>
     protected override void OnAwake()
     {
         input.SetFirst();
-        windowSize = new Vector2(Screen.width, Screen.height);
     }
 
     private void Update()

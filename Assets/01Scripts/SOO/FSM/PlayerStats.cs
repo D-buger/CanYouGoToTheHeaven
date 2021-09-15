@@ -20,6 +20,8 @@ public class PlayerStats
         }
     }
 
+    public int soul;
+
     public Watergun watergun;
 
     public PhysicsStats physicsStat;

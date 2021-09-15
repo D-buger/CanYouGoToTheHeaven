@@ -33,37 +33,42 @@ public class StageManager : SingletonBehavior<StageManager>
 
     private void Update()
     {
-        //카메라 매니저에서 검사할지 스테이지 매니저에서 검사할지 고민해봐야함
-        //작동되는 수식 자체가 틀려먹음 이것만 고치면 될듯
-        if (Player.transform.position.y
-            >= StageGenerator.EdgePositions[playerRoom].y
-            - CameraManager.WorldToViewportPoint(0))
+        if (PlayerInStage)
         {
-            CameraManager.CameraLock = true;
-        }
+            if (CameraManager.Screen2World(GameManager.Instance.ScreenSize).y
+                > StageGenerator.EdgePositions[playerRoom].y)
+            {
+                CameraManager.CameraLock = true;
+            }
 
-        if (PlayerInStage &&
-            Player.transform.position.y 
-            >= StageGenerator.EdgePositions[playerRoom].y)
-        {
-            PlayerTeleportToShop();
+            if (Player.transform.position.y
+                >= StageGenerator.EdgePositions[playerRoom].y)
+            {
+                PlayerTeleportToShop();
+            }
         }
-        
     }
+
+    public bool PlayerInStage { get; private set; } = true;
 
     private void PlayerTeleportToShop()
     {
         PlayerInStage = false;
         Player.transform.position = Shop.DoorPosition;
-        CameraManager.CamPositionChange(Shop.ShopPosition);
         playerRoom++;
-    }
 
-    public bool PlayerInStage { get; private set; } = true;
+        CameraManager.CamPositionChange(Shop.ShopPosition);
+    }
 
     public void PlayerTeleportToStage()
     {
-        Player.transform.position = StageGenerator.EdgePositions[playerRoom++];
+        Vector3 playerTeleportPosition = StageGenerator.EdgePositions[playerRoom];
+        playerTeleportPosition.y -= 10; 
+        Player.transform.position = StageGenerator.EdgePositions[playerRoom];
         PlayerInStage = true;
+
+        Debug.Log(StageGenerator.EdgePositions[playerRoom]);
+        CameraManager.CamPositionChange(StageGenerator.EdgePositions[playerRoom++]);
+        CameraManager.CameraLock = false;
     }
 }
