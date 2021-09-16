@@ -89,10 +89,11 @@ public class Shop : MonoBehaviour
 
     private void ShelvesReload()
     {
-        for(int i = 0; i < itemShelves.Length; i++)
+        for(int i = 0; i < items.Length; i++)
         {
             items[i] = itemManager.GetRandomItem();
-            items[i].GetComponent<CircleCollider2D>().enabled = false;
+            Debug.Log(items[i]);
+            items[i].GetComponent<Collider2D>().enabled = false;
             items[i].transform.position = itemShelves[i].position;
         }
     }

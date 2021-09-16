@@ -19,7 +19,7 @@ public class TouchManager
     public void TouchUpdate()
     {
         mousePos = Input.mousePosition;
-        touchPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        touchPos = new Vector2(mousePos.x / GameManager.Instance.ScreenSize.x, mousePos.y / GameManager.Instance.ScreenSize.y);
 
         if (Input.GetMouseButton(0))
             Drag();

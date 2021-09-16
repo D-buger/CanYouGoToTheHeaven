@@ -56,7 +56,7 @@ public class ItemManager
         ItemModel randomItem = items[Random.Range(0, items.Count)];
         items.Remove(randomItem);
         randomItem?.gameObject.SetActive(true);
-        return randomItem;
+        return randomItem ?? default(ItemModel);
     }
 
     public void SetItem(params ItemModel[] obj)

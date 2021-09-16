@@ -5,5 +5,5 @@
 4,푸른하트,Item_BlueHeart,30,1,blueheart,빈 하트를 하나 추가로 획득합니다.
 5,음료증가,Item_IncreaseMaxWater,25,10,pluscan,음료의 최대 저장량을 증가시킵니다.
 6,파워 업,Item_PowerUp,25,10,powerup,음료의 대미지를 증가시킵니다.
-7,핏방울,NONE,35,"10,0.5",bloodtear,일정횟수만큼 적을 처치 할 시 일정량의 체력을 회복합니다.
-8,네잎클로버,NONE,20,5%,clover,황금몬스터의 등장 확률을 증가시킵니다.
+7,핏방울,Item_Blood,35,"10,0.5",bloodtear,일정횟수만큼 적을 처치 할 시 일정량의 체력을 회복합니다.
+8,네잎클로버,Item_Clover,20,5%,clover,황금몬스터의 등장 확률을 증가시킵니다.

@@ -32,8 +32,7 @@ public class InputManager
 
     private void Joystick()
     {
-        //TODO : touchPos 말고 따른거 생각하셈
-        if (touch.mouseState == eMouse.Down && touch.touchPos.x < 0)
+        if (touch.mouseState == eMouse.Down && touch.touchPos.x < 0.5f)
         {
             joystick.JoyStickSetActive(true, touch.mousePos);
         }
