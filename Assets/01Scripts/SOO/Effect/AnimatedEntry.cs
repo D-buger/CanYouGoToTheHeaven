@@ -6,27 +6,40 @@ public class AnimatedEntry : MonoBehaviour
 {
     [Space(10)]
     [Header("Bools")]
-    public bool animateOnStart = false;
-    public bool offset = false;
+    [SerializeField]
+    private bool animateOnStart = false;
+    [SerializeField]
+    private bool animateOnEnabled = false;
+    [SerializeField]
+    private bool offset = false;
 
     [Space(10)]
     [Header("Timing")]
-    public float delay = 0;
+    [SerializeField]
+    private float delay = 0;
 
-    public float effectTime = 1;
+    [SerializeField]
+    private float effectTime = 1;
+
+    [SerializeField]
+    private bool isLoop = false;
 
     [Space(10)]
     [Header("Scale")]
-    public Vector3 startScale;
+    [SerializeField]
+    private Vector3 startScale;
 
-    public AnimationCurve scaleCurve;
+    [SerializeField]
+    private AnimationCurve scaleCurve;
 
 
     [Space(10)]
     [Header("Position")]
-    public Vector3 startPos;
+    [SerializeField]
+    private Vector3 startPos;
 
-    public AnimationCurve posCurve;
+    [SerializeField]
+    private AnimationCurve posCurve;
 
     Vector3 endScale;
 
@@ -34,18 +47,38 @@ public class AnimatedEntry : MonoBehaviour
 
     private void Awake()
     {
-        if (!animateOnStart)
-        {
-            SetupVariables();
-        }
+        if (animateOnEnabled)
+            animateOnStart = false;
+        SetupVariables();
     }
 
     private void Start()
     {
         if (animateOnStart)
         {
-            SetupVariables();
-            StartCoroutine(Animation());
+            if (isLoop)
+            {
+                StartCoroutine(LoopAnim());
+            }
+            else
+            {
+                StartCoroutine(Animation());
+            }
+        }
+    }
+
+    private void OnEnable()
+    {
+        if (animateOnEnabled)
+        {
+            if (isLoop)
+            {
+                StartCoroutine(LoopAnim());
+            }
+            else
+            {
+                StartCoroutine(Animation());
+            }
         }
     }
 
@@ -82,6 +115,46 @@ public class AnimatedEntry : MonoBehaviour
         transform.localScale = endScale;
         transform.localPosition = endPos;
         yield return null;
+    }
+
+    IEnumerator LoopAnim()
+    {
+        transform.localPosition = startPos;
+        transform.localScale = startScale;
+        float time = 0;
+        float perc = 0;
+        float lastTime = Time.realtimeSinceStartup;
+        do
+        {
+            time += Time.realtimeSinceStartup - lastTime;
+            lastTime = Time.realtimeSinceStartup;
+            perc = Mathf.Clamp01(time / effectTime);
+            Vector3 tempScale = Vector3.LerpUnclamped(startScale, endScale, scaleCurve.Evaluate(perc));
+            Vector3 tempPos = Vector3.LerpUnclamped(startPos, endPos, posCurve.Evaluate(perc));
+            transform.localScale = tempScale;
+            transform.localPosition = tempPos;
+            yield return null;
+        } while (perc < 1);
+        transform.localScale = endScale;
+        transform.localPosition = endPos;
+        time = 0;
+        perc = 0;
+        lastTime = Time.realtimeSinceStartup;
+        do
+        {
+            time += Time.realtimeSinceStartup - lastTime;
+            lastTime = Time.realtimeSinceStartup;
+            perc = 1 - Mathf.Clamp01(time / effectTime);
+            Vector3 tempScale = Vector3.LerpUnclamped(startScale, endScale, scaleCurve.Evaluate(perc));
+            Vector3 tempPos = Vector3.LerpUnclamped(startPos, endPos, posCurve.Evaluate(perc));
+            transform.localScale = tempScale;
+            transform.localPosition = tempPos;
+            yield return null;
+        } while (perc > 0);
+
+        yield return null;
+
+        StartCoroutine(LoopAnim());
     }
 
 

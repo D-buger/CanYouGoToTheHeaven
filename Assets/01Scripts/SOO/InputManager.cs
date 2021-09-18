@@ -4,9 +4,10 @@ using UnityEngine;
 [System.Serializable]
 public class InputManager
 {
-    public Joystick joystick;
-    public TouchManager touch;
-    public bool behaviourActive { get; private set; }
+    public Joystick Joystick;
+    public TouchManager Touch { get; private set; }
+        = new TouchManager();
+    public bool BehaviourActive { get; private set; }
 
     private float buttonExtent = 0.5f;
     public float ButtonExtent
@@ -17,65 +18,75 @@ public class InputManager
 
     public void SetFirst()
     {
-        joystick.SetFirst();
+        Joystick.SetFirst();
     }
 
     public void InputUpdate()
     {
-        touch.TouchUpdate();
+        Touch.TouchUpdate();
 
-        Joystick();
-        Behaviour();
+        for(int i = 0; i < Touch.NowTouchCount; i++)
+        { 
+            JoystickSet(i);
+            Behaviour(i);
+        }
     }
 
-    public bool IsMove => (joystick.horizontalValue != 0);
+    public bool IsMove => (Joystick.horizontalValue != 0);
 
-    private void Joystick()
+    private void JoystickSet(int i)
     {
-        if (touch.mouseState == eMouse.Down && touch.touchPos.x < 0.5f)
+        if (!Joystick.isActive)
         {
-            joystick.JoyStickSetActive(true, touch.mousePos);
+            if (Touch.TouchState[i] == TouchPhase.Began
+                && Touch.ResolutionPos[i].x < buttonExtent)
+            {
+                Joystick.JoyStickSetActive(true, Touch.TouchPos[i]);
+            }
         }
-
-        if (touch.mouseState == eMouse.Drag)
+        else
         {
-            joystick.OnDrag(touch.mousePos);
-        }
-
-        if (touch.mouseState == eMouse.Up && joystick.isActive)
-        {
-            joystick.OnPointerUp();
+            if (Touch.TouchState[i] == TouchPhase.Moved)
+            {
+                Joystick.OnDrag(Touch.TouchPos[i]);
+            }
+            if (Touch.TouchState[i] == TouchPhase.Ended)
+            {
+                Joystick.OnPointerUp();
+            }
         }
     }
 
     //전처리기 지시어
 #if UNITY_EDITOR
-    private void Behaviour()
+    private void Behaviour(int i)
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            behaviourActive = true;
-        }
-        
-        if(Input.GetKeyUp(KeyCode.Space))
-        {
-            behaviourActive = false;
+        if (Touch.ResolutionPos[i].x > buttonExtent) {
+            if (Touch.TouchState[i] == TouchPhase.Began)
+            {
+                BehaviourActive = true;
+            }
+
+            if (Touch.TouchState[i] == TouchPhase.Ended)
+            {
+                BehaviourActive = false;
+            }
         }
     }
 #else
-    private void Behaviour()
+    private void Behaviour(int i)
     {
-        if(touch.mouseState == eMouse.Down)
+        if(Touch.mouseState == eMouse.Down)
         {
-            if(touch.touchPos.x > 0)
+            if(Touch.TouchPos.x > 0)
             {
                 behaviourActive = true;
             } 
         }
 
-        if(touch.mouseState == eMouse.Up)
+        if(Touch.mouseState == eMouse.Up)
         {
-            if(!joystick.isActive)
+            if(!Joystick.isActive)
             {
                 behaviourActive = false;
             }

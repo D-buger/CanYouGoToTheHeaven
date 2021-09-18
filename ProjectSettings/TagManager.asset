@@ -57,3 +57,9 @@ TagManager:
   - name: Monster
     uniqueID: 2772894239
     locked: 0
+  - name: Wall
+    uniqueID: 2428607917
+    locked: 0
+  - name: Text
+    uniqueID: 2281793517
+    locked: 0

@@ -10,7 +10,7 @@ public class PlayerAttack : FsmState<Player>
 
     public override void Exit(Player target)
     {
-        if (!target.input.behaviourActive)
+        if (!target.input.BehaviourActive)
             target.anim.SetBool("isAttack", false);
     }
 
@@ -31,7 +31,7 @@ public class PlayerAttack : FsmState<Player>
 
     public override void HandleInput(Player target)
     {
-        if (target.input.behaviourActive)
+        if (target.input.BehaviourActive)
         {
             if (target.input.IsMove)
             {

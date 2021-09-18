@@ -13,6 +13,35 @@ public static class TextEffects
     };
     public static string COLOR = "rainbow";
 
+    public static IEnumerator HorizontalShaking(TMP_Text textComponent)
+    {
+        while (true)
+        {
+            yield return new WaitForFixedUpdate();
+            textComponent.ForceMeshUpdate();
+            TMP_TextInfo textInfo = textComponent.textInfo;
+            TMP_CharacterInfo charInfo;
+            for (int i = 0; i < textInfo.characterCount; ++i)
+            {
+                charInfo = textInfo.characterInfo[i];
+
+                if (!charInfo.isVisible)
+                    continue;
+
+                TMP_MeshInfo meshInfo = textInfo.meshInfo[charInfo.materialReferenceIndex];
+
+                for (int j = 0; j < 4; ++j)
+                {
+                    int index = charInfo.vertexIndex + j;
+                    Vector3 vec = meshInfo.vertices[index];
+                    meshInfo.vertices[index] = vec +
+                        new Vector3(0, Mathf.Sin(Time.time * 3f + vec.x * 1f) * 0.1f, 0);
+                }
+            }
+            yield return null;
+        }
+    }
+
 
     public static IEnumerator Waving(TMP_Text textComponent)
     {

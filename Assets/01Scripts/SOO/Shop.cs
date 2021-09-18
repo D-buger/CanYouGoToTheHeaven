@@ -92,7 +92,6 @@ public class Shop : MonoBehaviour
         for(int i = 0; i < items.Length; i++)
         {
             items[i] = itemManager.GetRandomItem();
-            Debug.Log(items[i]);
             items[i].GetComponent<Collider2D>().enabled = false;
             items[i].transform.position = itemShelves[i].position;
         }

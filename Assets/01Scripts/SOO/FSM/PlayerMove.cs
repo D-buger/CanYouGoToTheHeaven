@@ -23,12 +23,12 @@ public class PlayerMove : FsmState<Player>
 
     public override void FixedUpdate(Player target)
     {
-        target.physics.Moving(target.input.joystick.horizontalValue);
+        target.physics.Moving(target.input.Joystick.horizontalValue);
     }
     
     public override void HandleInput(Player target)
     {
-        if (target.input.behaviourActive)
+        if (target.input.BehaviourActive)
         {
             if (!target.input.IsMove)
             {
