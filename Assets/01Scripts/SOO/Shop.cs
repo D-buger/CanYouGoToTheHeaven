@@ -18,6 +18,9 @@ public class Shop : MonoBehaviour
     private TMP_Text text;
     private TMP_Text priceText;
 
+    private string doorText = "스테이지로 돌아갑니다.";
+    private string refillmuchineText = "음료를 1회 최대치로 충전합니다.";
+
     private int shelvesCount;
 
     private void Awake()
