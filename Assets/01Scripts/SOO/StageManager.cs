@@ -68,8 +68,7 @@ public class StageManager : SingletonBehavior<StageManager>
         playerTeleportPosition.y -= 10; 
         Player.transform.position = StageGenerator.EdgePositions[playerRoom];
         PlayerInStage = true;
-
-        Debug.Log(StageGenerator.EdgePositions[playerRoom]);
+        
         CameraManager.CamPositionChange(StageGenerator.EdgePositions[playerRoom++]);
         CameraManager.CameraLock = false;
     }
