@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerStats
 {
     public int MaxHP = 3;
+    [SerializeField]
     private int currentHP;
     public int CurrentHP
     {

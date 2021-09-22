@@ -20,7 +20,7 @@ public class Fragment : MonoBehaviour
     {
         if (_collision.gameObject.CompareTag("Player"))
         {
-            _collision.gameObject.GetComponent<HHH_Player>().currentHitPoint -= damage;
+            StageManager.Instance.Stat.CurrentHP -= damage;
             Destroy(gameObject);
         }
         else if (_collision.gameObject.layer == LayerMask.NameToLayer("Tile"))

@@ -53,6 +53,7 @@ public class StageManager : SingletonBehavior<StageManager>
 
     private void PlayerTeleportToShop()
     {
+        Shop.enabled = true;
         PlayerInStage = false;
         Player.transform.position = Shop.DoorPosition;
         playerRoom++;
@@ -62,6 +63,7 @@ public class StageManager : SingletonBehavior<StageManager>
 
     public void PlayerTeleportToStage()
     {
+        Shop.enabled = false;
         Vector3 playerTeleportPosition = StageGenerator.EdgePositions[playerRoom];
         playerTeleportPosition.y -= 10; 
         Player.transform.position = StageGenerator.EdgePositions[playerRoom];

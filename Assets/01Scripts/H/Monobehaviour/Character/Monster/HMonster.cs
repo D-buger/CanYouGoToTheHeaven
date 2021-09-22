@@ -12,6 +12,9 @@ public class HMonster : MonoBehaviour
     MonsterManager monsterManager;
     protected WaitForSeconds waitFor1Seconds = new WaitForSeconds(1f);
 
+    protected int damage = 1;
+    protected int contactDamage = 2;
+
     protected virtual void OperateStart()
     {
         monsterManager = MonsterManager.instance;
@@ -113,5 +116,15 @@ public class HMonster : MonoBehaviour
             goldenPortal.transform.position = transform.position;
         }
         Destroy(gameObject);
+    }
+
+    //충돌 데미지
+    private void OnCollisionEnter2D(Collision2D _collision)
+    {
+        if (_collision.gameObject.CompareTag("Player")) //플레이어와 몬스터의 충돌을 감지하는 역할. 플레이어 스크립트 내로 옮기는게 좋음.
+        {
+            StageManager.Instance.Stat.CurrentHP -= contactDamage;
+            Destroy(gameObject);
+        }
     }
 }

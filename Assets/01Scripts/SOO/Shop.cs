@@ -80,6 +80,11 @@ public class Shop : MonoBehaviour
             text.text = priceText.text = "";
     }
 
+    private void BuyItem(int itemIndex)
+    {
+
+    }
+
     private void OnEnable()
     {
         ShelvesReload();

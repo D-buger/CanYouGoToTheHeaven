@@ -21,6 +21,14 @@ public class Player : MonoBehaviour
 
     public Animator anim;
 
+    private void Reset()
+    {
+        stats = new PlayerStats();
+        stats.Set(
+            transform,
+            transform.GetChild(0).GetComponent<Watergun>());
+    }
+
     private void Awake()
     {
         stats.Set(
