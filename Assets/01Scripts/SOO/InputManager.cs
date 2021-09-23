@@ -23,74 +23,75 @@ public class InputManager
 
     public void InputUpdate()
     {
-        Touch.TouchUpdate();
+        if (Touch.TouchUpdate())
+        {
+            for (int i = 0; i < Touch.Touches.Length; i++)
+            {
+                if (Touch.SavedFingerId[0] == i
+                    || Touch.SavedFingerId[1] == i)
+                    continue;
 
-        for(int i = 0; i < Touch.NowTouchCount; i++)
-        { 
-            JoystickSet(i);
-            Behaviour(i);
+
+                //처음 초기화 구문
+                {
+                    if (Touch.Touches[i].Value.resolutionPos.x < buttonExtent
+                        && Touch.SavedFingerId[0] == -1)
+                    {
+                        Joystick.JoyStickSetActive(true, Touch.Touches[i].Value.touch.position);
+                        Touch.SavedFingerId[0] = Touch.Touches[i].Value.touch.fingerId;
+                    }
+                    else if (Touch.SavedFingerId[1] == -1)
+                    {
+                        BehaviourActive = true;
+                        Touch.SavedFingerId[1] = Touch.Touches[i].Value.touch.fingerId;
+                    }
+                }
+            }
+
+            if (Touch.SavedFingerId[0] != -1)
+            {
+                JoystickSet( Touch.Touches[Touch.SavedFingerId[0]].Value );
+            }
+            if (Touch.SavedFingerId[1] != -1)
+            {
+                Behaviour(Touch.Touches[Touch.SavedFingerId[1]].Value);
+            }
+
         }
     }
 
     public bool IsMove => (Joystick.horizontalValue != 0);
-
-    private void JoystickSet(int i)
+    
+    private void JoystickSet(CustomTouch customTouch)
     {
-        if (!Joystick.isActive)
+        if (customTouch.touch.phase == TouchPhase.Moved)
         {
-            if (Touch.TouchState[i] == TouchPhase.Began
-                && Touch.ResolutionPos[i].x < buttonExtent)
-            {
-                Joystick.JoyStickSetActive(true, Touch.TouchPos[i]);
-            }
+            Joystick.OnDrag(customTouch.touch.position);
         }
-        else
+        if (customTouch.touch.phase == TouchPhase.Ended)
         {
-            if (Touch.TouchState[i] == TouchPhase.Moved)
-            {
-                Joystick.OnDrag(Touch.TouchPos[i]);
-            }
-            if (Touch.TouchState[i] == TouchPhase.Ended)
-            {
-                Joystick.OnPointerUp();
-            }
+            Joystick.OnPointerUp();
         }
     }
 
     //전처리기 지시어
 #if UNITY_EDITOR
-    private void Behaviour(int i)
+    private void Behaviour(CustomTouch customTouch)
     {
-        if (Touch.ResolutionPos[i].x > buttonExtent) {
-            if (Touch.TouchState[i] == TouchPhase.Began)
-            {
-                BehaviourActive = true;
-            }
-
-            if (Touch.TouchState[i] == TouchPhase.Ended)
-            {
-                BehaviourActive = false;
-            }
+        if (customTouch.touch.phase == TouchPhase.Ended)
+        {
+            BehaviourActive = false;
         }
     }
 #else
-    private void Behaviour(int i)
+    private void Behaviour(CustomTouch customTouch)
     {
-        if(Touch.mouseState == eMouse.Down)
+        if (customTouch.touch.phase == TouchPhase.Ended)
         {
-            if(Touch.TouchPos.x > 0)
-            {
-                behaviourActive = true;
-            } 
-        }
-
-        if(Touch.mouseState == eMouse.Up)
-        {
-            if(!Joystick.isActive)
-            {
-                behaviourActive = false;
-            }
+            BehaviourActive = false;
+            Touch.SavedFingerID.Remove("Behaviour");
         }
     }
 #endif
+
 }

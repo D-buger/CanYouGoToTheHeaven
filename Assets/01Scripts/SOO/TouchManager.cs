@@ -6,24 +6,64 @@ public class TouchManager
 {
     public static int MaxMultiTouch { get; private set; } = 2;
     public int NowTouchCount { get; private set; }
+    
+    public CustomTouch?[] Touches { get; private set; }
+        = new CustomTouch?[MaxMultiTouch];
 
-    public Vector2[] TouchPos { get; private set; }
-        = new Vector2[MaxMultiTouch];
-    public Vector2[] ResolutionPos { get; private set; }
-        = new Vector2[MaxMultiTouch];
-    public TouchPhase[] TouchState { get; private set; }
-        = new TouchPhase[MaxMultiTouch];
+    public int[] SavedFingerId = new int[MaxMultiTouch];
 
-    public void TouchUpdate()
+    public TouchManager()
+    {
+        for (int i = 0; i < MaxMultiTouch; i++)
+            SavedFingerId[i] = -1;
+    }
+    
+    public bool TouchUpdate()
     {
         NowTouchCount = Mathf.Min(Input.touchCount, MaxMultiTouch);
-        for (int i = 0; i < NowTouchCount; i++)
+        for(int i = 0; i < MaxMultiTouch; i++)
         {
-            TouchPos[i] = Input.GetTouch(i).position;
-            ResolutionPos[i] = new Vector2(
-                TouchPos[i].x / GameManager.Instance.ScreenSize.x,
-                TouchPos[i].y / GameManager.Instance.ScreenSize.y);
-            TouchState[i] = Input.GetTouch(i).phase;
+            Touches[i] = null;
         }
+
+        if (NowTouchCount > 0) {
+            CustomTouch customTouch;
+            for (int i = 0; i < MaxMultiTouch; i++)
+            {
+                if (Input.touchCount > i)
+                {
+                    customTouch = new CustomTouch(Input.touches[i]);
+                    Touches[customTouch.touch.fingerId] = customTouch;
+                }
+            }
+            for (int i = 0; i < Touches.Length; i++)
+            {
+                if (!Touches[i].HasValue)
+                {
+                    for(int j = 0; j < SavedFingerId.Length; j++)
+                        SavedFingerId[j] = SavedFingerId[j] == i ? -1 : SavedFingerId[j];
+                }
+            }
+
+             return true;
+        }
+        else
+            return false;
     }
+    
+
+}
+
+public struct CustomTouch
+{
+    public CustomTouch(Touch _touch)
+    {
+        touch = _touch;
+        resolutionPos = new Vector2(
+                    touch.position.x / GameManager.ScreenSize.x,
+                    touch.position.y / GameManager.ScreenSize.y);
+    }
+
+    public Touch touch;
+    public Vector2 resolutionPos;
 }

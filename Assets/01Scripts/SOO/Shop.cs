@@ -5,9 +5,6 @@ using TMPro;
 
 public class Shop : MonoBehaviour
 {
-    [SerializeField]
-    private float CheckDistance = 2f;
-
     public Vector2 ShopPosition { get; private set; }
     public Vector2 DoorPosition { get; private set; }
     
@@ -20,6 +17,7 @@ public class Shop : MonoBehaviour
 
     private string doorText = "스테이지로 돌아갑니다.";
     private string refillmuchineText = "음료를 1회 최대치로 충전합니다.";
+    private string puchaseErrorText = "보유 재화가 부족합니다.";
 
     private int shelvesCount;
 
@@ -56,14 +54,20 @@ public class Shop : MonoBehaviour
 
     private int PlayerPositionCheck()
     {
+        float x = playerPosition.position.x;
+        //FIX : 플레이어가 상점에 왔을 때 번호를 부여하고 입력 키에 따라 위치를 확인하고 번호를 변경한다.
         for (int i = 0; i < shelvesCount; i++)
         {
-            if (playerPosition.position.x >= itemShelves[i].position.x - itemManager.ItemRadius
-             && playerPosition.position.x <= itemShelves[i].position.x + itemManager.ItemRadius)
+            if (x >= itemShelves[i].position.x - itemManager.ItemRadius
+             && x <= itemShelves[i].position.x + itemManager.ItemRadius)
             {
                 return i;
             }
         }
+        if (x >= DoorPosition.x)
+            return shelvesCount;
+        else if (x >= DoorPosition.x)
+            return shelvesCount + 1; //리필머신
         return -1;
     }
 
@@ -75,6 +79,16 @@ public class Shop : MonoBehaviour
             priceText.transform.position = 
                 new Vector3(items[itemIndex].transform.position.x, priceText.transform.position.y );
             priceText.text = items[itemIndex]?.Price.ToString();
+        }
+        else if (itemIndex == shelvesCount)
+        {
+            text.text = doorText;
+            priceText.text = "";
+        }
+        else if (itemIndex == shelvesCount + 1)
+        {
+            text.text = refillmuchineText;
+            priceText.text = "";
         }
         else
             text.text = priceText.text = "";

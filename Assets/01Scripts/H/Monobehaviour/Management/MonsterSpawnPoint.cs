@@ -21,7 +21,7 @@ public class MonsterSpawnPoint : MonoBehaviour
         {
             if (monsterToCreat == null)
             {
-                Debug.LogError($"({gameObject.transform.position}) {gameObject.name}: 생성할 몬스터가 없습니다!");
+                //Debug.LogError($"({gameObject.transform.position}) {gameObject.name}: 생성할 몬스터가 없습니다!");
                 return;
             }
             SpawnMonster();
@@ -60,7 +60,7 @@ public class MonsterSpawnPoint : MonoBehaviour
                 break;
         }
         int index = Random.Range(0, monsterList.Length);
-        Debug.Log($"index is {index}");
+        //Debug.Log($"index is {index}");
         if (monsterList[index] == null)
         {
             Debug.LogError("몬스터를 찾지 못함");
@@ -98,11 +98,11 @@ public class MonsterSpawnPoint : MonoBehaviour
         if (pickedValue < chance)
         {
             isGolden = true;
-            Debug.Log($"뽑을 확률은{chance} / {maxRange}이었으며 뽑은 수는{pickedValue} < {chance}이므로 황금 몬스터가 되었습니다");
+            //Debug.Log($"뽑을 확률은{chance} / {maxRange}이었으며 뽑은 수는{pickedValue} < {chance}이므로 황금 몬스터가 되었습니다");
         }
         else
         {
-            Debug.Log($"뽑을 확률은{chance} / {maxRange}이었으며 뽑은 수는{pickedValue} >= {chance}이므로 황금 몬스터가 되지 못하였습니다");
+            //Debug.Log($"뽑을 확률은{chance} / {maxRange}이었으며 뽑은 수는{pickedValue} >= {chance}이므로 황금 몬스터가 되지 못하였습니다");
         }
         return isGolden;
     }

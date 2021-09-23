@@ -17,8 +17,8 @@ public class ItemManager
 
     public ItemManager()
     {
-        image = new FileLoader<Sprite>("02Sprites/item");
-        itemModel = new FileLoader<GameObject>("04Prefabs", "Prefab").GetFile("ItemDummy");
+        image = new FileLoader<Sprite>("Images/item");
+        itemModel = new FileLoader<GameObject>("Prefabs", "Prefab").GetFile("ItemDummy");
         itemParent = new GameObject();
         itemParent.name = "ItemParent";
 

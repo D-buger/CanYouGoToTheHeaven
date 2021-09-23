@@ -12,10 +12,10 @@ public class PhysicsStats
         previousYPos = trans.position.y;
     }
 
-    [SerializeField, Range(0f, 10f), ReadOnly]
+    [SerializeField, Range(0f, 10f)]
     public readonly float maxSpeed = 5f;
 
-    [SerializeField, Range(0f, 2f), ReadOnly]
+    [SerializeField, Range(0f, 2f)]
     public readonly float moveSpeed = 1f;
 
     [SerializeField, Range(0f, 10f)]
@@ -25,7 +25,7 @@ public class PhysicsStats
     public Vector3 velocity = Vector3.zero, desiredVelocity = Vector3.zero;
     public float aVelocity = 0, aDesiredVelocity = 0;
 
-    [SerializeField, Range(0f, 180f), ReadOnly]
+    [SerializeField, Range(0f, 180f)]
     public readonly float rotateAmount = 45f;
 
     private float currentYSpeed = 0f;

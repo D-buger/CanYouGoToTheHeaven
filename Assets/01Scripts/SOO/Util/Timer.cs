@@ -2,19 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Timer
+public struct Timer
 {
-    float timer = 0.0f;
+    float timer;
     float endSec;
 
     public Timer(float sec)
     {
         endSec = sec;
+        timer = 0;
     }
 
-    public Timer(float sec, float startSec)
+    public Timer(float sec, float startSec) : this(sec)
     {
-        endSec = sec;
         timer = startSec;
     }
 

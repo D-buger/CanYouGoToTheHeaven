@@ -5,7 +5,7 @@ public class GameManager : SingletonBehavior<GameManager>
     [SerializeField]
     public InputManager input;
 
-    public Vector2 ScreenSize { get; private set; }
+    public static readonly Vector2 ScreenSize 
                 = new Vector2(Screen.width, Screen.height);
 
     private struct eSettings
@@ -16,8 +16,14 @@ public class GameManager : SingletonBehavior<GameManager>
     } 
     public int GameSetting { get; private set; } = 0x00000000;
 
+    private void Reset()
+    {
+        input = new InputManager();   
+    }
+
     protected override void OnAwake()
     {
+        Input.simulateMouseWithTouches = true;
         input.SetFirst();
     }
 

@@ -21,21 +21,21 @@ public class StageManager : SingletonBehavior<StageManager>
 
     protected override void OnAwake()
     {
+        ItemManager = new ItemManager();
+        UiManager =  new UIManager();
         Player = GameObject.FindGameObjectWithTag("Player");
         Stat = Player.GetComponent<Player>().stats;
 
         Shop = GameObject.FindGameObjectWithTag("Shop").GetComponent<Shop>();
         CameraManager = Camera.main.gameObject.GetComponent<CameraManager>();
         StageGenerator = GetComponent<StageGenerator>();
-        ItemManager = new ItemManager();
-        UiManager = new UIManager();
     }
 
     private void Update()
     {
         if (PlayerInStage)
         {
-            if (CameraManager.Screen2World(GameManager.Instance.ScreenSize).y
+            if (CameraManager.Screen2World(GameManager.ScreenSize).y
                 > StageGenerator.EdgePositions[playerRoom].y)
             {
                 CameraManager.CameraLock = true;

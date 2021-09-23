@@ -27,13 +27,13 @@ public class TextInput : MonoBehaviour
 
     private void Start()
     {
-        MoveEffect(TextEffects.Typing(textComponent, 0.1f));
+        //MoveEffect(TextEffects.Typing(textComponent, 0.1f));
         //ColorEffect(TextEffects.Gradient(textComponent, gradient));
     }
 
     private void Update()
     {
-        TextEffects.UpdateTexts(textComponent);
+        //TextEffects.UpdateTexts(textComponent);
 
         Skip();
     }
