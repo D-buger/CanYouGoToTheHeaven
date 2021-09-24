@@ -10,9 +10,6 @@ public class TouchManager
     public Action<Vector2>[,] touchAction
         = new Action<Vector2>[3, MAX_MULTITOUCH];
 
-    public Touch[] Touches { get; private set; }
-        = new Touch[MAX_MULTITOUCH];
-
     public int[] TouchFingerId { get; private set; }
         = new int[MAX_MULTITOUCH];
 
@@ -61,16 +58,13 @@ public class TouchManager
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Debug.Log("Down");
             touch.fingerId = 2;
             TouchBegin(1, touch);
         }
         else if (Input.GetKeyUp(KeyCode.Space))
         {
-            Debug.Log("Up");
             TouchEnd(1, touch);
         }
-        Debug.Log(TouchFingerId[1]);
     }
 
 #else

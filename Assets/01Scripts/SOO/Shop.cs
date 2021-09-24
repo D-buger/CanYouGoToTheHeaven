@@ -15,7 +15,9 @@ public class Shop : MonoBehaviour
     private TMP_Text text;
     private TMP_Text priceText;
     
-    private string puchaseErrorText = "보유 재화가 부족합니다.";
+    private readonly string puchaseErrorText = "보유 재화가 부족합니다.";
+    private bool errorTextEnabled = false;
+    private Timer errorTimer;
 
     private int shelvesCount;
 
@@ -27,9 +29,9 @@ public class Shop : MonoBehaviour
         shelvesCount = itemShelvesParent.childCount - 1;
 
         ShopPosition = transform.position;
-        DoorPosition = transform.GetChild(2).transform.position;
+        DoorPosition = transform.GetChild(3).transform.position;
 
-        text = transform.GetChild(3).GetComponent<TMP_Text>();
+        text = transform.GetChild(2).GetComponent<TMP_Text>();
 
         itemShelves = new Transform[shelvesCount];
         items = new ItemModel[shelvesCount];
@@ -46,7 +48,10 @@ public class Shop : MonoBehaviour
     {
         if (!StageManager.PlayerInStage)
         {
-            SetExplanation(PlayerPositionCheck());
+            if (!errorTextEnabled)
+                SetExplanation(PlayerPositionCheck());
+            else
+                ErrorText();
         }
     }
 
@@ -63,6 +68,19 @@ public class Shop : MonoBehaviour
             }
         }
         return -1;
+    }
+
+    private void ErrorText()
+    {
+        if (errorTimer.TimerUpdate())
+        {
+            text.color = Color.white;
+            errorTextEnabled = false;
+            return;
+        }
+
+        text.text = puchaseErrorText;
+        text.color = Color.red;
     }
 
     private void SetExplanation(int itemIndex)
@@ -90,7 +108,9 @@ public class Shop : MonoBehaviour
         }
         else
         {
-            text.text = puchaseErrorText;
+            priceText.text = "";
+            errorTimer = new Timer(0.8f);
+            errorTextEnabled = true;
         }
     }
 

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 [System.Serializable]
 public class InputManager
@@ -10,6 +11,8 @@ public class InputManager
     private bool active = false;
     public bool BehaviourActive => active && !StageManager.PlayerInStage;
     public bool AttackActive => active && StageManager.PlayerInStage;
+    
+    public event Action activeEvent;
 
     public void SetFirst()
     {

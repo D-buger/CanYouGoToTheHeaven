@@ -39,8 +39,7 @@ public class WaterGunModel
         }
         set
         {
-            waterAmount = Mathf.Min(value, MaxWaterAmount);
-            waterAmount = Mathf.Max(waterAmount, 0);
+            Mathf.Clamp(value, 0, maxWaterAmount);
             //StageManager.Instance.UiManager.SetWater(waterAmount);
         }
     }

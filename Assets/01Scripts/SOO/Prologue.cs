@@ -17,6 +17,8 @@ public class Prologue : MonoBehaviour
 
     private void Awake()
     {
+        GameManager.Instance.input.Touch.ButtonExtent = 0;
+
         prologue = CSVReader.Read("Prologue", out int size);
         image = new FileLoader<Sprite>("02Sprites/prologue");
 

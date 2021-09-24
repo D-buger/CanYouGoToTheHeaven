@@ -1,0 +1,25 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Door : MonoBehaviour
+{
+    public Vector2 playerMoveTo;
+
+    private void Teleport()
+    {
+        StageManager.Instance.Player.transform.position = playerMoveTo;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag(TagManager.PlayerTag))
+            GameManager.Instance.input.activeEvent += Teleport;
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag(TagManager.PlayerTag))
+            GameManager.Instance.input.activeEvent -= Teleport;
+    }
+}

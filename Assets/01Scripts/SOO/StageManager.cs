@@ -50,7 +50,7 @@ public class StageManager : SingletonBehavior<StageManager>
     }
 
     public static bool PlayerInStage { get; private set; } = true;
-
+    
     private void PlayerTeleportToShop()
     {
         Shop.enabled = true;
