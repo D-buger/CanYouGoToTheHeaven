@@ -40,10 +40,10 @@ public class Joystick
         backgroundObject.SetActive(active);
         handleObject.SetActive(active);
     }
-    public void JoyStickSetActive(bool active, Vector2 pos)
+    public void JoyStickSetActive(Vector2 pos)
     {
-        backgroundObject.SetActive(active);
-        handleObject.SetActive(active);
+        backgroundObject.SetActive(true);
+        handleObject.SetActive(true);
 
         back.rectTransform.transform.position = pos;
     }
@@ -89,7 +89,7 @@ public class Joystick
             Touch(pos.x);
     }
 
-    public void OnPointerUp()
+    public void OnPointerUp(Vector2 pos)
     {
         ResetPos();
     }

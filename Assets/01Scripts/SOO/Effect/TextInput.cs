@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using TMPro;
+using System.Xml;
 
 public class TextInput : MonoBehaviour
 {
@@ -23,6 +24,11 @@ public class TextInput : MonoBehaviour
             message = str;
         else
             str = message;
+    }
+
+    private void XmlTest()
+    {
+        XmlDocument xmlDocument = new XmlDocument();
     }
 
     private void Start()

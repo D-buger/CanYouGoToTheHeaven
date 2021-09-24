@@ -14,9 +14,7 @@ public class Shop : MonoBehaviour
 
     private TMP_Text text;
     private TMP_Text priceText;
-
-    private string doorText = "스테이지로 돌아갑니다.";
-    private string refillmuchineText = "음료를 1회 최대치로 충전합니다.";
+    
     private string puchaseErrorText = "보유 재화가 부족합니다.";
 
     private int shelvesCount;
@@ -46,7 +44,7 @@ public class Shop : MonoBehaviour
 
     private void Update()
     {
-        if (!StageManager.Instance.PlayerInStage)
+        if (!StageManager.PlayerInStage)
         {
             SetExplanation(PlayerPositionCheck());
         }
@@ -64,10 +62,6 @@ public class Shop : MonoBehaviour
                 return i;
             }
         }
-        if (x >= DoorPosition.x)
-            return shelvesCount;
-        else if (x >= DoorPosition.x)
-            return shelvesCount + 1; //리필머신
         return -1;
     }
 
@@ -79,16 +73,9 @@ public class Shop : MonoBehaviour
             priceText.transform.position = 
                 new Vector3(items[itemIndex].transform.position.x, priceText.transform.position.y );
             priceText.text = items[itemIndex]?.Price.ToString();
-        }
-        else if (itemIndex == shelvesCount)
-        {
-            text.text = doorText;
-            priceText.text = "";
-        }
-        else if (itemIndex == shelvesCount + 1)
-        {
-            text.text = refillmuchineText;
-            priceText.text = "";
+
+            if (GameManager.Instance.input.BehaviourActive)
+                BuyItem(itemIndex);
         }
         else
             text.text = priceText.text = "";
@@ -96,7 +83,15 @@ public class Shop : MonoBehaviour
 
     private void BuyItem(int itemIndex)
     {
-
+        if(StageManager.Instance.Stat.soul >= items[itemIndex].Price)
+        {
+            items[itemIndex].GetComponent<Collider2D>().enabled = true;
+            items[itemIndex] = null;
+        }
+        else
+        {
+            text.text = puchaseErrorText;
+        }
     }
 
     private void OnEnable()

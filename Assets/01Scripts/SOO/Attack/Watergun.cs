@@ -15,7 +15,7 @@ public class Watergun : MonoBehaviour
 
     private void Update()
     {
-        if (GameManager.Instance.input.BehaviourActive)
+        if (GameManager.Instance.input.AttackActive)
         {
             ShootWatergun();
         }

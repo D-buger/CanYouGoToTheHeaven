@@ -49,7 +49,7 @@ public class StageManager : SingletonBehavior<StageManager>
         }
     }
 
-    public bool PlayerInStage { get; private set; } = true;
+    public static bool PlayerInStage { get; private set; } = true;
 
     private void PlayerTeleportToShop()
     {

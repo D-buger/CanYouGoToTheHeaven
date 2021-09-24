@@ -38,6 +38,11 @@ public class TextEffects
         GetTextElementsInFixedUpdate();
     }
 
+    private void DivideWithTags()
+    {
+
+    }
+
     public void GetTextElementsInFixedUpdate()
     {
         textComponent.ForceMeshUpdate();
