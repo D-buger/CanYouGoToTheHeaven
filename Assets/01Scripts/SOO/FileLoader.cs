@@ -10,11 +10,17 @@ public class FileLoader<T>
     private string filePath;
     private string typeOfString;
 
-    public FileLoader(string path, string type) : this(path)
-        => typeOfString = type;
+    public FileLoader(string path, string divideString)
+        => SetFileLoader(path, divideString);
 
     public FileLoader(string path)
      => SetFileLoader(filePath = path);
+
+    public FileLoader<T> SetType(string type)
+    {
+        typeOfString = type;
+        return this;
+    }
 
     //TODO : 출시 직전에 #if문 두개에 있는 SetFileLoader 각각 내용 바꾸기
 #if UNITY_EDITOR
@@ -28,6 +34,14 @@ public class FileLoader<T>
         for (int i = 0; i < loadedFile.Length; i++)
         {
             files.Add(loadedFile[i].name, loadedFile[i]);
+        }
+    }
+    public void SetFileLoader(string filePath, string divideString)
+    {
+        T[] loadedFile = Resources.LoadAll<T>(filePath);
+        for (int i = 0; i < loadedFile.Length; i++)
+        {
+            files.Add(StringFormat(loadedFile[i].name, divideString), loadedFile[i]);
         }
     }
 
@@ -47,8 +61,8 @@ public class FileLoader<T>
     }
 #endif
 
-    private string StringFormat(string str)
-        => str.Contains("UnityEngine.") ? str.Remove(0, 12) : str;
+    private string StringFormat(string str, string divide)
+        => str.Contains(divide) ? str.Remove(0, divide.Length) : str;
 
     public T GetFile(string name) 
         => files[name];

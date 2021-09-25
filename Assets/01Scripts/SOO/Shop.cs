@@ -106,7 +106,6 @@ public class Shop : MonoBehaviour
             items[itemIndex].GetComponent<Collider2D>().enabled = true;
             items[itemIndex] = null;
         }
-        else
         {
             priceText.text = "";
             errorTimer = new Timer(0.8f);
