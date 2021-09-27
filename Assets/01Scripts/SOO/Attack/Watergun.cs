@@ -5,7 +5,6 @@ using UnityEngine;
 public class Watergun : MonoBehaviour
 {
     public WaterGunModel Model { get; private set; }
-     = new WaterGunModel(100);
 
     private Vector2 Angle => SOO.Util.AngleToVector(transform.rotation.eulerAngles.z);
 
@@ -14,8 +13,7 @@ public class Watergun : MonoBehaviour
     
     private void Awake()
     {
-        GameManager.Instance.input.attackCallback += ShootWatergun;
-        GameManager.Instance.input.attackEndCallback += () => Model.NowWater = null;
+        Model = new WaterGunModel(100);
 
         var element = new Dictionary<string, float>();
         foreach (var info in CSVReader.Read("Water"))
@@ -29,10 +27,17 @@ public class Watergun : MonoBehaviour
         }
     }
 
-    private void Start()
+    public void Update()
     {
-        Model.MaxWaterAmount = Model.MaxWaterAmount;
-        Model.WaterAmount = Model.WaterAmount;
+        if (GameManager.Instance.input.AttackActive)
+        {
+            ShootWatergun();
+        }
+        else
+        {
+            if (null != Model.NowWater)
+                Model.NowWater = null;
+        }
     }
 
     public void ShootWatergun()
@@ -62,7 +67,7 @@ public class Watergun : MonoBehaviour
         {
             if (value["MinPercent"] < Model.WaterAmount &&
                 Model.WaterAmount >= value["MaxPercent"])
-                return value["Length"];
+                return value["Length"] + 3;
         }
         Debug.LogError("waterAmount out of values in Water.csv");
         return -1;

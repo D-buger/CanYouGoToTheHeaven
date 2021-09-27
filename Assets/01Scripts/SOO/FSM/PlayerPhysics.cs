@@ -17,7 +17,7 @@ public class PlayerPhysics
         stat.velocity.x =
             Mathf.MoveTowards(stat.velocity.x, stat.desiredVelocity.x, maxSpeedChange);
         stat.aVelocity = 
-            -Mathf.MoveTowardsAngle(0, stat.rotateAmount,
+            -(int)Mathf.MoveTowardsAngle(0, stat.rotateAmount,
             (stat.velocity.x / stat.maxSpeed) * stat.rotateAmount);
         
         if(!stat.limitLeft || !stat.limitRight)

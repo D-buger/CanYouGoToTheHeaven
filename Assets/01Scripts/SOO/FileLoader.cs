@@ -62,7 +62,9 @@ public class FileLoader<T>
 #endif
 
     private string StringFormat(string str, string divide)
-        => str.Contains(divide) ? str.Remove(0, divide.Length) : str;
+    {
+        return str.Contains(divide) ? str.Remove(0, divide.Length) : str;
+    }
 
     public T GetFile(string name) 
         => files[name];

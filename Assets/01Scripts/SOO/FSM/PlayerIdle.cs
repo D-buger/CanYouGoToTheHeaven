@@ -29,7 +29,7 @@ public class PlayerIdle : FsmState<Player>
 
     public override void HandleInput(Player target)
     {
-        if (target.input.BehaviourActive)
+        if (target.input.AttackActive)
         {
             if (target.input.IsMove)
             {

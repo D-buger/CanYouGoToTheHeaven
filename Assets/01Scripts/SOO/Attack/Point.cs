@@ -30,5 +30,4 @@ public class Point
         PointPosition = Vector2.MoveTowards(PointPosition, PointPosition + Direction, 1 * speed);
         return true;
     }
-
 }

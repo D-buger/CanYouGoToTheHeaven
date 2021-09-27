@@ -7,8 +7,11 @@ public class TouchManager
 {
     public const int MAX_MULTITOUCH = 2;
 
-    public Action<Vector2>[,] touchAction
-        = new Action<Vector2>[3, MAX_MULTITOUCH];
+    public Action<Vector2>[] movementAction
+        = new Action<Vector2>[3];
+
+    public Action[] touchAction
+        = new Action[3];
 
     public int[] TouchFingerId { get; private set; }
         = new int[MAX_MULTITOUCH];
@@ -44,22 +47,27 @@ public class TouchManager
         {
             touch.fingerId = 1;
             touch.position = Input.mousePosition;
-            TouchBegin(0, touch);
+            TouchBegin(0, touch, touch.position);
         }
         else if (Input.GetMouseButton(0)) {
             touch.fingerId = 1;
             touch.position = Input.mousePosition;
-            TouchMove(0, touch);
+            TouchMove(0, touch, touch.position);
         }
         else if (Input.GetMouseButtonUp(0))
         {
-            TouchEnd(0, touch);
+            TouchEnd(0, touch, touch.position);
         }
+
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
             touch.fingerId = 2;
             TouchBegin(1, touch);
+        }
+        else if (Input.GetKey(KeyCode.Space))
+        {
+            TouchMove(1, touch);
         }
         else if (Input.GetKeyUp(KeyCode.Space))
         {
@@ -117,20 +125,37 @@ public class TouchManager
     }
 #endif
 
+    private void TouchBegin(int fingerId, Touch touch, Vector2 vec)
+    {
+        TouchFingerId[fingerId] = touch.fingerId;
+        movementAction[0]?.Invoke(vec);
+    }
+
     private void TouchBegin(int fingerId, Touch touch)
     {
         TouchFingerId[fingerId] = touch.fingerId;
-        touchAction[0, fingerId]?.Invoke(touch.position);
+        touchAction[0]?.Invoke();
+    }
+
+    private void TouchMove(int fingerId, Touch touch, Vector2 vec)
+    {
+        movementAction[1]?.Invoke(vec);
     }
 
     private void TouchMove(int fingerId, Touch touch)
     {
-        touchAction[1, fingerId]?.Invoke(touch.position);
+        touchAction[1]?.Invoke();
+    }
+
+    private void TouchEnd(int fingerId, Touch touch, Vector2 vec)
+    {
+        TouchFingerId[fingerId] = -1;
+        movementAction[2]?.Invoke(vec);
     }
 
     private void TouchEnd(int fingerId, Touch touch)
     {
         TouchFingerId[fingerId] = -1;
-        touchAction[2, fingerId]?.Invoke(touch.position);
+        touchAction[2]?.Invoke();
     }
 }

@@ -15,37 +15,24 @@ public class InputManager
         set
         {
             active = value;
-            if (!StageManager.PlayerInStage)
-            {
-                Touch.touchAction[2, 1] -= (Vector2 vec) => attackEndCallback?.Invoke();
-                Touch.touchAction[1, 1] -= (Vector2 vec) => attackCallback?.Invoke();
-                Touch.touchAction[0, 1] += (Vector2 vec) => activeCallback?.Invoke();
-            }
-            else
-            {
-                Touch.touchAction[2, 1] += (Vector2 vec) => attackEndCallback?.Invoke();
-                Touch.touchAction[1, 1] += (Vector2 vec) => attackCallback?.Invoke();
-                Touch.touchAction[0, 1] -= (Vector2 vec) => activeCallback?.Invoke();
-            }
         }
     }
     public bool BehaviourActive => active && !StageManager.PlayerInStage;
     public bool AttackActive => active && StageManager.PlayerInStage;
     
     public Action activeCallback;
-    public Action attackCallback;
-    public Action attackEndCallback;
 
     public void SetFirst()
     {
         Joystick.SetFirst();
 
-        Touch.touchAction[0, 0] += Joystick.JoyStickSetActive;
-        Touch.touchAction[1, 0] += Joystick.OnDrag;
-        Touch.touchAction[2, 0] += Joystick.OnPointerUp;
+        Touch.movementAction[0] += Joystick.JoyStickSetActive;
+        Touch.movementAction[1] += Joystick.OnDrag;
+        Touch.movementAction[2] += Joystick.OnPointerUp;
 
-        Touch.touchAction[0, 1] += (Vector2 vec) => Active = true;
-        Touch.touchAction[2, 1] += (Vector2 vec) => Active = false;
+        Touch.touchAction[0] += () => Active = true;
+        Touch.touchAction[2] += () => Active = false;
+        Touch.touchAction[0] += activeCallback;
     }
 
     public void InputUpdate()

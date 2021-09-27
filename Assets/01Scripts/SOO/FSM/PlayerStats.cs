@@ -7,7 +7,7 @@ using System;
 public class PlayerStats
 {
     public static event Action<int, int> maxHpCallback;
-    private int maxHp = 6;
+    private int maxHp;
     public int MaxHp
     {
         get => maxHp;
@@ -28,7 +28,6 @@ public class PlayerStats
         {
             currentHp = Mathf.Clamp(value, 0, maxHp);
             currentHpCallback?.Invoke(maxHp, currentHp);
-            Debug.Log(currentHpCallback);
         }
     }
 
@@ -52,7 +51,9 @@ public class PlayerStats
     public void SetFirst(Transform _trans, Watergun _watergun)
     {
         physicsStat.Set(_trans);
-        CurrentHp = MaxHp;
         watergun = _watergun;
+        MaxHp = 6;
+        CurrentHp = MaxHp;
+        Soul = 0;
     }
 }

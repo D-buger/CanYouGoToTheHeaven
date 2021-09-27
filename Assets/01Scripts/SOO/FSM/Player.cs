@@ -23,9 +23,6 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        stats.SetFirst(
-            transform,
-            transform.GetChild(0).GetComponent<Watergun>());
         physics = new PlayerPhysics(stats.physicsStat);
         anim = transform.GetComponent<Animator>();
 
@@ -41,9 +38,9 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        stats.MaxHp = stats.MaxHp;
-        stats.CurrentHp = stats.CurrentHp;
-        stats.Soul = 100;
+        stats.SetFirst(
+            transform,
+            transform.GetChild(0).GetComponent<Watergun>());
     }
 
     private void Update()

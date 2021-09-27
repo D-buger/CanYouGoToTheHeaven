@@ -5,17 +5,18 @@ using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
+    [SerializeField]
     private Image image;
 
-    Texture2D texture;
+    private Texture2D texture;
 
     private FileLoader<Texture2D> hudImage;
     private Rect frameRect;
-    int ratio;
+    private int ratio;
 
-    Texture2D emptyHeart;
-    Texture2D fullHeart;
-    Texture2D halfHeart;
+    private Texture2D emptyHeart;
+    private Texture2D fullHeart;
+    private Texture2D halfHeart;
 
     private void Awake()
     {
@@ -74,7 +75,10 @@ public class HealthBar : MonoBehaviour
             emptyHeart.height +
             emptyHeart.height * (HP <= ratio ? 0 : HP - ratio) / ratio;
 
-        texture.Resize(textureWidth, textureHeight);
+        if (texture == null)
+            texture = new Texture2D(textureWidth, textureHeight);
+        else
+            texture.Resize(textureWidth, textureHeight);
 
         Color[] color = texture.GetPixels();
         for (int i = 0; i < color.Length; i++)

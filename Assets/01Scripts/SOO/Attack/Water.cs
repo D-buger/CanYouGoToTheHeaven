@@ -5,7 +5,7 @@ using UnityEngine;
 public class Water : MonoBehaviour
 {
     private float pointDist = 0.01f;
-    private int waterReflected = 1;
+    private int waterReflected = 0;
 
     private string reflectTag = TagManager.WallTag;
     private string removeTag = TagManager.EnemyTag; 
