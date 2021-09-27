@@ -18,9 +18,9 @@ public class Fragment : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D _collision)
     {
-        if (_collision.gameObject.CompareTag("Player"))
+        if (_collision.gameObject.CompareTag(TagManager.PlayerTag))
         {
-            StageManager.Instance.Stat.CurrentHP -= damage;
+            StageManager.Instance.Stat.CurrentHp -= damage;
             Destroy(gameObject);
         }
         else if (_collision.gameObject.layer == LayerMask.NameToLayer("Tile"))

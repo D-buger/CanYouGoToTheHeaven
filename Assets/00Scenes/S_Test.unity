@@ -312,7 +312,7 @@ GameObject:
   - component: {fileID: 568815735}
   - component: {fileID: 568815734}
   m_Layer: 5
-  m_Name: Test
+  m_Name: Soul
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -335,7 +335,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -365.07, y: 581}
+  m_AnchoredPosition: {x: -382.23, y: 627}
   m_SizeDelta: {x: 135.54, y: 135.5371}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &568815734
@@ -352,7 +352,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -652,7 +652,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 1
-  m_FillAmount: 1
+  m_FillAmount: 0.01
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -843,9 +843,9 @@ GameObject:
   - component: {fileID: 805035417}
   - component: {fileID: 805035416}
   - component: {fileID: 805035415}
-  - component: {fileID: 805035414}
   - component: {fileID: 805035418}
   - component: {fileID: 805035413}
+  - component: {fileID: 805035414}
   m_Layer: 0
   m_Name: Can
   m_TagString: Player
@@ -892,19 +892,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats:
-    MaxHP: 3
-    currentHP: 0
-    soul: 0
-    watergun: {fileID: 0}
+    watergun: {fileID: 855221228}
     physicsStat:
-      maxAcceleration: 8.76
-      maxAirAcceleration: 6.5
+      maxAcceleration: 6.06
+      maxAirAcceleration: 4.37
       velocity: {x: 0, y: 0, z: 0}
       desiredVelocity: {x: 0, y: 0, z: 0}
       aVelocity: 0
       aDesiredVelocity: 0
-      body: {fileID: 0}
-      trans: {fileID: 0}
+      body: {fileID: 805035415}
+      trans: {fileID: 805035417}
       limitLeft: 0
       limitRight: 0
       onGround: 0
@@ -1095,8 +1092,8 @@ Camera:
   m_GameObject: {fileID: 910325702}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.3207547, g: 0.3207547, b: 0.3207547, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -1155,15 +1152,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RenderShadows: 1
-  m_RequiresDepthTextureOption: 2
-  m_RequiresOpaqueTextureOption: 2
+  m_RenderShadows: 0
+  m_RequiresDepthTextureOption: 0
+  m_RequiresOpaqueTextureOption: 0
   m_CameraType: 0
   m_Cameras: []
   m_RendererIndex: -1
   m_VolumeLayerMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 0
   m_VolumeTrigger: {fileID: 0}
   m_RenderPostProcessing: 0
   m_Antialiasing: 0
@@ -1203,9 +1200,10 @@ GameObject:
   - component: {fileID: 1019643828}
   - component: {fileID: 1019643827}
   - component: {fileID: 1019643826}
+  - component: {fileID: 1019643830}
   m_Layer: 5
   m_Name: Canvas
-  m_TagString: Untagged
+  m_TagString: Canvas
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1294,6 +1292,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1019643830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1019643825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba6c2b193e3f0504e887bda9763503c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1046030244
 GameObject:
   m_ObjectHideFlags: 0
@@ -1381,8 +1391,9 @@ GameObject:
   - component: {fileID: 1100374342}
   - component: {fileID: 1100374341}
   - component: {fileID: 1100374343}
+  - component: {fileID: 1100374344}
   m_Layer: 5
-  m_Name: Test
+  m_Name: HealthBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1404,8 +1415,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -75, y: 725}
-  m_SizeDelta: {x: 750, y: 150}
+  m_AnchoredPosition: {x: -150, y: 750}
+  m_SizeDelta: {x: 600, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1100374341
 MonoBehaviour:
@@ -1454,12 +1465,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 1100374339}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f30358eef4cf8247821e6fa1e03d65a, type: 3}
+  m_Script: {fileID: 11500000, guid: c9f5835dbe483514886a07c6a5069bdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHP: 6
-  sampleHp: 6
-  texture: {fileID: 0}
+  halfHeart: {fileID: 0}
+--- !u!114 &1100374344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1100374339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e01e498b7d532a4db1ada11633ecc8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tag: 
 --- !u!1 &1158777560
 GameObject:
   m_ObjectHideFlags: 0
@@ -1947,8 +1969,9 @@ GameObject:
   - component: {fileID: 1993843573}
   - component: {fileID: 1993843575}
   - component: {fileID: 1993843574}
+  - component: {fileID: 1993843576}
   m_Layer: 5
-  m_Name: Text
+  m_Name: SoulText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1987,7 +2010,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -2015,6 +2038,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1993843572}
   m_CullTransparentMesh: 1
+--- !u!114 &1993843576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1993843572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e01e498b7d532a4db1ada11633ecc8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tag: 
 --- !u!1 &2082381497
 GameObject:
   m_ObjectHideFlags: 0
@@ -2025,8 +2061,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2082381498}
   - component: {fileID: 2082381499}
+  - component: {fileID: 2082381500}
   m_Layer: 5
-  m_Name: Water
+  m_Name: WaterBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2099,12 +2136,25 @@ MonoBehaviour:
   m_HandleRect: {fileID: 0}
   m_Direction: 2
   m_MinValue: 0
-  m_MaxValue: 1
+  m_MaxValue: 100
   m_WholeNumbers: 0
   m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2082381500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2082381497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e01e498b7d532a4db1ada11633ecc8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tag: 
 --- !u!1001 &2862845007742340205
 PrefabInstance:
   m_ObjectHideFlags: 0

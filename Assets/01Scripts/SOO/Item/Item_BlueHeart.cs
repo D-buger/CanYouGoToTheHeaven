@@ -6,6 +6,6 @@ public class Item_BlueHeart : ItemModel
 {
     protected override void ItemEffect(GameObject player)
     {
-        player.GetComponent<Player>().stats.MaxHP += option;
+        player.GetComponent<Player>().stats.MaxHp += option;
     }
 }

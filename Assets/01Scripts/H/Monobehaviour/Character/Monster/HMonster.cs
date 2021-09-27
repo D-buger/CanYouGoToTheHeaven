@@ -47,12 +47,12 @@ public class HMonster : MonoBehaviour
 
     protected void ShotHomingProjectile(GameObject _projectile, int _damage, float _velocity)
     {
-        Debug.Log($"{gameObject.name}: 유도 발사체 발사!");
+        //Debug.Log($"{gameObject.name}: 유도 발사체 발사!");
     }
 
     protected void ShotProjectile(GameObject _projectile, int _damage, int _projectileCount, float _velocity, float _totalAngle)
     {
-        Debug.Log($"{gameObject.name}: 발사체 발사!");
+        //Debug.Log($"{gameObject.name}: 발사체 발사!");
         Vector2 dir = player.transform.position - transform.position;
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         float currentRotZ = angle;
@@ -123,7 +123,7 @@ public class HMonster : MonoBehaviour
     {
         if (_collision.gameObject.CompareTag("Player")) //플레이어와 몬스터의 충돌을 감지하는 역할. 플레이어 스크립트 내로 옮기는게 좋음.
         {
-            StageManager.Instance.Stat.CurrentHP -= contactDamage;
+            StageManager.Instance.Stat.CurrentHp -= contactDamage;
             Destroy(gameObject);
         }
     }

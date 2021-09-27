@@ -85,7 +85,8 @@ public class Shop : MonoBehaviour
 
     private void SetExplanation(int itemIndex)
     {
-        if (itemIndex >= 0 && itemIndex < shelvesCount)
+        if (itemIndex >= 0 && itemIndex < shelvesCount
+            && items[itemIndex] != null)
         {
             text.text = items[itemIndex]?.Effect;
             priceText.transform.position = 
@@ -101,12 +102,13 @@ public class Shop : MonoBehaviour
 
     private void BuyItem(int itemIndex)
     {
-        if(StageManager.Instance.Stat.soul >= items[itemIndex].Price)
+        if(StageManager.Instance.Stat.Soul >= items[itemIndex].Price)
         {
+            StageManager.Instance.Stat.Soul -= items[itemIndex].Price;
             items[itemIndex].GetComponent<Collider2D>().enabled = true;
             items[itemIndex] = null;
         }
-        {
+        else{
             priceText.text = "";
             errorTimer = new Timer(0.8f);
             errorTextEnabled = true;

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class WaterGunModel
 {
@@ -15,6 +16,7 @@ public class WaterGunModel
         Damage = damage;
     }
 
+    public static event Action<int> maxWaterAmountCallback;
     private int maxWaterAmount;
     public int MaxWaterAmount
     {
@@ -25,11 +27,11 @@ public class WaterGunModel
         set
         {
             maxWaterAmount = value;
-            //StageManager.Instance.UiManager.SetMaxWater(maxWaterAmount);
-
+            maxWaterAmountCallback?.Invoke(maxWaterAmount);
         }
     }
 
+    public static event Action<int> currentWaterAmountCallback;
     private int waterAmount;
     public int WaterAmount
     {
@@ -39,8 +41,8 @@ public class WaterGunModel
         }
         set
         {
-            Mathf.Clamp(value, 0, maxWaterAmount);
-            //StageManager.Instance.UiManager.SetWater(waterAmount);
+            waterAmount = Mathf.Clamp(value, 0, maxWaterAmount);
+            currentWaterAmountCallback?.Invoke(waterAmount);
         }
     }
 

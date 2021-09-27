@@ -24,7 +24,7 @@ public class RefillMuchine : MonoBehaviour
     {
         if (collision.gameObject.CompareTag(TagManager.PlayerTag))
         {
-            GameManager.Instance.input.activeEvent += Refill;
+            GameManager.Instance.input.activeCallback += Refill;
         }
     }
 
@@ -32,7 +32,7 @@ public class RefillMuchine : MonoBehaviour
     {
         if (collision.gameObject.CompareTag(TagManager.PlayerTag))
         {
-            GameManager.Instance.input.activeEvent -= Refill;
+            GameManager.Instance.input.activeCallback -= Refill;
         }
     }
 }

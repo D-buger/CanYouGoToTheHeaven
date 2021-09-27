@@ -6,7 +6,6 @@ using UnityEngine;
 public class StageManager : SingletonBehavior<StageManager>
 {
     public CameraManager CameraManager { get; private set; }
-    public UIManager UiManager { get; private set; }
     public ItemManager ItemManager { get; private set; }
 
     public PlayerStats Stat { get; private set; }
@@ -22,7 +21,6 @@ public class StageManager : SingletonBehavior<StageManager>
     protected override void OnAwake()
     {
         ItemManager = new ItemManager();
-        UiManager =  new UIManager();
         Player = GameObject.FindGameObjectWithTag("Player");
         Stat = Player.GetComponent<Player>().stats;
 

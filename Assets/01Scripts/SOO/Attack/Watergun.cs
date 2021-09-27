@@ -5,25 +5,34 @@ using UnityEngine;
 public class Watergun : MonoBehaviour
 {
     public WaterGunModel Model { get; private set; }
+     = new WaterGunModel(100);
 
     private Vector2 Angle => SOO.Util.AngleToVector(transform.rotation.eulerAngles.z);
 
+    private List<Dictionary<string, float>> waterInfo
+        = new List<Dictionary<string, float>>();
+    
     private void Awake()
     {
-        Model = new WaterGunModel(100);
+        GameManager.Instance.input.attackCallback += ShootWatergun;
+        GameManager.Instance.input.attackEndCallback += () => Model.NowWater = null;
+
+        var element = new Dictionary<string, float>();
+        foreach (var info in CSVReader.Read("Water"))
+        {
+            element = new Dictionary<string, float>();
+            foreach (var infoDicti in info)
+            {
+                element[infoDicti.Key] = float.Parse(infoDicti.Value);
+            }
+            waterInfo.Add(element);
+        }
     }
 
-    private void Update()
+    private void Start()
     {
-        if (GameManager.Instance.input.AttackActive)
-        {
-            ShootWatergun();
-        }
-        else
-        {
-            if (null != Model.NowWater)
-                Model.NowWater = null;
-        }
+        Model.MaxWaterAmount = Model.MaxWaterAmount;
+        Model.WaterAmount = Model.WaterAmount;
     }
 
     public void ShootWatergun()
@@ -49,22 +58,13 @@ public class Watergun : MonoBehaviour
 
     private float TimeSet()
     {
-        if (Model.MaxWaterAmount / 100 * 20 > Model.WaterAmount)
+        foreach (var value in waterInfo)
         {
-            return 0.3f;
+            if (value["MinPercent"] < Model.WaterAmount &&
+                Model.WaterAmount >= value["MaxPercent"])
+                return value["Length"];
         }
-        else if (Model.MaxWaterAmount / 100 * 50 > Model.WaterAmount)
-        {
-            return 0.5f;
-        }
-        else if(Model.MaxWaterAmount / 100 * 50 <= Model.WaterAmount)
-        {
-            return 1f;
-        }
-        else
-        {
-            Debug.Log("해당 되지 않는 양");
-            return 0;
-        }
+        Debug.LogError("waterAmount out of values in Water.csv");
+        return -1;
     }
 }

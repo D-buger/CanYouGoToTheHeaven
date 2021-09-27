@@ -21,18 +21,10 @@ public class Player : MonoBehaviour
 
     public Animator anim;
 
-    private void Reset()
-    {
-        stats = new PlayerStats();
-        stats.Set(
-            transform,
-            transform.GetChild(0).GetComponent<Watergun>());
-    }
-
     private void Awake()
     {
-        stats.Set(
-            transform, 
+        stats.SetFirst(
+            transform,
             transform.GetChild(0).GetComponent<Watergun>());
         physics = new PlayerPhysics(stats.physicsStat);
         anim = transform.GetComponent<Animator>();
@@ -46,7 +38,14 @@ public class Player : MonoBehaviour
         StateMachine = new StateMachine<Player>();
         StateMachine.Init(this, new PlayerIdle());
     }
-    
+
+    private void Start()
+    {
+        stats.MaxHp = stats.MaxHp;
+        stats.CurrentHp = stats.CurrentHp;
+        stats.Soul = 100;
+    }
+
     private void Update()
     {
         StateMachine.Update();
