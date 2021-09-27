@@ -88,7 +88,7 @@ public class TouchManager
                     if (ResolutionPos(touch).x < buttonExtent 
                         && TouchFingerId[0] == -1)
                     {
-                        TouchBegin(0, touch);
+                        TouchBegin(0, touch, touch.position);
                     }
                     else if (ResolutionPos(touch).x > buttonExtent
                         && TouchFingerId[1] == -1)
@@ -101,7 +101,7 @@ public class TouchManager
                     if (TouchFingerId[0] != -1 
                         && touch.fingerId == TouchFingerId[0])
                     {
-                        TouchMove(0, touch);
+                        TouchMove(0, touch, touch.position);
                     }
                     else if (TouchFingerId[1] != 1
                         && touch.fingerId == TouchFingerId[1])
@@ -113,7 +113,7 @@ public class TouchManager
                 case TouchPhase.Canceled:
                     if (touch.fingerId == TouchFingerId[0])
                     {
-                        TouchEnd(0, touch);
+                        TouchEnd(0, touch, touch.position);
                     }
                     else if(touch.fingerId == TouchFingerId[1])
                     {

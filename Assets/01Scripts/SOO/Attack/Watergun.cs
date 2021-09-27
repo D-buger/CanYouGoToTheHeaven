@@ -10,10 +10,14 @@ public class Watergun : MonoBehaviour
 
     private List<Dictionary<string, float>> waterInfo
         = new List<Dictionary<string, float>>();
+
+    private ParticleSystem spreadWater;
     
     private void Awake()
     {
-        Model = new WaterGunModel(100);
+        Model = new WaterGunModel(500);
+        spreadWater = transform.GetChild(0).GetComponent<ParticleSystem>();
+        spreadWater.Play();
 
         var element = new Dictionary<string, float>();
         foreach (var info in CSVReader.Read("Water"))
@@ -31,20 +35,17 @@ public class Watergun : MonoBehaviour
     {
         if (GameManager.Instance.input.AttackActive)
         {
-            ShootWatergun();
+            if (Model.WaterAmount > 0)
+            {
+                spreadWater.enableEmission = true;
+                WaterSet();
+            }
         }
         else
         {
+            spreadWater.enableEmission = false;
             if (null != Model.NowWater)
                 Model.NowWater = null;
-        }
-    }
-
-    public void ShootWatergun()
-    {
-        if (Model.WaterAmount > 0)
-        {
-            WaterSet();
         }
     }
 

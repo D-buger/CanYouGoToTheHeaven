@@ -46,6 +46,38 @@ public class FileLoader<T>
     }
 
 #else
+    private readonly string FILE_PATH = Application.streamingAssetsPath;
+
+    private System.Type typeOfT = typeof(T);
+
+    public void SetFileLoader(string filePath)
+    {
+        T[] loadedFile = Resources.LoadAll<T>(filePath);
+        for (int i = 0; i < loadedFile.Length; i++)
+        {
+            files.Add(loadedFile[i].name, loadedFile[i]);
+        }
+    }
+    public void SetFileLoader(string filePath, string divideString)
+    {
+        T[] loadedFile = Resources.LoadAll<T>(filePath);
+        for (int i = 0; i < loadedFile.Length; i++)
+        {
+            files.Add(StringFormat(loadedFile[i].name, divideString), loadedFile[i]);
+        }
+    }
+#endif
+
+    private string StringFormat(string str, string divide)
+    {
+        return str.Contains(divide) ? str.Remove(0, divide.Length) : str;
+    }
+
+    public T GetFile(string name) 
+        => files[name];
+}
+
+/*
     public void SetFileLoader(string spritePath)
     {
         string[] guids = UnityEditor.AssetDatabase.FindAssets($"t:" +
@@ -59,13 +91,5 @@ public class FileLoader<T>
         }
         
     }
-#endif
 
-    private string StringFormat(string str, string divide)
-    {
-        return str.Contains(divide) ? str.Remove(0, divide.Length) : str;
-    }
-
-    public T GetFile(string name) 
-        => files[name];
-}
+    */
