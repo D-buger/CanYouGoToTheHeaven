@@ -15,7 +15,6 @@ public class Watergun : MonoBehaviour
     
     private void Awake()
     {
-        Model = new WaterGunModel(500);
         spreadWater = transform.GetChild(0).GetComponent<ParticleSystem>();
         spreadWater.Play();
 
@@ -29,6 +28,11 @@ public class Watergun : MonoBehaviour
             }
             waterInfo.Add(element);
         }
+    }
+
+    private void Start()
+    {
+        Model = new WaterGunModel(500);
     }
 
     public void Update()

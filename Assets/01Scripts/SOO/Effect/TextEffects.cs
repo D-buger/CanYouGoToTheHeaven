@@ -24,23 +24,18 @@ public class TextEffects
     private TMP_CharacterInfo charInfo;
     private TMP_MeshInfo[] meshInfo;
 
-    private Dictionary<string, System.Action> customTags;
+    public static Dictionary<string, System.Action> customTags { get; private set; }
     
     public TextEffects()
     {
         customTags = new Dictionary<string, System.Action>();
 
-        customTags.Add("<H>", () => HorizontalShaking());
-        customTags.Add("<W>", () => Waving());
-        customTags.Add("<T>", () => Typing(3));
-        customTags.Add("<Rainbow>", () => Rainbow());
+        customTags.Add("H", () => HorizontalShaking());
+        customTags.Add("W", () => Waving());
+        customTags.Add("T", () => Typing(3));
+        customTags.Add("Rainbow", () => Rainbow());
 
         GetTextElementsInFixedUpdate();
-    }
-
-    private void DivideWithTags()
-    {
-
     }
 
     public void GetTextElementsInFixedUpdate()
@@ -78,7 +73,6 @@ public class TextEffects
             }
         }
     }
-
 
     private void Waving()
     {

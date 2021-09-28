@@ -1,16 +1,14 @@
 using System.Collections;
 using UnityEngine;
 using TMPro;
-using System.Xml;
 
 public class TextInput : MonoBehaviour
 {
-    [SerializeField]
     private TMP_Text textComponent;
 
-    public Gradient gradient;
-    public string message;
-
+    private TextSplit textDictionary;
+    private TextEffects textEffects;
+    
     private IEnumerator moveEffect = null;
     private IEnumerator colorEffect = null;
 
@@ -19,27 +17,12 @@ public class TextInput : MonoBehaviour
         if (textComponent == null)
             textComponent = GetComponent<TMP_Text>();
 
-        string str = GetComponent<TextMeshPro>().text;
-        if (str != null)
-            message = str;
-        else
-            str = message;
-    }
-
-    private void XmlTest()
-    {
-        XmlDocument xmlDocument = new XmlDocument();
-    }
-
-    private void Start()
-    {
-        //MoveEffect(TextEffects.Typing(textComponent, 0.1f));
-        //ColorEffect(TextEffects.Gradient(textComponent, gradient));
+        textEffects = new TextEffects();
     }
 
     private void Update()
     {
-        //TextEffects.UpdateTexts(textComponent);
+        textEffects.UpdateTexts();
 
         Skip();
     }
