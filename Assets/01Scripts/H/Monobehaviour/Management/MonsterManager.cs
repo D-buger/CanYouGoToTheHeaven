@@ -6,14 +6,19 @@ public class MonsterManager : MonoBehaviour
 {
     public static MonsterManager instance = null;
 
+    public List<Dictionary<string, string>> monsterInfoCSV = new List<Dictionary<string, string>>(); //CSV파일 읽어온 것
+    Dictionary<string, int> monsterIndexDictionary = new Dictionary<string, int>(); //key값으로 몬스터의 이름을 넣으면 value로 integer인 index를 반환
+
     void MakeSingleton()
     {
         if (instance != null && instance != this)
         {
             Destroy(gameObject);
-            return;
         }
-        instance = this;
+        else
+        {
+            instance = this;
+        }
     }
 
     public GameObject[] EGradeMonster;
@@ -32,6 +37,8 @@ public class MonsterManager : MonoBehaviour
     public void FindPlayer()
     {
         player = GameObject.FindWithTag("Player");
+        Debug.LogWarning("플레이어를 가급적 특정 매니저에게 직접 받아올것!");
+
         if (player == null)
         {
             Debug.LogError($"{gameObject.name}: Warnning!! Player is null!");
@@ -42,6 +49,25 @@ public class MonsterManager : MonoBehaviour
     {
         FindPlayer();
         CheckVariable();
+    }
+
+    void ReadingCSVFile()
+    {
+        monsterInfoCSV = CSVReader.Read("MonsterData");
+        for (int i = 0; i < 40; i++)
+        {
+            if (monsterInfoCSV[i]["Index"] == "" || monsterInfoCSV[i] == null) //인덱스가 공란이면 == 해당 행에 데이터가 없다면
+            {
+                break; //Escape
+            }
+            monsterIndexDictionary.Add(monsterInfoCSV[i]["MonsterName"], i); //i번째 행의 몬스터 이름을 key로, i를 value로 딕셔너리에 추가
+        }
+    }
+
+    public Dictionary<string, string> GetDataWithName(string _name)
+    {
+        int index = monsterIndexDictionary[_name]; //몇 번째 행인지 구함
+        return monsterInfoCSV[index];
     }
 
     void CheckVariable()
@@ -59,6 +85,5 @@ public class MonsterManager : MonoBehaviour
     private void Awake()
     {
         MakeSingleton();
-        FindPlayer();
     }
 }

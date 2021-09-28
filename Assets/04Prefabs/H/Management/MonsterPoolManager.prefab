@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3665305679513349950
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3665305679513349948}
+  - component: {fileID: 3665305679513349951}
+  m_Layer: 0
+  m_Name: MonsterPoolManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3665305679513349948
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3665305679513349950}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.5004249, y: -5.4896183, z: -0.26176423}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3665305679513349951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3665305679513349950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48ad6d9a62f269b4f925143812deb1ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectPoolPrefab: {fileID: 1436198923727162557, guid: fc6c0e5303861cc479fce6ddb2da3510, type: 3}
+  objectList:
+  - objectToPooling: {fileID: 2331454088833507680, guid: 43ce2caf4cebcbf48b3bf97c2a50b691, type: 3}
+    poolingCount: 3
+  - objectToPooling: {fileID: 2185849960792005978, guid: e08cdeb2c7afce3499367d5f42eb16f1, type: 3}
+    poolingCount: 0
+  - objectToPooling: {fileID: 651090270845228537, guid: f1904ad4461ac2348929ba91b132572f, type: 3}
+    poolingCount: 8
+  - objectToPooling: {fileID: 8307769380026285632, guid: ba547abfbca143f4f953edfd1a00b518, type: 3}
+    poolingCount: 2
+  - objectToPooling: {fileID: 5042816215450494462, guid: 8ad1452451a7d8840a55afc859e53126, type: 3}
+    poolingCount: 4

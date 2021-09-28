@@ -1081,6 +1081,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats:
     MaxHP: 3
+    currentHP: 0
     soul: 0
     watergun: {fileID: 0}
     physicsStat:
@@ -1644,6 +1645,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1046030244}
   m_CullTransparentMesh: 1
+--- !u!1 &1157989834
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1157989836}
+  - component: {fileID: 1157989835}
+  m_Layer: 0
+  m_Name: mdmdmmd
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1157989835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1157989834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 794c8562edebfe14cbfbdadaaecef984, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  monsterName: 
+  rank: 0
+  hitPoint: 0
+  isGoldenMonster: 0
+--- !u!4 &1157989836
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1157989834}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.013150193, y: 1.5243605, z: -4.623353}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1158777560
 GameObject:
   m_ObjectHideFlags: 0
@@ -2056,6 +2104,63 @@ MonoBehaviour:
   levelInStage: 3
   distXBetwnStages: 0
   firstStagePos: {x: 0, y: 0}
+--- !u!1001 &1799530134
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3665305679513349948, guid: 608e5fe13eeb2604ab879429f3ce6cda, type: 3}
+      propertyPath: m_RootOrder
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 3665305679513349948, guid: 608e5fe13eeb2604ab879429f3ce6cda, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3665305679513349948, guid: 608e5fe13eeb2604ab879429f3ce6cda, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3665305679513349948, guid: 608e5fe13eeb2604ab879429f3ce6cda, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3665305679513349948, guid: 608e5fe13eeb2604ab879429f3ce6cda, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3665305679513349948, guid: 608e5fe13eeb2604ab879429f3ce6cda, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3665305679513349948, guid: 608e5fe13eeb2604ab879429f3ce6cda, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3665305679513349948, guid: 608e5fe13eeb2604ab879429f3ce6cda, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3665305679513349948, guid: 608e5fe13eeb2604ab879429f3ce6cda, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3665305679513349948, guid: 608e5fe13eeb2604ab879429f3ce6cda, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3665305679513349948, guid: 608e5fe13eeb2604ab879429f3ce6cda, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3665305679513349950, guid: 608e5fe13eeb2604ab879429f3ce6cda, type: 3}
+      propertyPath: m_Name
+      value: MonsterPoolManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 608e5fe13eeb2604ab879429f3ce6cda, type: 3}
 --- !u!4 &1884825139 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4994161751940940213, guid: dfeebec717fc2f644afdcdc36bb270ae, type: 3}

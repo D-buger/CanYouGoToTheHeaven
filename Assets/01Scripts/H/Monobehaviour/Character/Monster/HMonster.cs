@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class HMonster : MonoBehaviour
 {
+    public enum Grade
+    {
+        D, C, B, A, S, SS, SSS
+    }
+
+    [SerializeField] protected string monsterName;
+    [SerializeField] protected Grade rank;
     [SerializeField] protected int hitPoint;
     protected float damagedTime;
     protected GameObject player;
@@ -13,12 +20,51 @@ public class HMonster : MonoBehaviour
     protected WaitForSeconds waitFor1Seconds = new WaitForSeconds(1f);
 
     protected int damage = 1;
-    protected int contactDamage = 2;
+    protected int contactDamage;
+
+    protected virtual void SettingData()
+    {
+        hitPoint = StringToInteger(monsterManager.GetDataWithName(gameObject.name)["HitPoint"]);
+        Debug.LogWarning("해당 부분을 현재 스테이지에 따라서 바꿔야함");
+        if (true /*만약 현재 스테이지가 <= 3이라면*/) //조건 바꿀것
+        {
+            damage = 1;
+        }
+        else
+        {
+            damage = 2;
+        }
+        contactDamage = 2;
+        damagedTime = 0f;
+    }
+
+    public void MakeGoldenMonster()
+    {
+        isGoldenMonster = true;
+    }
+
+    protected int StringToInteger(string _string)
+    {
+        if(int.TryParse(_string, out int _int))
+        {
+            return _int;
+        }
+        else
+        {
+            Debug.LogWarning($"{gameObject.name}: 정수형 변환에 실패하였습니다!");
+            return 0;
+        }
+    }
+
+    protected virtual void OperateAwake()
+    {
+        animator = GetComponent<Animator>();
+    }
 
     protected virtual void OperateStart()
     {
+        SettingData();
         monsterManager = MonsterManager.instance;
-        animator = GetComponent<Animator>();
         player = monsterManager.player;
     }
 
@@ -103,17 +149,17 @@ public class HMonster : MonoBehaviour
             hitPoint -= 3; //player의 damage가 담긴 스크립트에서 참조해야함. 또는 매개변수로 damage를 받아야함
             if (hitPoint <= 0)
             {
-                ActionAfterDeath();
+                ActionAfterDeath(); //체력이 0이 될 시 행동
             }
         }
     }
 
     protected void ActionAfterDeath()
     {
-        if (isGoldenMonster)
+        if (isGoldenMonster) //만약 황금몬스터였을 경우
         {
-            GameObject goldenPortal = Instantiate(monsterManager.TreasureRoomPortalPrefab, null);
-            goldenPortal.transform.position = transform.position;
+            GameObject goldenPortal = Instantiate(MonsterManager.instance.TreasureRoomPortalPrefab, null);
+            goldenPortal.transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
         }
         Destroy(gameObject);
     }
