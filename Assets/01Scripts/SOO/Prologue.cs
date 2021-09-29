@@ -29,11 +29,6 @@ public class Prologue : MonoBehaviour
         }
     }
 
-    private void MovingWordCheck(string str)
-    {
-        string[] find = str.Split('>');
-    }
-
     private void ColorWordCheck()
     {
 
