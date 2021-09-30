@@ -20,7 +20,7 @@ public class InputManager
     public bool BehaviourActive => active && !StageManager.PlayerInStage;
     public bool AttackActive => active && StageManager.PlayerInStage;
     
-    public Action activeCallback;
+    public event Action activeCallback;
 
     public void SetFirst()
     {
@@ -32,7 +32,9 @@ public class InputManager
 
         Touch.touchAction[0] += () => Active = true;
         Touch.touchAction[2] += () => Active = false;
-        Touch.touchAction[0] += activeCallback;
+        //Invoke를 event에 추가하려 하면 범위를 넘어가는 값이라고 뜬다.
+        //아마도 null일 때가 있다보니 그렇게 뜨는 것 같아서 람다식으로 함수를 만들어 넣어줬다.
+        Touch.touchAction[0] += () => activeCallback?.Invoke();
     }
 
     public void InputUpdate()

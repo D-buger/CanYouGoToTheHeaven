@@ -13,13 +13,25 @@ public class TextSplit : MonoBehaviour
     public Dictionary<string, string> textEffect { get; private set; }
     public string TextWithoutTags { get; private set; }
 
+    public bool StringToCount(string type ,out int startIndex, out int count)
+    {
+        startIndex = count = -1;
+        if (!textEffect.ContainsKey(type))
+            return false;
+
+        string[] split = TextWithoutTags.Split(textEffect[type].ToCharArray());
+
+        count = textEffect[type].Length;
+
+        return true;
+    }
+
     private string DivideWithTags(string str)
     {
         Regex regex = new Regex(@"<(\w+)>([\s\S]+?)<\/\1>");
         Regex tag = new Regex(@"<(\w+)>[\s\S]+?<\/\1>");
         string[] strTags = tag.Split(str);
         string[] strs = regex.Split(str);
-
         int index = 0;
         for (; index < strs.Length; index++)
         {
@@ -52,14 +64,4 @@ public class TextSplit : MonoBehaviour
 
         return SOO.Util.StringBuilder(newArray.ToArray());
     }
-}
-
-public struct TextElements
-{
-    public string originalText;
-    public string cuttedText;
-
-    public string effectType;
-    public int startIndex;
-    public int cont;
 }
