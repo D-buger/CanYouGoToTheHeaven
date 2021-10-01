@@ -8,6 +8,10 @@ public class TextSplit : MonoBehaviour
     {
         textEffect = new Dictionary<string, string>();
         TextWithoutTags = DivideWithTags(str);
+        foreach (var i in textEffect)
+        {
+            Debug.Log(i.Key + " " + i.Value);
+        }
     }
 
     public Dictionary<string, string> textEffect { get; private set; }
@@ -22,6 +26,11 @@ public class TextSplit : MonoBehaviour
         string[] split = TextWithoutTags.Split(textEffect[type].ToCharArray());
 
         count = textEffect[type].Length;
+        if (split.Length == 1)
+            startIndex = 0;
+        else
+            startIndex = split[0].Length;
+        
 
         return true;
     }
@@ -40,6 +49,11 @@ public class TextSplit : MonoBehaviour
                 index++;
                 break;
             }
+        }
+
+        foreach (string st in strs)
+        {
+            Debug.Log(st);
         }
 
         if (regex.IsMatch(strs[2]))

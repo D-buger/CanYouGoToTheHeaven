@@ -17,16 +17,10 @@ public class Prologue : MonoBehaviour
 
     private void Awake()
     {
-        GameManager.Instance.input.Touch.ButtonExtent = 0;
+        //GameManager.Instance.input.Touch.ButtonExtent = 0;
 
         prologue = CSVReader.Read("Prologue", out int size);
         image = new FileLoader<Sprite>("02Sprites/prologue");
-
-        string[] split = prologue[0]["story"].Split(SPLIT_SEPARATOR);
-        for(int i = 0; i < split.Length; i++)
-        {
-            Debug.Log(split[i]);
-        }
     }
 
     private void ColorWordCheck()

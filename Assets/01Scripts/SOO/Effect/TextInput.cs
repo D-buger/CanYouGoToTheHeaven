@@ -22,14 +22,17 @@ public class TextInput : MonoBehaviour
         if (textComponent == null)
             textComponent = GetComponent<TMP_Text>();
 
-        textEffects = new TextEffects();
+        //textEffects = new TextEffects();
 
         prologue = CSVReader.Read("Prologue");
+        textDictionary = new TextSplit(prologue[0]["story"]);
+        textDictionary.StringToCount("T", out int startIndex, out int indexCount );
+        Debug.Log(startIndex + " " + indexCount);
     }
 
     private void Update()
     {
-        textEffects.UpdateTexts();
+        //textEffects.UpdateTexts();
 
         Skip();
     }
