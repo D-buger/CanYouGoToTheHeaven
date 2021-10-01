@@ -1,8 +1,11 @@
 using System.Collections.Generic;
+using System.Collections;
+using System;
 using UnityEngine;
 using TMPro;
 
-public class TextEffects
+//sealed : 상속 못하게 
+public sealed class TextEffects
 {
     private static readonly Gradient rainbowGradient = new Gradient()
     {
@@ -23,17 +26,21 @@ public class TextEffects
     private TMP_CharacterInfo charInfo;
     private TMP_MeshInfo[] meshInfo;
 
-    public static Dictionary<string, System.Action> customTags { get; private set; }
-    
-    public TextEffects()
+    public static float typingTime = 3;
+
+    public static Dictionary<string, coroutine> customTags { get; private set; }
+    public delegate IEnumerator coroutine(SplittedText text);
+
+    public TextEffects(TMP_Text _textComponent)
     {
-        customTags = new Dictionary<string, System.Action>();
+        customTags = new Dictionary<string, coroutine>();
 
-        customTags.Add("H", () => HorizontalShaking());
-        customTags.Add("W", () => Waving());
-        customTags.Add("T", () => Typing(3));
-        customTags.Add("Rainbow", () => Rainbow());
+        customTags.Add("H", (SplittedText text) => HorizontalShaking(text));
+        customTags.Add("W", (SplittedText text) => Waving(text));
+        customTags.Add("T", (SplittedText text) => Typing(text));
+        customTags.Add("rainbow", (SplittedText text) => Rainbow(text));
 
+        textComponent = _textComponent;
         GetTextElementsInFixedUpdate();
     }
 
@@ -55,12 +62,17 @@ public class TextEffects
         }
     }
 
-    private void HorizontalShaking()
+    public void NewTextEffects()
+    {
+        GetTextElementsInFixedUpdate();
+    }
+
+    private IEnumerator HorizontalShaking(SplittedText _text)
     {
         while (true)
         {
-            //wait for FixedUpdate()
-            for (int i = 0; i < textInfo.characterCount; ++i)
+            yield return YieldInstructionCache.waitForFixedUpdate;
+            for (int i = _text.startIndex; i < _text.count; ++i)
             {
                 for (int j = 0; j < 4; ++j)
                 {
@@ -73,12 +85,12 @@ public class TextEffects
         }
     }
 
-    private void Waving()
+    private IEnumerator Waving(SplittedText _text)
     {
         while (true)
         {
-            //wait for FixedUpdate()
-            for (int i = 0; i < textInfo.characterCount; ++i)
+            yield return YieldInstructionCache.waitForFixedUpdate;
+            for (int i = _text.startIndex; i < _text.count; ++i)
             {
                 for (int j = 0; j < 4; ++j)
                 {
@@ -91,26 +103,40 @@ public class TextEffects
         }
     }
 
-    private void Typing(float time)
+    private IEnumerator Typing(SplittedText _text)
     {
-        string text = textComponent.text;
-        textComponent.text = null;
-        for (int i = 0; i < text.Length; i++)
+        for (int i = _text.startIndex; i < _text.count; ++i)
         {
-            textComponent.text += text[i];
-            //wait for seconds realtime
+            for (int j = 0; j < 4; ++j)
+            {
+                int index = charInfo.vertexIndex + j;
+                Vector3 vec = meshInfo[i].vertices[index];
+                Color color = meshInfo[i].colors32[index];
+                meshInfo[i].colors32[index] = new Color(color.r, color.g, color.b, 0);
+            }
+        }
+        for (int i = _text.startIndex; i < _text.count; ++i)
+        {
+            for (int j = 0; j < 4; ++j)
+            {
+                int index = charInfo.vertexIndex + j;
+                Vector3 vec = meshInfo[i].vertices[index];
+                Color color = meshInfo[i].colors32[index];
+                meshInfo[i].colors32[index] = new Color(color.r, color.g, color.b, 1);
+                yield return YieldInstructionCache.GetTimeInteval(typingTime * Time.deltaTime);
+            }
         }
     }
 
-    private void Rainbow()
+    private IEnumerator Rainbow(SplittedText _text)
     {
         while (true)
         {
-            //wait for fixed Update
+            yield return YieldInstructionCache.waitForFixedUpdate;
             float min = textInfo.characterInfo[0].vertex_BL.position.x;
             float max = textInfo.characterInfo[textInfo.characterCount - 1].vertex_TR.position.x;
 
-            for (int i = 0; i < textInfo.characterCount; ++i)
+            for (int i = _text.startIndex; i < _text.count; ++i)
             {
                 for (int j = 0; j < 4; ++j)
                 {

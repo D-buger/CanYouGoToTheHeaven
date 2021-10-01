@@ -6,66 +6,50 @@ public class TextSplit : MonoBehaviour
 {
     public TextSplit(string str)
     {
-        textEffect = new Dictionary<string, string>();
-        TextWithoutTags = DivideWithTags(str);
-        foreach (var i in textEffect)
-        {
-            Debug.Log(i.Key + " " + i.Value);
-        }
+        TextEffect = new Dictionary<string, SplittedText>();
+        Tags = new List<string>();
+        DivideWithTags(str);
+        TextWithoutTags = removeTags.Replace(str, "");
     }
 
-    public Dictionary<string, string> textEffect { get; private set; }
+    public Dictionary<string, SplittedText> TextEffect { get; private set; }
     public string TextWithoutTags { get; private set; }
+    public List<string> Tags { get; private set; }
 
-    public bool StringToCount(string type ,out int startIndex, out int count)
-    {
-        startIndex = count = -1;
-        if (!textEffect.ContainsKey(type))
-            return false;
-
-        string[] split = TextWithoutTags.Split(textEffect[type].ToCharArray());
-
-        count = textEffect[type].Length;
-        if (split.Length == 1)
-            startIndex = 0;
-        else
-            startIndex = split[0].Length;
-        
-
-        return true;
-    }
-
+    Regex regex = new Regex(@"<(\w+)>([\s\S]+?)<\/\1>");
+    Regex tag = new Regex(@"<(\w+)>[\s\S]+?<\/\1>");
+    Regex removeTags = new Regex(@"<[^>]*>");
     private string DivideWithTags(string str)
     {
-        Regex regex = new Regex(@"<(\w+)>([\s\S]+?)<\/\1>");
-        Regex tag = new Regex(@"<(\w+)>[\s\S]+?<\/\1>");
         string[] strTags = tag.Split(str);
         string[] strs = regex.Split(str);
-        int index = 0;
-        for (; index < strs.Length; index++)
-        {
-            if (strs[index] == strTags[1])
-            {
-                index++;
-                break;
-            }
-        }
 
-        foreach (string st in strs)
-        {
-            Debug.Log(st);
-        }
+        if (strs.Length < 2)
+            return str;
 
         if (regex.IsMatch(strs[2]))
         {
-            textEffect.Add(strTags[1], DivideWithTags(strs[2]));
-            strs[2] = textEffect[strTags[1]];
-        }
+           string untaggedText = DivideWithTags(strs[2]);
+            Tags.Add(strTags[1]);
+           TextEffect.Add(strTags[1], new SplittedText(TextWithoutTags, 
+               strs[0].Length + strs[1].Length - 1,
+               removeTags.Replace(untaggedText, "").Length));
 
-        return RemoveElementInText(strs, strTags[1]);
+            return RemoveElementInText(strs, strTags[1]);
+        }
+        else
+        {
+            Tags.Add(strTags[1]);
+            TextEffect.Add(strTags[1], new SplittedText(TextWithoutTags,
+               strs[0].Length + strs[1].Length - 1,
+               removeTags.Replace(strs[2], "").Length));
+
+            return strs[2];
+        }
     }
 
     List<string> newArray = new List<string>();
+
     private string RemoveElementInText(string[] str, string element)
     {
         newArray.Clear();
@@ -78,4 +62,18 @@ public class TextSplit : MonoBehaviour
 
         return SOO.Util.StringBuilder(newArray.ToArray());
     }
+}
+
+public struct SplittedText
+{
+    public SplittedText(string _untagOri, int _startIndex, int _count)
+    {
+        untaggedOriginalText = _untagOri;
+        startIndex = _startIndex;
+        count = _count;
+    }
+
+    public string untaggedOriginalText;
+    public int startIndex;
+    public int count;
 }

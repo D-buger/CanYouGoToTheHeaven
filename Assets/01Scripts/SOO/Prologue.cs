@@ -6,54 +6,77 @@ using TMPro;
 
 public class Prologue : MonoBehaviour
 {
-    static char[] SPLIT_SEPARATOR = { '/' };
+    private TMP_Text textComponent;
+    [SerializeField]
+    private Image imageComponent;
+
+    private TextSplit textDictionary;
+    private TextEffects textEffects;
 
     private List<Dictionary<string, string>> prologue;
+    private FileLoader<Sprite> prologueImage;
 
-    private FileLoader<Sprite> image;
-
-    public TMP_Text textShow;
-    public Image imageShow;
+    int index = 0;
 
     private void Awake()
     {
-        //GameManager.Instance.input.Touch.ButtonExtent = 0;
+        if (textComponent == null)
+            textComponent = GetComponent<TMP_Text>();
 
-        prologue = CSVReader.Read("Prologue", out int size);
-        image = new FileLoader<Sprite>("02Sprites/prologue");
-    }
+        textEffects = new TextEffects(textComponent);
+        prologueImage = new FileLoader<Sprite>("Images/Prologue");
 
-    private void ColorWordCheck()
-    {
-
+        prologue = CSVReader.Read("Prologue");
+        SetTextEffects();
     }
 
     private void Update()
     {
+        textEffects.UpdateTexts();
 
-
-
-        //Timer timer = new Timer(3);
-
-        //if (timer.TimerUpdate())
-        //{
-        //    Next();
-        //    timer.Reset();
-        //}
-
-        //if(GameManager.Instance.input.touch.mouseState == eMouse.Down)
-        //{
-        //    Skip();
-        //}
+        Skip();
     }
 
-    private void Skip()
+    private void FixedUpdate()
     {
-
+        textEffects.GetTextElementsInFixedUpdate();
     }
 
-    private void Next()
+    private void SetTextEffects()
     {
+        StopAllCoroutines();
+        imageComponent.sprite = prologueImage.files[prologue[index]["image"]];
+        textDictionary = new TextSplit(prologue[index++]["story"]);
+        ChangeText(textDictionary.TextWithoutTags);
+        textEffects.NewTextEffects();
+        for (int i = 0; i < textDictionary.Tags.Count; i++)
+        {
+            string tag = textDictionary.Tags[i];
+            if (TextEffects.customTags.ContainsKey(tag))
+            {
+                StartCoroutine(
+                TextEffects.customTags[tag](
+                    textDictionary.TextEffect[tag]));
+            }
+        }
+    }
 
+    public void Skip()
+    {
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            SetTextEffects();
+        }
+    }
+
+    public void Clear()
+    {
+        StopAllCoroutines();
+        textComponent.text = null;
+    }
+
+    private void ChangeText(string afterText)
+    {
+        textComponent.text = afterText;
     }
 }

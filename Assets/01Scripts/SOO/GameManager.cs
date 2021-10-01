@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : SingletonBehavior<GameManager>
 {
@@ -30,5 +31,10 @@ public class GameManager : SingletonBehavior<GameManager>
     private void Update()
     {
         input.InputUpdate();
+    }
+
+    public void ChangeScene(int i)
+    {
+        SceneManager.LoadScene(i);
     }
 }
