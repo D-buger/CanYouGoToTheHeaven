@@ -16,7 +16,12 @@ public class BombBirdAI : HMonster
     float radius;
     bool detectPlayer;
 
-    // Start is called before the first frame update
+    protected override void SettingVariables()
+    {
+        base.SettingVariables();
+        detectPlayerRange = StringToInteger(GetDataWithVariableName("CognitiveRange"));
+    }
+
     void Start()
     {
         OperateStart();

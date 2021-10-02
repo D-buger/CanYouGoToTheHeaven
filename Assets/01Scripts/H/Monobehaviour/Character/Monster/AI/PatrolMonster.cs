@@ -12,6 +12,12 @@ public class PatrolMonster : WalkMonster
     protected WaitForEndOfFrame waitForEndOfFrame = new WaitForEndOfFrame();
     protected Coroutine chasingCoroutine = null;
 
+    protected override void SettingVariables()
+    {
+        base.SettingVariables();
+        visualRange = StringToInteger(GetDataWithVariableName("CognitiveRange"));
+        chasingTime = StringToInteger(GetDataWithVariableName("ChasingDuration"));
+    }
 
     protected override void OperateStart()
     {

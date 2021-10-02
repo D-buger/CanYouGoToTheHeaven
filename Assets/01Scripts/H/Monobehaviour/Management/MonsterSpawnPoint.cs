@@ -4,17 +4,23 @@ using UnityEngine;
 
 public class MonsterSpawnPoint : MonoBehaviour
 {
-    MonsterManager monsterManager;
+    public enum Grade
+    {
+        D, C, B, A, S, SS, SSS
+    }
 
-    [SerializeField, Range(0.0f, 100.0f), Tooltip("황금 몬스터가 스폰될 백분율")] float aChanceOfSpawningGoldenMonster = 2.5f;
+    MonsterManager monsterManager;
+    [SerializeField] Grade grade;
+
     [SerializeField, Tooltip("디버깅용")] string monsterToSpawn;
 
     private void OnTriggerStay2D(Collider2D _collision)
     {
-        if (_collision.CompareTag("Player"))
+        if (_collision.CompareTag("Player")) //플레이어가 범위 내에 들어오면
         {
             if (monsterToSpawn == null)
-            { 
+            {
+                Debug.LogError("몬스터가 할당되지 않았습니다!");
                 return;
             }
             SpawnMonster();
@@ -25,22 +31,29 @@ public class MonsterSpawnPoint : MonoBehaviour
     void Start()
     {
         monsterManager = MonsterManager.instance;
-        Debug.Log(monsterToSpawn);
+        GetMonsterToSpawn();
     }
 
-    WaitForSeconds wait2Sec = new WaitForSeconds(2f);
+    void GetMonsterToSpawn()
+    {
+        monsterManager.GetMonstersNameWithGrade(grade.ToString);
+    }
 
     void SpawnMonster()
     {
-        GameObject spawnedMonster = MonsterPoolManager.instance.GetObject($"{monsterToSpawn}");
-        spawnedMonster.transform.position = transform.position;
-        bool isGoldenMonster = Probability(99f/*플레이어의 현재 황금몹 스폰 확률을 넣을것!!!*/);
-        Debug.LogWarning("수정할 내용 있음");
+        GameObject spawnedMonster = MonsterPoolManager.instance.GetObject(monsterToSpawn);
+        HMonster spawnedMonsterComp = spawnedMonster.GetComponent<HMonster>();
 
-        if (isGoldenMonster)
+        spawnedMonster.transform.position = transform.position;
+
+        Debug.LogWarning($"{gameObject.name}수정할 내용 있음");
+        if (Probability(75f/*플레이어의 현재 황금몹 스폰 확률을 넣을것!!!*/))
         {
-            spawnedMonster.GetComponent<HMonster>().MakeGoldenMonster();
+            Debug.Log("황금몬스터가 되었습니다!"); //디버그 용이니 지울것
+            spawnedMonsterComp.MakeGoldenMonster();
         }
+
+        spawnedMonsterComp.OperateOnEnable();
         Destroy(gameObject);
     }
 
@@ -50,21 +63,7 @@ public class MonsterSpawnPoint : MonoBehaviour
         int maxRange = 10000;
         int pickedValue = Random.Range(0, maxRange);
         int chance = (int)(((System.Math.Truncate(_percentage * 100f) * 0.01f) * 100f) + 1);
-        if (pickedValue < chance)
-        { 
-            //Debug.Log($"뽑을 확률은{chance} / {maxRange}이었으며 뽑은 수는{pickedValue} >= {chance}이므로 황금 몬스터가 되지 못하였습니다");
-            result = true;
-        }
-        return result;
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Keypad0))
-        {
-            SpawnMonster();
-        }
+        return pickedValue < chance ? true : false;
     }
 }
-

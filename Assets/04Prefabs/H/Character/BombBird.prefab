@@ -135,8 +135,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e45104c4beda354daa2530b2ab483a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitPoint: 0
-  isGoldenMonster: 0
+  monsterName: "\uD3ED\uD0C4\uC0C8"
+  currentHitPoint: 0
   explosionDelay: 0.2
   detectPlayerRange: 3
   fragment: {fileID: 5877258647630904168, guid: c005c5d96968d7c4cac20e183845d6e2, type: 3}

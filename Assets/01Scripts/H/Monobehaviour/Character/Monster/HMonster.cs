@@ -21,8 +21,7 @@ public class HMonster : MonoBehaviour
         if (damagedTime >= 1)
         {
             damagedTime -= 1;
-            Debug.LogWarning($"{gameObject.name}: HMonster스크립트에 변경할 내용이 존재합니다");
-            currentHitPoint -= 3; //player의 damage가 담긴 스크립트에서 참조해야함. 또는 매개변수로 damage를 받아야함
+            currentHitPoint -= StageManager.Instance.Stat.watergun.Model.Damage;
 
             if (currentHitPoint <= 0)
             {
@@ -33,13 +32,54 @@ public class HMonster : MonoBehaviour
 
     protected virtual void SettingData()
     {
-        currentHitPoint = StringToInteger(GetDataWithVariableName("HitPoint"));
-        damagedTime = 0f;
+        if (monsterName == "")
+        {
+            Debug.LogWarning($"{gameObject.name}: 이름이 지정되지 않았습니다!");
+            return;
+        }
+        SettingVariables();
     }
 
-    protected string GetDataWithVariableName(string _variableName)
+    protected virtual void SettingVariables()
     {
-        return monsterManager.GetDataWithMonsterName(monsterName)[_variableName];
+        Debug.LogWarning("변경할 내용 있음");
+        int currentStage = 3; //직접 스테이지 매니저에서 가져올것
+
+        if (currentStage <= 3) //3스테이지면
+        {
+            contactDamage = 1;
+        }
+        else
+        {
+            contactDamage = 2;
+        }
+
+        damagedTime = 0f;
+
+        currentHitPoint = StringToInteger(GetDataWithVariableName("HitPoint"));
+    }
+
+    protected string GetDataWithVariableName(string _variableName) //변수명을 넣으면 해당 몬스터의 해당 변수명의 값을 제공
+    {
+        if (monsterManager.GetDataWithMonsterName(monsterName) == null)
+        {
+            Debug.LogWarning("이런 몬스터는 없는데요");
+            return null;
+        }
+        string ddd = monsterManager.GetDataWithMonsterName(monsterName)[_variableName];
+        Debug.Log($"{_variableName}: {ddd}");
+        return ddd;
+    }
+
+    protected void OperateOnCollisionEnter2D(Collision2D _collision)
+    {
+        if (_collision.gameObject.CompareTag("Player"))
+        {
+            Player player = _collision.gameObject.GetComponent<Player>();
+            player.stats.CurrentHp -= contactDamage;
+
+            MonsterPoolManager.instance.ReturnObject(gameObject);
+        }
     }
 
     protected int StringToInteger(string _string)
@@ -55,11 +95,16 @@ public class HMonster : MonoBehaviour
         }
     }
 
+    public void OperateOnEnable()
+    {
+        SettingData();
+    }
+
     protected virtual void OperateStart()
     {
         animator = GetComponent<Animator>();
-        SettingData();
         monsterManager = MonsterManager.instance;
+        SettingData();
         player = monsterManager.player;
     }
 
@@ -73,7 +118,7 @@ public class HMonster : MonoBehaviour
         MonsterPoolManager.instance.ReturnObject(gameObject);
     }
 
-    void CheckDistanceFromPlayer()
+    void CheckDistanceFromPlayer() //플레이어가 본인과 멀어지면 디스폰 시키는 역할
     {
         if (player.transform.position.y - transform.position.y >= 25) //플레이어의 y좌표가 본인으로부터 25이상 올라가면
         {
@@ -144,14 +189,5 @@ public class HMonster : MonoBehaviour
             goldenPortal.transform.position = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
         }
         MonsterPoolManager.instance.ReturnObject(gameObject);
-    }
-
-    protected void OperateOnCollisionEnter2D(Collision2D _collision)
-    {
-        if (_collision.gameObject.CompareTag("Player")) //플레이어와 몬스터의 충돌을 감지하는 역할. 플레이어 스크립트 내로 옮기는게 좋음.
-        {
-            StageManager.Instance.Stat.CurrentHp -= contactDamage;
-            Destroy(gameObject);
-        }
     }
 }
