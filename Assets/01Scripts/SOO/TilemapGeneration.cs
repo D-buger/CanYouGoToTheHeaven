@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class LevelGeneration : MonoBehaviour
+public class TilemapGeneration : MonoBehaviour
 {
-    public MapComponent?[] maps = MapGenerator.Map;
+    public MapComponent[] maps;
     public float distXBetwnStages = 15;
     public float distYBetwnRooms;
 
@@ -14,7 +14,7 @@ public class LevelGeneration : MonoBehaviour
 
     private float cellSize;
 
-    public RuleTile ruleTile;
+    public Tile[] tile;
     private Grid grid;
     private Tilemap tilemap;
 
@@ -22,18 +22,38 @@ public class LevelGeneration : MonoBehaviour
 
     public void Awake()
     {
+        maps =  new MapGenerator(5, 6).Map;
         GameObject _mapParent = this.gameObject;
         grid = _mapParent.transform.GetChild(0).GetComponent<Grid>();
         tilemap = grid.transform.GetChild(0).GetComponent<Tilemap>();
 
         distYBetwnRooms = MapGenerator.MapHeightTile * grid.cellSize.y;
-
-        tilemap.SetTile(new Vector3Int(0, 0, 0) , ruleTile.m_Self);
+        LevelGeneration(transform.position, 1);
     }
 
-    public void Generation(Vector2 levelFirstPosition)
+    private void LevelGeneration(Vector2 levelFirstPosition, int nowStage)
     {
+        int i;
+        for(i = 0; i < roomInStage - 1; i++)
+        {
+            Generation(i * MapGenerator.MapHeightTile, 
+                maps[Random.Range((nowStage - 1) * MapGenerator.RoomsInStage + 1, nowStage * MapGenerator.RoomsInStage - 1)]);
+        }
+        Debug.Log(nowStage * MapGenerator.RoomsInStage);
+        Generation(i * MapGenerator.MapHeightTile, maps[nowStage * MapGenerator.RoomsInStage]);
+    }
 
+    private void Generation(int startY, MapComponent map)
+    {
+        int height;
+        int width;
+        for (int i = MapGenerator.MapWidthTile * MapGenerator.MapHeightTile - 1; i >= 0; i--)
+        {
+            width = (i / MapGenerator.MapHeightTile);
+            height = i % MapGenerator.MapHeightTile;
+            tilemap.SetTile(new Vector3Int(width, startY + MapGenerator.MapHeightTile - height, 0), 
+                map.tiles[height, width] == 0 ? null : tile[map.tiles[height, width]]);
+        }
     }
 
 

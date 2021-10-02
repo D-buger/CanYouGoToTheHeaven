@@ -80,6 +80,7 @@ public class Water : MonoBehaviour
         }
         else if (ray.transform.CompareTag(removeTag))
         {
+            ray.transform.GetComponent<HMonster>().InflictDamage();
             RemovePoint(point);
         }
     }

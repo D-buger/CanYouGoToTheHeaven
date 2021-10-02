@@ -10,11 +10,14 @@ public class MapGenerator : MonoBehaviour
     public static int MapWidthTile { get; private set; } = -1;
     public static int MapHeightTile { get; private set; } = -1;
 
-    public static MapComponent?[] Map { get; private set; }
+    public MapComponent[] Map { get; private set; }
+
+    public static int RoomsInStage { get; private set; }
 
     public MapGenerator(int stageNum, int roomNum)
     {
-        Map = new MapComponent?[stageNum * roomNum];
+        RoomsInStage = roomNum;
+        Map = new MapComponent[stageNum * roomNum];
         int stage;
         int room;
         for (int i = 0; i < Map.Length; i++)
@@ -29,11 +32,11 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
-    private MapComponent? XmlLoadComplete(string _fileName)
+    private MapComponent XmlLoadComplete(string _fileName)
     {
         TextAsset textAsset = Resources.Load<TextAsset>(SOO.Util.StringBuilder("Maps/", _fileName));
         if (textAsset == null)
-            return null;
+            return default;
         XmlDocument xml = new XmlDocument();
         xml.LoadXml(textAsset.text);
         MapComponent map = new MapComponent();
@@ -56,7 +59,7 @@ public class MapGenerator : MonoBehaviour
         int count = 0;
         foreach (string str in node.InnerText.Split(','))
         {
-            map.tiles[count++ / map.widthTile, count % map.widthTile]
+            map.tiles[count / map.widthTile, count++ % map.widthTile]
                 = int.Parse(str);
         }
 

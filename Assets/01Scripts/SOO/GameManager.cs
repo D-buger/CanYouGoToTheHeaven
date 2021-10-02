@@ -5,7 +5,7 @@ public class GameManager : SingletonBehavior<GameManager>
 {
     [SerializeField]
     public InputManager input;
-    public MapGenerator maps;
+    public MapGenerator maps = new MapGenerator(5, 6);
 
     public static readonly Vector2 ScreenSize 
                 = new Vector2(Screen.width, Screen.height);
@@ -21,7 +21,6 @@ public class GameManager : SingletonBehavior<GameManager>
     private void Reset()
     {
         input = new InputManager();
-        maps = new MapGenerator(5, 6);
     }
 
     protected override void OnAwake()
