@@ -18,6 +18,7 @@ public class StageGenerator : MonoBehaviour
     [SerializeField]
     private Vector2 firstStagePos;
 
+    public List<Vector2> StartPositions { get; private set; }
     public List<Vector2> EdgePositions { get; private set; }
 
     private void Awake()

@@ -5,29 +5,52 @@ using System.Xml;
 
 public class MapGenerator : MonoBehaviour
 {
-    System.Xml.XmlDocument Document = new System.Xml.XmlDocument();
-    MapComponent map;
+    public static int MapTileWidth { get; private set; } = -1;
+    public static int MapTileHeight { get; private set; } = -1;
+    public static int MapWidthTile { get; private set; } = -1;
+    public static int MapHeightTile { get; private set; } = -1;
 
-    public static int MapWidthTile { get; private set; }
-    public static int MapHeightTile { get; private set; }
+    public static MapComponent?[] Map { get; private set; }
 
-    public void Awake()
+    public MapGenerator(int stageNum, int roomNum)
     {
-        XmlLoadComplete("1_1");
+        Map = new MapComponent?[stageNum * roomNum];
+        int stage;
+        int room;
+        for (int i = 0; i < Map.Length; i++)
+        {
+            stage = i / roomNum + 1;
+            room = i % roomNum;
+
+            if (room++ < roomNum - 1)
+               Map[i] = XmlLoadComplete(SOO.Util.StringBuilder(stage.ToString(), "_", room.ToString()));
+            else
+               Map[i] = XmlLoadComplete(SOO.Util.StringBuilder(stage.ToString(), "_End"));
+        }
     }
 
-    private void XmlLoadComplete(string _fileName)
+    private MapComponent? XmlLoadComplete(string _fileName)
     {
         TextAsset textAsset = Resources.Load<TextAsset>(SOO.Util.StringBuilder("Maps/", _fileName));
+        if (textAsset == null)
+            return null;
         XmlDocument xml = new XmlDocument();
         xml.LoadXml(textAsset.text);
-        map = new MapComponent();
+        MapComponent map = new MapComponent();
 
         XmlNode node = xml.SelectSingleNode("map");
-        map.tileWidth = int.Parse(node.Attributes.GetNamedItem("tilewidth").Value);
-        map.tileHeight = int.Parse(node.Attributes.GetNamedItem("tileheight").Value);
-        map.widthTile = int.Parse(node.Attributes.GetNamedItem("width").Value);
-        map.heightTile = int.Parse(node.Attributes.GetNamedItem("height").Value);
+        if (MapHeightTile == -1)
+        {
+            MapTileWidth = int.Parse(node.Attributes.GetNamedItem("tilewidth").Value);
+            MapTileHeight = int.Parse(node.Attributes.GetNamedItem("tileheight").Value);
+            MapWidthTile = int.Parse(node.Attributes.GetNamedItem("width").Value);
+            MapHeightTile = int.Parse(node.Attributes.GetNamedItem("height").Value);
+        }
+
+        map.tileWidth = MapTileWidth;
+        map.tileHeight = MapTileHeight;
+        map.widthTile = MapWidthTile;
+        map.heightTile = MapHeightTile;
 
         map.tiles = new int[map.heightTile, map.widthTile];
         int count = 0;
@@ -38,29 +61,54 @@ public class MapGenerator : MonoBehaviour
         }
 
         XmlNodeList nodeList = xml.SelectNodes("map/objectgroup");
-
-        XmlNode rectNode = nodeList.Item(0);
-        XmlNodeList ObjectNodeList = rectNode.SelectNodes("Object");
-
-        XmlNode spawnerNode = nodeList.Item(1);
-
-
-        foreach (XmlNode nodeInList in nodeList)
+        XmlNode objectGroupNode;
+        XmlNodeList objectNodeList;
+        XmlAttributeCollection attributeCollection;
+        XmlNode objectNode;
+        for (int i = 0; i < nodeList.Count; i++)
         {
-            XmlAttribute attri = nodeInList.Attributes[name];
-            XmlNodeList objectNodeList = nodeInList.SelectNodes("object");
-            map.GetType().GetProperty(attri.Value).SetValue( ,new Rect[objectNodeList.Count]);
-            map.Collision = new Rect[objectNodeList.Count];
-            foreach (XmlNode objectNode in objectNodeList)
+            objectGroupNode = nodeList.Item(i);
+            if (objectGroupNode.Attributes.GetNamedItem("name").Value
+                == nameof(map.collision))
             {
-                XmlAttribute objectAttribute = objectNode.Attributes["x"];
-                Debug.Log(objectAttribute.Value);
-            }
+                objectNodeList = objectGroupNode.SelectNodes("object");
+                map.collision = new Rect[objectNodeList.Count];
+                for(int j = 0; j < objectNodeList.Count; j++)
+                {
+                    objectNode = objectNodeList.Item(j);
+                    attributeCollection = objectNode.Attributes;
+                    map.collision[j] = new Rect(
+                        float.Parse(attributeCollection.GetNamedItem("x").Value),
+                        float.Parse(attributeCollection.GetNamedItem("y").Value),
+                        float.Parse(attributeCollection.GetNamedItem("width").Value),
+                        float.Parse(attributeCollection.GetNamedItem("height").Value)
+                        );
+                }
 
-            //map.GetType().GetProperty(attri.Value).SetValue();
+            }
+            else if (objectGroupNode.Attributes.GetNamedItem("name").Value
+                == nameof(map.MonsterSpawner))
+            {
+                objectNodeList = objectGroupNode.SelectNodes("object");
+                map.MonsterSpawner = new Vector2[objectNodeList.Count];
+                for (int j = 0; j < objectNodeList.Count; j++)
+                {
+                    objectNode = objectNodeList.Item(j);
+                    attributeCollection = objectNode.Attributes;
+                    map.MonsterSpawner[j] = new Vector2(
+                        float.Parse(attributeCollection.GetNamedItem("x").Value),
+                        float.Parse(attributeCollection.GetNamedItem("y").Value));
+                }
+            }
+            else
+                continue;
         }
+        //이름을 이용해서 변수를 불러오는 기능, 사용하기 까다롭고 적용시키기 애매해서 일단 주석 처리
+        //map.GetType().GetProperty(attri.Value).SetValue();
+        return map;
     }
 }
+
 
 public struct MapComponent
 {
@@ -69,7 +117,7 @@ public struct MapComponent
     public int heightTile;
     public int widthTile;
     public int[,] tiles;
-    
-    public Rect[] Collision { get; set; }
+
+    public Rect[] collision;
     public Vector2[] MonsterSpawner { get; set; }
 }

@@ -6,7 +6,7 @@ using UnityEngine.Tilemaps;
 [System.Serializable]
 public class LevelGeneration
 {
-    public GameObject[] rooms;
+    public MapComponent?[] maps = MapGenerator.Map;
     public float distXBetwnStages;
 
     private Tilemap[] tilemaps;
