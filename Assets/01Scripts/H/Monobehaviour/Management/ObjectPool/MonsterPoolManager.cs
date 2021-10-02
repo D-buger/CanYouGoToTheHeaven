@@ -15,10 +15,11 @@ public class MonsterPoolManager : MonoBehaviour
 
     [SerializeField] GameObject objectPoolPrefab;
     [Space]
-    [SerializeField] List<ObjectList> objectList = new List<ObjectList>();
+    [SerializeField, Tooltip("'시작할 때' 해당 오브젝트가 풀링됨")] List<ObjectList> objectList = new List<ObjectList>();
 
+    int currentIndex = 0;
     Dictionary<string, int> poolIndexDictionary = new Dictionary<string, int>(); //string을 받으면 해당 이름을 가진 오브젝트가 몇 번째 풀에 있는지
-    MonsterPool[] monsterPoolComponents; //각 풀들의 컴포넌트 캐싱용
+    List<MonsterPool> monsterPoolComponents; //각 풀들의 컴포넌트 캐싱용. 위의 딕셔너리에서 받은 index에 해당하는 값을 가져오면 됨
 
     void MakeSingleton()
     {
@@ -37,24 +38,43 @@ public class MonsterPoolManager : MonoBehaviour
         MakeSingleton();
     }
 
-    void AddPoolingObject() //CSV에서 읽어온 정보를 토대로 몬스터들을 할당시켜주는 역할
+    void Start()
     {
+        if (objectPoolPrefab == null)
+        {
+            Debug.LogWarning($"{gameObject.name}: 오브젝트 풀 프리팹이 할당되지 않았습니다");
+            return;
+        }
+        monsterPoolComponents = new List<MonsterPool>();
 
-    }
-
-    void CreateObjectPools()
-    {
         for (int i = 0; i < objectList.Count; i++)
         {
-            GameObject pool = Instantiate(objectPoolPrefab, transform);
-
-            string poolingObjectName = objectList[i].objectToPooling.name;
-            pool.name = poolingObjectName + "Pool";
-
-            poolIndexDictionary.Add(poolingObjectName, i);
-            monsterPoolComponents[i] = pool.GetComponent<MonsterPool>();
-            monsterPoolComponents[i].StartingInitialize(objectList[i].objectToPooling, objectList[i].poolingCount);
+            CreateObjectPools(objectList[i].objectToPooling, objectList[i].poolingCount);
         }
+    }
+
+    void CreateObjectPools(GameObject _objectToPooling, int _poolingCount)
+    {
+        GameObject pool = Instantiate(objectPoolPrefab, transform);
+        string poolingObjectName = _objectToPooling.name;
+        pool.name = poolingObjectName + "Pool";
+
+        poolIndexDictionary.Add(poolingObjectName, currentIndex);
+        monsterPoolComponents.Insert(currentIndex, pool.GetComponent<MonsterPool>());
+        monsterPoolComponents[currentIndex].StartingInitialize(_objectToPooling, _poolingCount);
+
+        currentIndex += 1;
+    }
+
+    public void RequestAddObjectPool(GameObject _objectToPooling, int _poolingCount)
+    {
+        string objectName = _objectToPooling.name;
+        Debug.Log($"{objectName}의 풀을 만들었습니다");
+        if (poolIndexDictionary.ContainsKey(objectName)) //해당 키가 있으면 = 해당 오브젝트가 이미 풀링되어 있으면
+        {
+            return;
+        }
+        CreateObjectPools(_objectToPooling, _poolingCount);
     }
 
     public GameObject GetObject(string _objectName)
@@ -69,16 +89,5 @@ public class MonsterPoolManager : MonoBehaviour
         string objectName = _object.name;
         int index = poolIndexDictionary[objectName];
         monsterPoolComponents[index].ReturnObject(_object);
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        if (objectPoolPrefab == null)
-        {
-            Debug.LogWarning($"{gameObject.name}: 오브젝트 풀 프리팹이 할당되지 않았습니다");
-        }
-        monsterPoolComponents = new MonsterPool[objectList.Count];
-        CreateObjectPools();
     }
 }

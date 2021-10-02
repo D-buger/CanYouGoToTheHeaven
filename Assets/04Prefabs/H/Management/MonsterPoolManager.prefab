@@ -44,14 +44,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPoolPrefab: {fileID: 1436198923727162557, guid: fc6c0e5303861cc479fce6ddb2da3510, type: 3}
-  objectList:
-  - objectToPooling: {fileID: 2331454088833507680, guid: 43ce2caf4cebcbf48b3bf97c2a50b691, type: 3}
-    poolingCount: 3
-  - objectToPooling: {fileID: 2185849960792005978, guid: e08cdeb2c7afce3499367d5f42eb16f1, type: 3}
-    poolingCount: 0
-  - objectToPooling: {fileID: 651090270845228537, guid: f1904ad4461ac2348929ba91b132572f, type: 3}
-    poolingCount: 8
-  - objectToPooling: {fileID: 8307769380026285632, guid: ba547abfbca143f4f953edfd1a00b518, type: 3}
-    poolingCount: 2
-  - objectToPooling: {fileID: 5042816215450494462, guid: 8ad1452451a7d8840a55afc859e53126, type: 3}
-    poolingCount: 4
+  objectList: []
