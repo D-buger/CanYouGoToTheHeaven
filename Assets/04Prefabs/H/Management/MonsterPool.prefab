@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3513589219948344775
+--- !u!1 &1436198923727162557
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,44 +8,38 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 656101450430530992}
-  - component: {fileID: 2870428732991099145}
+  - component: {fileID: 6287530535072261870}
+  - component: {fileID: 1824981022905335457}
   m_Layer: 0
-  m_Name: MonsterManager
+  m_Name: MonsterPool
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &656101450430530992
+--- !u!4 &6287530535072261870
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3513589219948344775}
+  m_GameObject: {fileID: 1436198923727162557}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -1.5004249, y: -5.4896183, z: -0.26176423}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2870428732991099145
+--- !u!114 &1824981022905335457
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3513589219948344775}
+  m_GameObject: {fileID: 1436198923727162557}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 371aec68bec9c954ba432dd2eb5435f0, type: 3}
+  m_Script: {fileID: 11500000, guid: 00a38caadc6baf4429a4236c6966fede, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  managers:
-  - {fileID: 3665305679513349950, guid: 608e5fe13eeb2604ab879429f3ce6cda, type: 3}
-  monsterList:
-  - {fileID: 5042816215450494462, guid: 8ad1452451a7d8840a55afc859e53126, type: 3}
-  TreasureRoomPortalPrefab: {fileID: 7219368410990909452, guid: 0f0c91ba0732f5c43be7c3cd2172ed1f, type: 3}
-  goldenMonsterParticle: {fileID: 819845330895904774, guid: 7dfe37eb39198384480248a60ce33daf, type: 3}

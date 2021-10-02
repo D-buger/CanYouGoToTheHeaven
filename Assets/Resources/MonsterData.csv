@@ -1,0 +1,15 @@
+Index,MonsterName,MonsterGrade,HitPoint,MovementSpeed,CognitiveRange,ChasingDuration,AttackDelay,ProjectileCount,TotalShotAngle,ProjectileVelocity,ProjectileLifetime
+0,다람쥐,D,30,1,,,0,,,,6
+1,심술다람쥐,D,30,1,,,2.5,,,,6
+2,하늘다람쥐,D,30,1.5,,,3,,,,6
+3,병아리,C,20,2.5,,,0,,,,6
+4,버럭새,C,30,0,,,3,,,,6
+5,폭탄새,C,20,0,,,0,,,,6
+6,잠꾸러기새,B,40,0.3,,,2,,,,6
+7,암탉,B,60,1.5,,,5,,,,6
+8,문어형외계인,A,50,0.5,,,1,,,,6
+9,프랭크톤형외계인,A,10,0,,,2,,,,6
+10,UFO외계인,S,100,2,,,5,,,,6
+11,파란천사,SS,60,1.5,,,2,,,,6
+12,신성모기,SS,50,0,,,0,,,,6
+13,대천사,SSS,150,3,,,5,,,,6

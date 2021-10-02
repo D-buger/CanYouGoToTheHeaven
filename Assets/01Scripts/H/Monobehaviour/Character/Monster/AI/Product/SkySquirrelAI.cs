@@ -15,8 +15,6 @@ public class SkySquirrelAI : PatrolMonster
     [SerializeField, Range(0f, 8f), Tooltip("돌진 지속시간(돌진 속도와 함께 돌진의 거리를 결정한다)")] float dashingDuration;
     WaitForSeconds waitDashingDurationDelay;
 
-    WaitForSeconds waitFor1Seconds = new WaitForSeconds(1f);
-
 
 
     [System.Serializable]
