@@ -145,8 +145,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6198c5e37d11d054c923c293dc0e92ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitPoint: 0
-  isGoldenMonster: 0
+  monsterName: "\uD504\uB7AD\uD06C\uD1A4\uD615\uC678\uACC4\uC778"
+  currentHitPoint: 0
   inflictDamageDelay: 3
   damage: 2
 --- !u!70 &8363059905292860484

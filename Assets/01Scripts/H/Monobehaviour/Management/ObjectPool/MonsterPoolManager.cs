@@ -19,13 +19,14 @@ public class MonsterPoolManager : MonoBehaviour
 
     int currentIndex = 0;
     Dictionary<string, int> poolIndexDictionary = new Dictionary<string, int>(); //string을 받으면 해당 이름을 가진 오브젝트가 몇 번째 풀에 있는지
-    List<MonsterPool> monsterPoolComponents; //각 풀들의 컴포넌트 캐싱용. 위의 딕셔너리에서 받은 index에 해당하는 값을 가져오면 됨
+    List<MonsterPool> monsterPoolComponents = new List<MonsterPool>(); //각 풀들의 컴포넌트 캐싱용. 위의 딕셔너리에서 받은 index에 해당하는 값을 가져오면 됨
 
     void MakeSingleton()
     {
         if (instance != null && instance != this)
         {
             Destroy(gameObject);
+            return;
         }
         else
         {
@@ -45,7 +46,6 @@ public class MonsterPoolManager : MonoBehaviour
             Debug.LogWarning($"{gameObject.name}: 오브젝트 풀 프리팹이 할당되지 않았습니다");
             return;
         }
-        monsterPoolComponents = new List<MonsterPool>();
 
         for (int i = 0; i < objectList.Count; i++)
         {
@@ -72,6 +72,7 @@ public class MonsterPoolManager : MonoBehaviour
         Debug.Log($"{objectName}의 풀을 만들었습니다");
         if (poolIndexDictionary.ContainsKey(objectName)) //해당 키가 있으면 = 해당 오브젝트가 이미 풀링되어 있으면
         {
+            Debug.Log($"이미 키가 있네요 쟌넨");
             return;
         }
         CreateObjectPools(_objectToPooling, _poolingCount);

@@ -145,8 +145,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4e1261cf2b246541a3171bceaca9033, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitPoint: 0
-  isGoldenMonster: 0
+  monsterName: "\uC554\uD0C9"
+  currentHitPoint: 0
   movementSpeed: 2
   checkRayAddLength: 0.35
   visualRange: 4

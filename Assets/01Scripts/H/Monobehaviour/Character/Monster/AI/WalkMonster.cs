@@ -12,6 +12,12 @@ public class WalkMonster : HMonster
     protected bool isRight = false;
     protected int moveDir = 0;
 
+    protected override void SettingVariables()
+    {
+        base.SettingVariables();
+        movementSpeed = StringToInteger(GetDataWithVariableName("MovementSpeed"));
+    }
+
     protected override void OperateStart()
     {
         base.OperateStart();
