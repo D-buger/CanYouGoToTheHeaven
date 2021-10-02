@@ -14,11 +14,7 @@ public class MonsterSpawnPoint : MonoBehaviour
         if (_collision.CompareTag("Player"))
         {
             if (monsterToSpawn == null)
-            {
-<<<<<<< HEAD
-                //Debug.LogError($"({gameObject.transform.position}) {gameObject.name}: 생성할 몬스터가 없습니다!");
-=======
->>>>>>> origin/Hyuns
+            { 
                 return;
             }
             SpawnMonster();
@@ -34,41 +30,6 @@ public class MonsterSpawnPoint : MonoBehaviour
 
     WaitForSeconds wait2Sec = new WaitForSeconds(2f);
 
-<<<<<<< HEAD
-    IEnumerator FindArray() //!!!!dictionary 활용해서 이름 다른 자료형 여러개 만들 수 있음?!!!!
-    {
-        yield return wait2Sec;
-        switch ((int)spawnMonsterGradeType)
-        {
-            case 0: monsterList = monsterManager.EGradeMonster;
-                break; 
-            case 1: monsterList = monsterManager.DGradeMonster;
-                break;
-            case 2: monsterList = monsterManager.CGradeMonster;
-                break;
-            case 3: monsterList = monsterManager.BGradeMonster;
-                break;
-            case 4: monsterList = monsterManager.AGradeMonster;
-                break;
-            case 5: monsterList = monsterManager.SGradeMonster;
-                break;
-            case 6: monsterList = monsterManager.EliteMonster;
-                break;
-            default: Debug.LogError($"{gameObject.name}: Not Implemented!");
-                break;
-        }
-        int index = Random.Range(0, monsterList.Length);
-        //Debug.Log($"index is {index}");
-        if (monsterList[index] == null)
-        {
-            Debug.LogError("몬스터를 찾지 못함");
-            yield break;
-        }
-        monsterToCreat = monsterList[index];
-    }
-
-=======
->>>>>>> origin/Hyuns
     void SpawnMonster()
     {
         GameObject spawnedMonster = MonsterPoolManager.instance.GetObject($"{monsterToSpawn}");
@@ -90,17 +51,9 @@ public class MonsterSpawnPoint : MonoBehaviour
         int pickedValue = Random.Range(0, maxRange);
         int chance = (int)(((System.Math.Truncate(_percentage * 100f) * 0.01f) * 100f) + 1);
         if (pickedValue < chance)
-        {
-<<<<<<< HEAD
-            isGolden = true;
-            //Debug.Log($"뽑을 확률은{chance} / {maxRange}이었으며 뽑은 수는{pickedValue} < {chance}이므로 황금 몬스터가 되었습니다");
-        }
-        else
-        {
+        { 
             //Debug.Log($"뽑을 확률은{chance} / {maxRange}이었으며 뽑은 수는{pickedValue} >= {chance}이므로 황금 몬스터가 되지 못하였습니다");
-=======
             result = true;
->>>>>>> origin/Hyuns
         }
         return result;
     }
@@ -114,3 +67,4 @@ public class MonsterSpawnPoint : MonoBehaviour
         }
     }
 }
+
