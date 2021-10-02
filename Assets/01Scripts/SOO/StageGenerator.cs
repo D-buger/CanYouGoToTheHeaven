@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class StageGenerator : MonoBehaviour
 {
-    [SerializeField]
-    private List<LevelGeneration> levelGenerations;
+    private LevelGeneration levelGeneration;
 
     [SerializeField]
     private int roomInStage;
@@ -24,10 +23,7 @@ public class StageGenerator : MonoBehaviour
     private void Awake()
     {
         EdgePositions = new List<Vector2>();
-        for(int i = 0; i < levelGenerations.Count; i++)
-        {
-            firstStagePos.x += i * distXBetwnStages;
-            EdgePositions.AddRange(levelGenerations[i].Generation(firstStagePos,roomInStage, levelInStage, transform));
-        }
+        //levelGeneration = new LevelGeneration(this.gameObject);
+        
     }
 }
