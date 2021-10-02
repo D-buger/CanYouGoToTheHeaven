@@ -13,10 +13,12 @@ public class MapGenerator : MonoBehaviour
     public MapComponent[] Map { get; private set; }
 
     public static int RoomsInStage { get; private set; }
+    public static int Stage { get; private set; }
 
     public MapGenerator(int stageNum, int roomNum)
     {
         RoomsInStage = roomNum;
+        Stage = stageNum;
         Map = new MapComponent[stageNum * roomNum];
         int stage;
         int room;

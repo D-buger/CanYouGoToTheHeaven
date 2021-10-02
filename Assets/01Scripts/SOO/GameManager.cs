@@ -5,7 +5,6 @@ public class GameManager : SingletonBehavior<GameManager>
 {
     [SerializeField]
     public InputManager input;
-    public MapGenerator maps = new MapGenerator(5, 6);
 
     public static readonly Vector2 ScreenSize 
                 = new Vector2(Screen.width, Screen.height);

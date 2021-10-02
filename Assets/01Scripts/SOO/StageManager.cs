@@ -6,6 +6,7 @@ public class StageManager : SingletonBehavior<StageManager>
 {
     public CameraManager CameraManager { get; private set; }
     public ItemManager ItemManager { get; private set; }
+    public TilemapGeneration MapManager { get; private set; }
 
     public PlayerStats Stat { get; private set; }
     public GameObject Player { get; private set; }
@@ -13,13 +14,17 @@ public class StageManager : SingletonBehavior<StageManager>
     public Shop Shop { get; private set; }
 
     private int playerRoom = 1;
-    public int PlayerRoom() => playerRoom++;
 
     protected override void OnAwake()
     {
         ItemManager = new ItemManager();
         Player = GameObject.FindGameObjectWithTag("Player");
         Stat = Player.GetComponent<Player>().stats;
+        foreach(GameObject obj in GameObject.FindGameObjectsWithTag("Wall"))
+        {
+            if (obj.name == nameof(MapManager))
+                MapManager = obj.GetComponent<TilemapGeneration>();
+        }
 
         Shop = GameObject.FindGameObjectWithTag("Shop").GetComponent<Shop>();
         CameraManager = Camera.main.gameObject.GetComponent<CameraManager>();
@@ -29,17 +34,17 @@ public class StageManager : SingletonBehavior<StageManager>
     {
         if (PlayerInStage)
         {
-            //if (CameraManager.Screen2World(GameManager.ScreenSize).y
-            //    > StageGenerator.EdgePositions[playerRoom].y)
-            //{
-            //    CameraManager.CameraLock = true;
-            //}
+            if (CameraManager.Screen2World(GameManager.ScreenSize).y
+                > MapManager.EndYPosition)
+            {
+                CameraManager.CameraLock = true;
+            }
 
-            //if (Player.transform.position.y
-            //    >= StageGenerator.EdgePositions[playerRoom].y)
-            //{
-            //    PlayerTeleportToShop();
-            //}
+            if (Player.transform.position.y
+                >= MapManager.EndYPosition)
+            {
+                PlayerTeleportToShop();
+            }
         }
     }
 
