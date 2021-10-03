@@ -46,6 +46,10 @@ public class BlueAngelAI : PatrolMonster
     {
         SearchPlayer();
         OperateUpdate();
+        if (Input.GetKeyDown(KeyCode.Alpha9))
+        {
+            ActionAfterDeath();
+        }
         if (!detectPlayer)
         {
             if (isAttacking)

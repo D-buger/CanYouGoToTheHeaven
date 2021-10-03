@@ -226,6 +226,8 @@ public class HMonster : MonoBehaviour
             goldenPortal.transform.position = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
             MonsterPoolManager.instance.ReturnObject(particle);
         }
+        GameObject droppedSoul = MonsterPoolManager.instance.GetObject("DroppedSoul");
+        droppedSoul.transform.position = transform.position;
         MonsterPoolManager.instance.ReturnObject(gameObject, monsterName);
     }
 }

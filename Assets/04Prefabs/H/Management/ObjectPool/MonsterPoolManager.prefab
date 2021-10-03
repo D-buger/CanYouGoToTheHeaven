@@ -53,3 +53,7 @@ MonoBehaviour:
     poolingCount: 15
   - objectToPooling: {fileID: 5920112367229229167, guid: 7504d4755450ddb45a757f6201398af3, type: 3}
     poolingCount: 15
+  - objectToPooling: {fileID: 366992659156246331, guid: f18b4e8f5f1034f4389c3e184540885d, type: 3}
+    poolingCount: 10
+  - objectToPooling: {fileID: 7219368410990909452, guid: 0f0c91ba0732f5c43be7c3cd2172ed1f, type: 3}
+    poolingCount: 2

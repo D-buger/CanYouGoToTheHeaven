@@ -47,7 +47,7 @@ public class MonsterSpawnPoint : MonoBehaviour
         }
         HMonster spawnedMonsterComp = spawnedMonster.GetComponent<HMonster>();
 
-        spawnedMonster.transform.position = transform.position;
+        spawnedMonster.transform.position = new Vector3(transform.position.x, transform.position.y, 0);
         float chan = monsterManager.player.GetComponent<Player>().stats.chanceOfSpawnGoldenMonster;
         chan = 80f;
         if (Probability(chan))
