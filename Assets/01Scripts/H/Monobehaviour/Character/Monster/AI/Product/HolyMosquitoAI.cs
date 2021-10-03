@@ -21,8 +21,8 @@ public class HolyMosquitoAI : HMonster
 
     protected override void OperateOnCollisionEnter2D(Collision2D _collision)
     {
-        base.OperateOnCollisionEnter2D(_collision);
         StealingJuice();
+        base.OperateOnCollisionEnter2D(_collision);
     }
 
     private void OnCollisionEnter2D(Collision2D _collision)
@@ -32,7 +32,6 @@ public class HolyMosquitoAI : HMonster
 
     void StealingJuice()
     {
-        //여기에 음료의 일정량을 뺏는 메소드를 작성해야함!
-        Debug.LogWarning($"{gameObject.name}: 남은 음료를 뺏는 메소드를 구현해야함! 주석 참고");
+        StageManager.Instance.Stat.watergun.Model.WaterAmount -= (int)(StageManager.Instance.Stat.watergun.Model.MaxWaterAmount * 0.1f);
     }
 }
