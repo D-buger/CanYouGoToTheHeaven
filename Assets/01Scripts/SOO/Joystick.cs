@@ -7,15 +7,13 @@ using UnityEngine.EventSystems;
 [System.Serializable]
 public class Joystick
 {
-    [SerializeField, Space(15), Header("Joystick Object")]
     private GameObject backgroundObject;
-    [SerializeField]
     private GameObject handleObject;
-
-    [SerializeField, Space(15), Header("Image")]
+    
     private Sprite backGroundImage;
-    [SerializeField]
     private Sprite handleImage;
+
+    private FileLoader<Sprite> joystickImages;
 
     [Header("Value")]
     public float horizontalValue;
@@ -29,6 +27,20 @@ public class Joystick
 
     public void SetFirst()
     {
+        joystickImages = new FileLoader<Sprite>("Images/UI/Joystick", "UI_");
+
+        GameObject Canvas = GameObject.FindGameObjectWithTag("GameController");
+        backgroundObject = GameObject.Instantiate(new GameObject(), Canvas.transform);
+        backgroundObject.transform.localScale = new Vector3(2, 2, 0);
+        handleObject = GameObject.Instantiate(new GameObject(), backgroundObject.transform);
+        handleObject.transform.localScale = new Vector3(1.5f, 1.5f, 0);
+
+        backgroundObject.AddComponent<Image>();
+        handleObject.AddComponent<Image>();
+
+        backGroundImage = joystickImages.GetFile("BackgroundImage");
+        handleImage = joystickImages.GetFile("HandleImage");
+
         back = new JoystickPart(backgroundObject, backGroundImage);
         handle = new JoystickPart(handleObject, handleImage);
 
@@ -40,6 +52,7 @@ public class Joystick
         backgroundObject.SetActive(active);
         handleObject.SetActive(active);
     }
+
     public void JoyStickSetActive(Vector2 pos)
     {
         backgroundObject.SetActive(true);

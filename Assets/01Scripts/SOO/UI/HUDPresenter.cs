@@ -13,7 +13,7 @@ public class HUDPresenter : MonoBehaviour
 
         WaterBar = new UIElement<Slider>("WaterBar", this.gameObject);
         SoulText = new UIElement<Text>("SoulText", this.gameObject);
-
+        
         ParticleSystem soulParticle = SoulText.Component.transform.GetComponentInChildren<ParticleSystem>();
 
         PlayerStats.maxHpCallback += HealthBar.Component.SizeChange;
