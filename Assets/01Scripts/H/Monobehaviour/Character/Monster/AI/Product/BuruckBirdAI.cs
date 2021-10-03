@@ -21,6 +21,7 @@ public class BuruckBirdAI : PatrolMonster
 
     private void Update()
     {
+        OperateUpdate();
         SearchPlayer();
         if (detectPlayer)
         {

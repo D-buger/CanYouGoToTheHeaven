@@ -38,6 +38,7 @@ public class ChickenAI : PatrolMonster
     void Update()
     {
         CheckFront();
+        CheckDistanceFromPlayer();
         if (spawnChick != null) //이미 소환 작업에 들어갔다면
         {
             return;

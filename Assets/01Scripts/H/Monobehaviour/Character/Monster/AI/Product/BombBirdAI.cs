@@ -43,6 +43,7 @@ public class BombBirdAI : HMonster
 
     private void Update()
     {
+        OperateUpdate();
         if (Input.GetKeyDown(KeyCode.Keypad3))
         {
             detectPlayer = true;

@@ -10,10 +10,10 @@ public class GameResultScreen : MonoBehaviour
 
     private void Awake()
     {
-        GameObject s1 = Instantiate(gameOverScreen);
+        /*GameObject s1 = Instantiate(gameOverScreen);
         s1.transform.SetParent(transform);
         GameObject s2 = Instantiate(gameClearScreen);
-        s2.transform.SetParent(transform);
+        s2.transform.SetParent(transform);*/
     }
 
     

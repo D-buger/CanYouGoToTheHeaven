@@ -56,5 +56,9 @@ MonoBehaviour:
   - {fileID: 2564883437134320648, guid: ea7cb037ade7b68479405fd5cc4b38dd, type: 3}
   - {fileID: 5663213513209649837, guid: 49082eb5ac2008c41b158a51e09b20dc, type: 3}
   - {fileID: 651090270845228537, guid: f1904ad4461ac2348929ba91b132572f, type: 3}
+  - {fileID: 3517735850117212451, guid: 96f4cf9ef1af2d44497febee877ea275, type: 3}
+  - {fileID: 2089739748966206256, guid: b0f8ff42bc43879409bc16a149f69849, type: 3}
+  - {fileID: 1483351637065316057, guid: 2a7413dfcaccb6b468a31359949ec4e5, type: 3}
+  - {fileID: 8363059905292860483, guid: 8dcd526d72b441143a49be2d17d7985e, type: 3}
   TreasureRoomPortalPrefab: {fileID: 7219368410990909452, guid: 0f0c91ba0732f5c43be7c3cd2172ed1f, type: 3}
   goldenMonsterParticle: {fileID: 819845330895904774, guid: 7dfe37eb39198384480248a60ce33daf, type: 3}

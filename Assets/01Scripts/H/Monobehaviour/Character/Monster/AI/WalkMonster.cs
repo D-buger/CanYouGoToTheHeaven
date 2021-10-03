@@ -32,11 +32,6 @@ public class WalkMonster : HMonster
         sprite = GetComponent<SpriteRenderer>();
     }
 
-    protected virtual void OperateUpdate()
-    {
-
-    }
-
     protected virtual void OperateFixedUpdate()
     {
 
@@ -49,21 +44,29 @@ public class WalkMonster : HMonster
 
     protected void CheckFront()
     {
-        CheckFrontGround();
+        if (CheckFrontGround())
+        {
+            return;
+        }
         CheckFrontWall();
     }
 
-    protected void CheckFrontGround()
+    protected bool CheckFrontGround()
     {
         Vector2 front = new Vector2(transform.position.x + (moveDir * transform.localScale.x) + (0.1f * moveDir) + (checkRayAddLength * -moveDir), transform.position.y);
-        RaycastHit2D platformCheckRay = Physics2D.Raycast(front, Vector2.up, 1, LayerMask.GetMask("Platform"));
+        RaycastHit2D platformCheckRay = Physics2D.Raycast(front, Vector2.up, 1, LayerMask.GetMask("Wall")); //¹Ù´Ú
         Debug.DrawRay(front, Vector2.up, Color.cyan);
         if (platformCheckRay.collider == null)
         {
             isRight = !isRight;
+            moveDir = isRight ? 1 : -1;
+            sprite.flipX = !isRight;
+            return true;
         }
-        moveDir = isRight ? 1 : -1;
-        sprite.flipX = !isRight;
+        else
+        {
+            return false;
+        }
     }
 
     protected void CheckFrontWall()

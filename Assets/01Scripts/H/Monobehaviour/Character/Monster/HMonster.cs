@@ -116,7 +116,7 @@ public class HMonster : MonoBehaviour
 
     }
 
-    protected void OperateUpdate()
+    protected virtual void OperateUpdate()
     {
         CheckDistanceFromPlayer();
     }
@@ -130,9 +130,9 @@ public class HMonster : MonoBehaviour
         }
     }
 
-    void CheckDistanceFromPlayer() //플레이어가 본인과 멀어지면 디스폰 시키는 역할
+    protected void CheckDistanceFromPlayer() //플레이어가 본인과 멀어지면 디스폰 시키는 역할
     {
-        if (player.transform.position.y - transform.position.y >= 25) //플레이어의 y좌표가 본인으로부터 25이상 올라가면
+        if (MonsterManager.instance.player.transform.position.y - transform.position.y >= 25) //플레이어의 y좌표가 본인으로부터 25이상 올라가면
         {
             DespawnMonster(); //풀로 반환시킴
         }
@@ -140,7 +140,6 @@ public class HMonster : MonoBehaviour
 
     public void MakeGoldenMonster()
     {
-        Debug.LogWarning("파티클 재생 안됨 ㅅㅂ");
         isGoldenMonster = true;
         particle = MonsterPoolManager.instance.GetObject("GoldenMonsterParticle");
         particle.transform.position = transform.position;

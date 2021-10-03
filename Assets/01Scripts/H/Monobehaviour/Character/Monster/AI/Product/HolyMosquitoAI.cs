@@ -14,6 +14,11 @@ public class HolyMosquitoAI : HMonster
         OperateOnEnable();
     }
 
+    private void Update()
+    {
+        CheckDistanceFromPlayer();
+    }
+
     protected override void OperateOnCollisionEnter2D(Collision2D _collision)
     {
         base.OperateOnCollisionEnter2D(_collision);

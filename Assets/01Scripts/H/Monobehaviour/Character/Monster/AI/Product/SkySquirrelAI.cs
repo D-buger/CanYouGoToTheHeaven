@@ -75,6 +75,7 @@ public class SkySquirrelAI : PatrolMonster
     private void Update()
     {
         SearchPlayer();
+        CheckDistanceFromPlayer();
         if (dashCoroutine == null)
         {
             if (detectPlayer == true)

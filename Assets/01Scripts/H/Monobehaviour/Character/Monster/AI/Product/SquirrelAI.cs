@@ -16,6 +16,7 @@ public class SquirrelAI : WalkMonster
 
     void Update()
     {
+        CheckDistanceFromPlayer();
         CheckFront();
     }
 

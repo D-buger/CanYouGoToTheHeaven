@@ -43,6 +43,7 @@ public class NastySquirrelAI : PatrolMonster
     void Update()
     {
         SearchPlayer();
+        CheckDistanceFromPlayer();
         if (!detectPlayer)
         {
             if (isAttacking)

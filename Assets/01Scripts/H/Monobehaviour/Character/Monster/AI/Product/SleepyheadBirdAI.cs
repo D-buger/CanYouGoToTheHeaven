@@ -129,6 +129,7 @@ public class SleepyheadBirdAI : PatrolMonster
     {
         SearchPlayer();
         UpdateSpriteState();
+        CheckDistanceFromPlayer();
         if (!isAlreadyAwake)
         {
             if (detectPlayer)

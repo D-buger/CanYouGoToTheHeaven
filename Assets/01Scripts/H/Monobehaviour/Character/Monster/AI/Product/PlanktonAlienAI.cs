@@ -36,6 +36,7 @@ public class PlanktonAlienAI : HMonster
     private void Update()
     {
         CheckPlayerInTheCursedPlatform();
+        CheckDistanceFromPlayer();
     }
 
     void CheckPlayerInTheCursedPlatform()
