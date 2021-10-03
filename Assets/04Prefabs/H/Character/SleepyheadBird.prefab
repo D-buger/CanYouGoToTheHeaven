@@ -153,7 +153,7 @@ MonoBehaviour:
   chasingTime: 3
   wakeUpFromSleep: 3
   timeToPrepareDash: 0.2
-  dashingSpeed: 17
+  dashingSpeed: 3
   dashAfterCooldown: 0.6
   dashingDuration: 0.7
   awakeFromDeepSleep: {fileID: 7459199326643700029, guid: e98d8f1e2395cf44f9f6a143e203431a, type: 3}

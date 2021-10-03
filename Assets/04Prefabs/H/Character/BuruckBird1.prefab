@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2331454088833507683}
   - component: {fileID: 2331454088833507682}
-  - component: {fileID: 2331454088833507681}
   - component: {fileID: 2331454088833507677}
   - component: {fileID: 2331454088833507676}
   - component: {fileID: 1491875532}
+  - component: {fileID: 4686859756705085949}
   m_Layer: 10
   m_Name: BuruckBird1
   m_TagString: Enemy
@@ -86,32 +86,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2331454088833507681
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2331454088833507680}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed8f82bbf049fed4d9c625d17cbbe8d8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  monsterName: "\uBC84\uB7ED\uC0C8"
-  currentHitPoint: 0
-  movementSpeed: 3
-  checkRayAddLength: 0.2
-  visualRange: 7
-  chasingTime: 2
-  projectile: {fileID: 2853162243808925760, guid: c308c89b647518746af6dc0700cb1ee4, type: 3}
-  projectileDamage: 2
-  projectileCount: 4
-  projectileVelocity: 2
-  shotAngle: 60
-  prepareAttackDelay: 2.7
-  debugOption:
-    showVisualRange: 1
 --- !u!50 &2331454088833507677
 Rigidbody2D:
   serializedVersion: 4
@@ -178,3 +152,29 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &4686859756705085949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2331454088833507680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e611c109e45b43842987b18dd01fc8a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  monsterName: "\uBC84\uB7ED\uC0C8"
+  currentHitPoint: 0
+  movementSpeed: 0
+  checkRayAddLength: 0
+  visualRange: 0
+  chasingTime: 0
+  projectile: {fileID: 5920112367229229167, guid: 7504d4755450ddb45a757f6201398af3, type: 3}
+  projectileDamage: 0
+  projectileVelocity: 0
+  projectileCount: 0
+  totalAngle: 0
+  attackDelay: 0
+  debugOption:
+    showVisualRange: 0

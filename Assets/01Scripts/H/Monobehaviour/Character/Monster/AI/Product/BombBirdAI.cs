@@ -23,6 +23,11 @@ public class BombBirdAI : HMonster
         fragmentDamage = StageManager.Instance.playerRoom <= 3 ? 1 : 2;
     }
 
+    private void OnEnable()
+    {
+        OperateOnEnable();
+    }
+
     private void Awake()
     {
         OperateAwake();

@@ -101,6 +101,7 @@ public class HMonster : MonoBehaviour
     public void OperateOnEnable()
     {
         SettingData();
+        OperateStart();
     }
 
     protected virtual void OperateAwake()
@@ -142,6 +143,7 @@ public class HMonster : MonoBehaviour
         Debug.LogWarning("파티클 재생 안됨 ㅅㅂ");
         isGoldenMonster = true;
         particle = MonsterPoolManager.instance.GetObject("GoldenMonsterParticle");
+        particle.transform.position = transform.position;
         particle.transform.SetParent(transform);
         ParticleSystem particleComp = particle.GetComponent<ParticleSystem>();
         particleComp.Play();
@@ -149,20 +151,44 @@ public class HMonster : MonoBehaviour
 
     protected WaitForEndOfFrame waitForEndOfFrame = new WaitForEndOfFrame();
 
-    protected void ShotHomingProjectile(GameObject _projectile, int _damage, float _velocity)
+    protected void ShotHomingProjectile(GameObject _projectile, int _damage, float _velocity, float _projectileCount, float _totalAngle, float _lifetime)
     {
-        //Debug.Log($"{gameObject.name}: 유도 발사체 발사!");
-    }
-
-    protected void ShotProjectile(GameObject _projectile, int _damage, int _projectileCount, float _velocity, float _totalAngle)
-    {
-        //Debug.Log($"{gameObject.name}: 발사체 발사!");
         Vector2 dir = player.transform.position - transform.position;
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         float currentRotZ = angle;
         if (_projectileCount == 1)
         {
-            InstantiateProjectile(_projectile, _damage, currentRotZ, _velocity);
+            GameObject pj = MonsterPoolManager.instance.GetObject(_projectile.name);
+            pj.transform.position = transform.position;
+            pj.transform.rotation = Quaternion.Euler(0, 0, currentRotZ);
+            pj.GetComponent<HomingMonsterProjectile>().StartingInitialize(_damage, _velocity, _lifetime);
+        }
+        else
+        {
+            float shotBtwAngle = _totalAngle / _projectileCount;
+            if (_projectileCount % 2 != 0)
+            {
+                currentRotZ = angle - (shotBtwAngle * (_projectileCount - 1) * 0.5f);
+                for (int i = 0; i < _projectileCount; i++)
+                {
+                    GameObject pj = MonsterPoolManager.instance.GetObject(_projectile.name);
+                    pj.transform.position = transform.position;
+                    pj.GetComponent<HomingMonsterProjectile>().StartingInitialize(_damage, _velocity, _lifetime);
+                    pj.transform.rotation = Quaternion.Euler(0, 0, currentRotZ);
+                    currentRotZ += shotBtwAngle;
+                }
+            }
+        }
+    }
+
+    protected void ShotProjectile(GameObject _projectile, int _damage, int _projectileCount, float _velocity, float _totalAngle, float _lifetime)
+    {
+        Vector2 dir = player.transform.position - transform.position;
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        float currentRotZ = angle;
+        if (_projectileCount == 1)
+        {
+            InstantiateProjectile(_projectile, _damage, currentRotZ, _lifetime, _velocity);
         }
         else
         {
@@ -172,22 +198,18 @@ public class HMonster : MonoBehaviour
                 currentRotZ = angle - (shotBtwAngle * (_projectileCount - 1) * 0.5f);
                 for (int i = 0; i < _projectileCount; i++)
                 {
-                    InstantiateProjectile(_projectile, _damage, currentRotZ, _velocity);
+                    InstantiateProjectile(_projectile, _damage, currentRotZ, _lifetime, _velocity);
                     currentRotZ += shotBtwAngle;
                 }
-            }
-            else //짝수, 필요없음
-            {
-
             }
         }
     }
 
-    void InstantiateProjectile(GameObject _projectile, int _damage, float _rotZ, float _velocity)
+    void InstantiateProjectile(GameObject _projectile, int _damage, float _rotZ, float _lifetime, float _velocity)
     {
         GameObject pj = MonsterPoolManager.instance.GetObject(_projectile.name);
         pj.transform.position = transform.position;
-        pj.GetComponent<MonsterProjectile>().Initialize(_damage, _velocity, _rotZ);
+        pj.GetComponent<MonsterProjectile>().Initialize(_damage, _velocity, _lifetime, _rotZ);
     }
 
     protected Vector2 FindDirectionVector(Vector3 _destination)

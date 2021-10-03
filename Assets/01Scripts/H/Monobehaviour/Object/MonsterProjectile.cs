@@ -10,7 +10,8 @@ public class MonsterProjectile : MonoBehaviour
     [SerializeField] Vector3 startPos;
     [SerializeField] Vector3 incidenceVec;
     [SerializeField] Vector3 reflectionVec;
-    bool noReflect;
+
+    float lifetimeCounter;
 
     int recochetCount = 5;
     Rigidbody2D rb2d;
@@ -23,17 +24,28 @@ public class MonsterProjectile : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!noReflect)
+        rb2d.velocity = transform.right * velocity;
+    }
+
+    private void Update()
+    {
+        if (lifetimeCounter >= float.Epsilon)
         {
-            transform.Translate(Vector2.up * velocity * Time.deltaTime);
+            lifetimeCounter -= Time.deltaTime;
+        }
+        else
+        {
+            MonsterPoolManager.instance.ReturnObject(gameObject);
         }
     }
 
-    public void Initialize(int _damage, float _velocity, float _angle = 0f)
+    public void Initialize(int _damage, float _velocity, float _lifetime, float _angle)
     {
         damage = (byte)_damage;
+        lifetimeCounter = _lifetime;
         velocity = _velocity;
         transform.rotation = Quaternion.Euler(0, 0, _angle);
+        reflectCount = 3;
     }
 
     void LookToDestination(Vector3 _destination)
@@ -60,23 +72,6 @@ public class MonsterProjectile : MonoBehaviour
             Vector3 hitPos = _collision.contacts[0].point;
             incidenceVec = hitPos - startPos;
             reflectionVec = Vector3.Reflect(incidenceVec, _collision.contacts[0].normal);
-            noReflect = true;
-            Vector2 newVelocity = reflectionVec.normalized * velocity;
-            if (newVelocity.x + newVelocity.y <= velocity)
-            {
-                for (int i = 0; i < 10; i++)
-                {
-                    if (newVelocity.x + newVelocity.y <= velocity)
-                    {
-                        newVelocity = newVelocity * 1.1f;
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-            }
-            rb2d.velocity = newVelocity;
             LookToDestination(transform.position + reflectionVec);
             startPos = transform.position;
         }

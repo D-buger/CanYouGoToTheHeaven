@@ -40,9 +40,14 @@ public class Soul : MonoBehaviour
             LookToDestination(MonsterManager.instance.player.transform.position);
             transform.Translate(transform.right * velocity * deltaTime);
         }
+        else if (currentTime <= 14f)
+        {
+            LookToDestination(MonsterManager.instance.player.transform.position);
+            transform.Translate((MonsterManager.instance.player.transform.position - transform.position).normalized * velocity * 2f * deltaTime);
+        }
         else
         {
-            transform.Translate((MonsterManager.instance.player.transform.position - transform.position).normalized * velocity * 2f * deltaTime);
+            AddPlayerSoulAmount();
         }
     }
 

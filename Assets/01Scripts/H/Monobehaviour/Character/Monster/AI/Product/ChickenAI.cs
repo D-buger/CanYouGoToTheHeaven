@@ -18,6 +18,16 @@ public class ChickenAI : PatrolMonster
         StartCoroutine(RemoveGravity());
     }
 
+    private void Awake()
+    {
+        OperateAwake();
+    }
+
+    private void OnEnable()
+    {
+        OperateOnEnable();
+    }
+
     IEnumerator RemoveGravity()
     {
         yield return waitFor1Seconds;
