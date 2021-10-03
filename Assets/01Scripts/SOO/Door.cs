@@ -9,6 +9,7 @@ public class Door : MonoBehaviour
     private void Teleport()
     {
         StageManager.Instance.Player.transform.position = playerMoveTo;
+        StageManager.Instance.PlayerTeleportToStage();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

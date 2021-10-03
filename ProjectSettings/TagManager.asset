@@ -9,6 +9,7 @@ TagManager:
   - Enemy
   - Shop
   - Canvas
+  - Door
   layers:
   - Default
   - TransparentFX

@@ -56,6 +56,7 @@ public class CameraManager : MonoBehaviour
         CheckChanged();
         Vector3 targetPosToViewp =
             World2Viewport(targetTransform.position);
+
         if (targetPosToViewp.y > topY)
         {
             transform.position += changedValue;
