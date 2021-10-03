@@ -51,11 +51,23 @@ public class CameraManager : MonoBehaviour
             CheckTargetPos();
     }
 
+    public bool TargetIsInRange()
+    {
+        Vector3 targetPosToViewp =
+            World2Viewport(targetTransform.position);
+        if (targetPosToViewp.y <= topY && targetPosToViewp.y >= bottomY)
+        {
+            return true;
+        }
+        return false;
+    }
+
     private void CheckTargetPos()
     {
         CheckChanged();
         Vector3 targetPosToViewp =
             World2Viewport(targetTransform.position);
+
         if (targetPosToViewp.y > topY)
         {
             transform.position += changedValue;
@@ -88,4 +100,7 @@ public class CameraManager : MonoBehaviour
 
     public void CamPositionChange(Vector2 position) 
         => transform.position = new Vector3(position.x, position.y, transform.position.z); 
+
+    public void CamPositionChangeY(float y)
+        => transform.position = new Vector3(transform.position.x, y, transform.position.z);
 }

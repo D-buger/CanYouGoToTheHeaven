@@ -9,6 +9,8 @@ TagManager:
   - Enemy
   - Shop
   - Canvas
+  - Door
+  - BonusRoom
   layers:
   - Default
   - TransparentFX
@@ -64,6 +66,6 @@ TagManager:
   - name: Text
     uniqueID: 2281793517
     locked: 0
-  - name: Projectile
-    uniqueID: 4134422837
+  - name: UI
+    uniqueID: 1177740819
     locked: 0

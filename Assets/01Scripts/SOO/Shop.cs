@@ -6,9 +6,7 @@ public class Shop : MonoBehaviour
     public Vector2 ShopPosition { get; private set; }
     public Vector2 DoorPosition { get; private set; }
     
-    private Transform[] itemShelves;
-    private ItemModel[] items;
-    private ItemManager itemManager;
+    private ItemShelve[] itemShelves;
 
     private TMP_Text text;
     private TMP_Text priceText;
@@ -21,23 +19,21 @@ public class Shop : MonoBehaviour
 
     private void Awake()
     {
-        itemManager = StageManager.Instance.ItemManager;
-
         Transform itemShelvesParent = transform.GetChild(0);
         shelvesCount = itemShelvesParent.childCount - 1;
+        itemShelves = new ItemShelve[shelvesCount];
+        for (int i = 0; i < shelvesCount; i++)
+        {
+            itemShelves[i] = itemShelvesParent.GetChild(i).GetComponent<ItemShelve>();
+        }
+        priceText = itemShelvesParent.GetChild(shelvesCount).GetComponent<TMP_Text>();
 
         ShopPosition = transform.position;
         DoorPosition = transform.GetChild(3).transform.position;
 
         text = transform.GetChild(2).GetComponent<TMP_Text>();
-
-        itemShelves = new Transform[shelvesCount];
-        items = new ItemModel[shelvesCount];
-        for (int i = 0; i < shelvesCount; i++)
-        {
-            itemShelves[i] = itemShelvesParent.GetChild(i);
-        }
-        priceText = itemShelvesParent.GetChild(shelvesCount).GetComponent<TMP_Text>();
+        
+        
     }
 
     private Transform playerPosition => StageManager.Instance.Player.transform;
@@ -59,8 +55,8 @@ public class Shop : MonoBehaviour
         //FIX : 플레이어가 상점에 왔을 때 번호를 부여하고 입력 키에 따라 위치를 확인하고 번호를 변경한다.
         for (int i = 0; i < shelvesCount; i++)
         {
-            if (x >= itemShelves[i].position.x - itemManager.ItemRadius
-             && x <= itemShelves[i].position.x + itemManager.ItemRadius)
+            if (x >= itemShelves[i].transform.position.x - StageManager.Instance.ItemManager.ItemRadius
+             && x <= itemShelves[i].transform.position.x + StageManager.Instance.ItemManager.ItemRadius)
             {
                 return i;
             }
@@ -84,12 +80,12 @@ public class Shop : MonoBehaviour
     private void SetExplanation(int itemIndex)
     {
         if (itemIndex >= 0 && itemIndex < shelvesCount
-            && items[itemIndex] != null)
+            && itemShelves[itemIndex].Item != null)
         {
-            text.text = items[itemIndex]?.Effect;
+            text.text = itemShelves[itemIndex]?.Item.Effect;
             priceText.transform.position = 
-                new Vector3(items[itemIndex].transform.position.x, priceText.transform.position.y );
-            priceText.text = items[itemIndex]?.Price.ToString();
+                new Vector3(itemShelves[itemIndex].transform.position.x, priceText.transform.position.y );
+            priceText.text = itemShelves[itemIndex]?.Item.Price.ToString();
 
             if (GameManager.Instance.input.BehaviourActive)
                 BuyItem(itemIndex);
@@ -100,11 +96,11 @@ public class Shop : MonoBehaviour
 
     private void BuyItem(int itemIndex)
     {
-        if(StageManager.Instance.Stat.Soul >= items[itemIndex].Price)
+        if(StageManager.Instance.Stat.Soul >= itemShelves[itemIndex]?.Item.Price)
         {
-            StageManager.Instance.Stat.Soul -= items[itemIndex].Price;
-            items[itemIndex].GetComponent<Collider2D>().enabled = true;
-            items[itemIndex] = null;
+            StageManager.Instance.Stat.Soul -= itemShelves[itemIndex].Item.Price;
+            itemShelves[itemIndex].CanBuy = true;
+            itemShelves[itemIndex].gameObject.SetActive(false);
         }
         else{
             priceText.text = "";
@@ -115,26 +111,10 @@ public class Shop : MonoBehaviour
 
     private void OnEnable()
     {
-        ShelvesReload();
-    }
-
-    private void OnDisable()
-    {
-        ShelvesClear();
-    }
-
-    private void ShelvesReload()
-    {
-        for(int i = 0; i < items.Length; i++)
+        for(int i = 0;i < itemShelves.Length; i++)
         {
-            items[i] = itemManager.GetRandomItem();
-            items[i].GetComponent<Collider2D>().enabled = false;
-            items[i].transform.position = itemShelves[i].position;
+            itemShelves[i].gameObject.SetActive(true);
+            itemShelves[i].CanBuy = false;
         }
-    }
-
-    private void ShelvesClear()
-    {
-        itemManager.SetItem(items);
     }
 }

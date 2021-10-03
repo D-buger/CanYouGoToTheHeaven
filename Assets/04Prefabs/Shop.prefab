@@ -488,6 +488,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &131817273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1907484706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57f81e7965a813d468e251c323f87d5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2036227989
 GameObject:
   m_ObjectHideFlags: 0
@@ -819,6 +831,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6418070491487200436}
+  - component: {fileID: 688083024}
   m_Layer: 0
   m_Name: Item_3
   m_TagString: Untagged
@@ -840,6 +853,18 @@ Transform:
   m_Father: {fileID: 6418070493201090230}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &688083024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6418070491487200437}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fa1ec7bfca3a9e41b54b0507474b918, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6418070491618667409
 GameObject:
   m_ObjectHideFlags: 0
@@ -4851,6 +4876,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6418070492030035339}
+  - component: {fileID: 1651735068}
   m_Layer: 0
   m_Name: Item_1
   m_TagString: Untagged
@@ -4872,6 +4898,18 @@ Transform:
   m_Father: {fileID: 6418070493201090230}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1651735068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6418070492030035336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fa1ec7bfca3a9e41b54b0507474b918, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6418070492366312713
 GameObject:
   m_ObjectHideFlags: 0
@@ -4925,6 +4963,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6418070493171946985}
+  - component: {fileID: 795283310}
   m_Layer: 0
   m_Name: Item_2
   m_TagString: Untagged
@@ -4946,6 +4985,18 @@ Transform:
   m_Father: {fileID: 6418070493201090230}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &795283310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6418070493171946990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fa1ec7bfca3a9e41b54b0507474b918, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6418070493201090231
 GameObject:
   m_ObjectHideFlags: 0
@@ -4989,6 +5040,10 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8337625790038234126, guid: 3d9fecb9a1586934185d6fd4fb79df72, type: 3}
       propertyPath: m_Name
+      value: Door
+      objectReference: {fileID: 0}
+    - target: {fileID: 8337625790038234126, guid: 3d9fecb9a1586934185d6fd4fb79df72, type: 3}
+      propertyPath: m_TagString
       value: Door
       objectReference: {fileID: 0}
     - target: {fileID: 8337625790038234127, guid: 3d9fecb9a1586934185d6fd4fb79df72, type: 3}
@@ -5037,6 +5092,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3d9fecb9a1586934185d6fd4fb79df72, type: 3}
+--- !u!1 &1907484706 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8337625790038234126, guid: 3d9fecb9a1586934185d6fd4fb79df72, type: 3}
+  m_PrefabInstance: {fileID: 8337625790299290668}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1907484707 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8337625790038234127, guid: 3d9fecb9a1586934185d6fd4fb79df72, type: 3}
@@ -5049,22 +5109,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6418070491715249146}
     m_Modifications:
-    - target: {fileID: 5782313101350266044, guid: 978758f28f7ed0842bf172b609a0c591, type: 3}
-      propertyPath: m_Size.x
-      value: 0.59721726
-      objectReference: {fileID: 0}
-    - target: {fileID: 5782313101350266044, guid: 978758f28f7ed0842bf172b609a0c591, type: 3}
-      propertyPath: m_Size.y
-      value: 0.5924499
-      objectReference: {fileID: 0}
-    - target: {fileID: 5782313101350266044, guid: 978758f28f7ed0842bf172b609a0c591, type: 3}
-      propertyPath: m_Offset.x
-      value: -0.021391362
-      objectReference: {fileID: 0}
-    - target: {fileID: 5782313101350266044, guid: 978758f28f7ed0842bf172b609a0c591, type: 3}
-      propertyPath: m_Offset.y
-      value: -0.81539595
-      objectReference: {fileID: 0}
     - target: {fileID: 8473360882476965818, guid: 978758f28f7ed0842bf172b609a0c591, type: 3}
       propertyPath: m_Name
       value: RefillMuchine

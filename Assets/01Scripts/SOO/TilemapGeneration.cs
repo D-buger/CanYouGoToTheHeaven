@@ -8,7 +8,9 @@ public class TilemapGeneration : MonoBehaviour
     private MapComponent[] maps;
     public readonly int distXBetwnStages = 50;
 
-    public List<int> XPositions { get; private set; } = new List<int>();
+    public List<float> XPositions { get; private set; } = new List<float>();
+
+    public float MapYSize { get; private set; }
     public float EndYPosition { get; private set; }
 
     public int roomInStage;
@@ -30,7 +32,8 @@ public class TilemapGeneration : MonoBehaviour
         GameObject _mapParent = this.gameObject;
         grid = _mapParent.transform.GetChild(0).GetComponent<Grid>();
         tilemap = grid.transform.GetChild(0).GetComponent<Tilemap>();
-        EndYPosition = grid.cellSize.y * MapGenerator.MapHeightTile * roomInStage - grid.cellSize.y * MapGenerator.MapHeightTile / 2;
+        MapYSize = grid.cellSize.y * MapGenerator.MapHeightTile;
+        EndYPosition = (MapYSize * roomInStage) - (MapYSize / 2);
         MapGeneration(0);
     }
 
@@ -40,7 +43,7 @@ public class TilemapGeneration : MonoBehaviour
         {
             for(int stageRepeat = 0; stageRepeat < levelInStage; stageRepeat++)
             {
-                XPositions.Add(startX);
+                XPositions.Add(startX * grid.cellSize.x);
                 LevelGeneration(startX, stageNum);
                 startX += distXBetwnStages + MapGenerator.MapWidthTile;
             }

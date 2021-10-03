@@ -14,11 +14,15 @@ public class HUDPresenter : MonoBehaviour
         WaterBar = new UIElement<Slider>("WaterBar", this.gameObject);
         SoulText = new UIElement<Text>("SoulText", this.gameObject);
 
+        ParticleSystem soulParticle = SoulText.Component.transform.GetComponentInChildren<ParticleSystem>();
+
         PlayerStats.maxHpCallback += HealthBar.Component.SizeChange;
         PlayerStats.currentHpCallback += HealthBar.Component.SetInsideGraphic;
 
         PlayerStats.soulCallback +=
             (int _value) => SoulText.Component.text = _value.ToString();
+        PlayerStats.soulCallback +=
+            (int _value) => soulParticle.Play();
 
         WaterGunModel.maxWaterAmountCallback +=
             (int _value) => WaterBar.Component.maxValue = _value;
