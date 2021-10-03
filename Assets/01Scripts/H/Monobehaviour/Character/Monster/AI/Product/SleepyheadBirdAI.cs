@@ -47,6 +47,11 @@ public class SleepyheadBirdAI : PatrolMonster
         defaultSprite = sprite.sprite;
     }
 
+    private void OnEnable()
+    {
+        OperateOnEnable();
+    }
+
     IEnumerator Dash()
     {
         Vector2 destination;

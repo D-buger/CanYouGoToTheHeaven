@@ -54,8 +54,5 @@ public class CharacterShotPJ : MonoBehaviour
 
     void InstantiateProjectile(GameObject _projectile, int _damage, float _velocity, Vector2 _destination, float aaann)
     {
-        GameObject pj = Instantiate(_projectile);
-        pj.transform.position = transform.position;
-        pj.GetComponent<MonsterProjectile>().Initialize(_damage, _velocity, aaann);
     }
 }

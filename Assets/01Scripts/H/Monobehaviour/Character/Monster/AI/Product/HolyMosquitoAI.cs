@@ -9,6 +9,11 @@ public class HolyMosquitoAI : HMonster
         OperateStart();
     }
 
+    private void OnEnable()
+    {
+        OperateOnEnable();
+    }
+
     protected override void OperateOnCollisionEnter2D(Collision2D _collision)
     {
         base.OperateOnCollisionEnter2D(_collision);

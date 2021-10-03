@@ -122,10 +122,10 @@ MonoBehaviour:
   currentHitPoint: 0
   movementSpeed: 4
   checkRayAddLength: 0
+  attackPerSecond: 1
+  laser: {fileID: 1937419222498303268, guid: f05e2abb06cec9641ab767dd890b7f69, type: 3}
   height: 10
   visualRange: 15
-  debugOption:
-    showVisualRange: 1
 --- !u!70 &5663213513209649836
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

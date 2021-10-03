@@ -9,15 +9,35 @@ public class NastySquirrelAI : PatrolMonster
     [SerializeField] float projectileVelocity;
     [SerializeField] int projectileCount = 1;
     [SerializeField] float totalAngle = 0f;
+    float projectileLifetime;
     bool isAttacking;
     Coroutine attackCoroutine = null;
     [SerializeField] float prepareAttackDelay;
-    WaitForSeconds waitPrepareAttackDelay;
 
     void Start()
     {
         OperateStart();
-        waitPrepareAttackDelay = new WaitForSeconds(prepareAttackDelay);
+    }
+
+    protected override void SettingVariables()
+    {
+        base.SettingVariables();
+        projectileDamage = StageManager.Instance.playerRoom <= 3 ? 1 : 2;
+        projectileVelocity = StringToFloat(GetDataWithVariableName("ProjectileVelocity"));
+        projectileCount = (int)StringToFloat(GetDataWithVariableName("ProjectileCount"));
+        totalAngle = StringToFloat(GetDataWithVariableName("TotalShotAngle"));
+        prepareAttackDelay = StringToFloat(GetDataWithVariableName("AttackDelay"));
+        projectileLifetime = StringToFloat(GetDataWithVariableName("ProjectileLifetime"));
+    }
+
+    private void OnEnable()
+    {
+        OperateOnEnable();
+    }
+
+    private void Awake()
+    {
+        OperateAwake();
     }
 
     void Update()
@@ -63,6 +83,7 @@ public class NastySquirrelAI : PatrolMonster
 
     IEnumerator ThrowAcorn()
     {
+        WaitForSeconds waitPrepareAttackDelay = new WaitForSeconds(prepareAttackDelay);
         isAttacking = true;
         animator.SetBool("isPrepareAttack", true);
         yield return waitPrepareAttackDelay;
@@ -74,7 +95,7 @@ public class NastySquirrelAI : PatrolMonster
         {
             yield return waitForEndOfFrame;
         }
-        ShotProjectile(projectile, projectileDamage, projectileCount, projectileVelocity, totalAngle); //발사
+        ShotProjectile(projectile, projectileDamage, projectileCount, projectileVelocity, totalAngle, projectileLifetime); //발사
         animator.SetBool("attackIsEnd", true);
         yield return wait100MilliSeconds;
         animator.SetBool("attackIsEnd", false);

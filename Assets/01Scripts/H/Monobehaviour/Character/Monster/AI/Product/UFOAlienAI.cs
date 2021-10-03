@@ -4,15 +4,71 @@ using UnityEngine;
 
 public class UFOAlienAI : WalkMonster
 {
+    float attackDelay;
+    [SerializeField] int attackPerSecond;
+    float attackDuration;
+    int projectileCount;
+    float totalShotAngle;
+
+    [SerializeField] GameObject laser;
+    EnemyLaser laserComp;
+
     bool isAlreadyDetectPlayer;
-    [SerializeField, Range(1f, 20f)] float height;
+    [SerializeField, Range(1f, 20f)] float height = 5;
     [SerializeField] float visualRange;
     bool isAttacking = false;
+
+    Coroutine attackCoroutine = null;
+
+    private void Awake()
+    {
+        SettingData();
+        GameObject laserObj = Instantiate(laser);
+        laserObj.transform.SetParent(transform);
+        laserObj.transform.position = transform.position;
+        laserComp = laserObj.GetComponent<EnemyLaser>();
+        laserComp.Initialize(projectileCount, totalShotAngle);
+        for (int i = 0; i < laserComp.laserCollider.Count; i++)
+        {
+            laserComp.laserCollider[i].rayDamage = StageManager.Instance.playerRoom <= 3 ? 1 : 2;
+            laserComp.laserCollider[i].attackDelay = 1f / attackPerSecond;
+        }
+    }
 
     void Start()
     {
         OperateStart();
         player = GameObject.FindWithTag("Player");
+    }
+
+    protected override void SettingVariables()
+    {
+        base.SettingVariables();
+        attackDelay = StringToFloat(GetDataWithVariableName("AttackDelay"));
+        attackDuration = StringToFloat(GetDataWithVariableName("AttackDuration"));
+        projectileCount = (int)StringToFloat(GetDataWithVariableName("ProjectileCount"));
+        totalShotAngle = StringToFloat(GetDataWithVariableName("TotalShotAngle"));
+        isAlreadyDetectPlayer = false;
+        isAttacking = false;
+    }
+
+    private void OnEnable()
+    {
+        OperateOnEnable();
+    }
+
+    private void OnDisable()
+    {
+        if (attackCoroutine != null)
+        {
+            StopCoroutine(attackCoroutine);
+            attackCoroutine = null;
+        }
+        for (int i = 0; i < laserComp.laserComps.Count; i++)
+        {
+            laserComp.laserComps[i].gameObject.SetActive(false);
+        }
+        laserComp.particleComp.gameObject.SetActive(false);
     }
 
     private void Update()
@@ -22,7 +78,40 @@ public class UFOAlienAI : WalkMonster
             FindPlayer();
             return;
         }
+        else
+        {
+            if (attackCoroutine == null)
+            {
+                attackCoroutine = StartCoroutine(Attack());
+            }
+        }
         CheckFrontWall();
+    }
+
+    IEnumerator Attack()
+    {
+        WaitForSeconds atkdel = new WaitForSeconds(attackDelay);
+        WaitForSeconds atkDur = new WaitForSeconds(attackDuration);
+        laserComp.particleComp.Play();
+        while (true)
+        {
+            laserComp.particleComp.gameObject.SetActive(true);
+            laserComp.particleComp.Play();
+            yield return atkdel; //공격 준비
+
+            laserComp.particleComp.gameObject.SetActive(false);
+            for (int i = 0; i < laserComp.laserComps.Count; i++)
+            {
+                laserComp.laserComps[i].gameObject.SetActive(true);
+            }
+
+
+            yield return atkDur; //공격 종료
+            for (int i = 0; i < laserComp.laserComps.Count; i++)
+            {
+                laserComp.laserComps[i].gameObject.SetActive(false);
+            }
+        }
     }
 
     void FindPlayer()
@@ -45,7 +134,7 @@ public class UFOAlienAI : WalkMonster
                 }
                 else
                 {
-                    rb2d.MovePosition(new Vector2(rb2d.position.x + (moveDir * movementSpeed * Time.deltaTime), rb2d.position.y + 4 * Time.deltaTime));
+                    rb2d.MovePosition(new Vector2(rb2d.position.x + (moveDir * movementSpeed * Time.deltaTime), rb2d.position.y + 5 * Time.deltaTime));
                 }
             }
         }
@@ -54,21 +143,5 @@ public class UFOAlienAI : WalkMonster
     private void OnCollisionEnter2D(Collision2D _collision)
     {
         OperateOnCollisionEnter2D(_collision);
-    }
-
-    [System.Serializable]
-    struct DebugOption
-    {
-        public bool showVisualRange;
-    }
-    [SerializeField] DebugOption debugOption;
-
-    private void OnDrawGizmos()
-    {
-        if (debugOption.showVisualRange)
-        {
-            Gizmos.DrawWireSphere(transform.position, visualRange);
-            Gizmos.color = Color.cyan;
-        }
     }
 }

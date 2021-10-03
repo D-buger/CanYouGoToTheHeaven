@@ -43,13 +43,18 @@ public class BuruckBirdAI : PatrolMonster
             }
             yield return waitForEndOfFrame;
         }*/
-        ShotProjectile(projectile, projectileDamage, projectileCount, projectileVelocity, shotAngle);
+        //ShotProjectile(projectile, projectileDamage, projectileCount, projectileVelocity, shotAngle);
         isAttacking = false;
     }
 
     private void OnCollisionEnter2D(Collision2D _collision)
     {
         OperateOnCollisionEnter2D(_collision);
+    }
+
+    private void OnEnable()
+    {
+        OperateOnEnable();
     }
 
     [System.Serializable]

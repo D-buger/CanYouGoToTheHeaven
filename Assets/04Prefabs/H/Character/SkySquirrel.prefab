@@ -152,7 +152,7 @@ MonoBehaviour:
   visualRange: 7
   chasingTime: 4
   timeToPrepareDash: 1.3
-  dashingSpeed: 12
+  dashingSpeed: 2.3
   dashAfterCooldown: 0.6
   dashingDuration: 1.2
   debugOption:

@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class SquirrelAI : WalkMonster
 {
+    private void OnEnable()
+    {
+        OperateOnEnable();
+    }
+
     void Start()
     {
         OperateStart();

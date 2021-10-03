@@ -67,6 +67,11 @@ public class SkySquirrelAI : PatrolMonster
         }
     }
 
+    private void OnEnable()
+    {
+        OperateOnEnable();
+    }
+
     private void Update()
     {
         SearchPlayer();

@@ -64,3 +64,6 @@ TagManager:
   - name: Text
     uniqueID: 2281793517
     locked: 0
+  - name: Projectile
+    uniqueID: 4134422837
+    locked: 0

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3517735850117212476}
   - component: {fileID: 3517735850117212477}
   - component: {fileID: 3517735850117212450}
+  - component: {fileID: 2030957359}
   m_Layer: 11
   m_Name: Archangel
   m_TagString: Enemy
@@ -71,10 +72,10 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 78113e604eb2ab6479ac5b3498ba8993, type: 3}
+  m_SortingLayerID: -1866359379
+  m_SortingLayer: 5
+  m_SortingOrder: 1
+  m_Sprite: {fileID: -7784972822876488142, guid: 0a800f50941fe3342a09cac4b2fce861, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -122,10 +123,10 @@ MonoBehaviour:
   currentHitPoint: 0
   movementSpeed: 9
   checkRayAddLength: 0
-  height: 10
+  attackPerSecond: 2
+  laser: {fileID: 1937419222498303268, guid: f05e2abb06cec9641ab767dd890b7f69, type: 3}
+  height: 4
   visualRange: 15
-  debugOption:
-    showVisualRange: 1
 --- !u!70 &3517735850117212450
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -142,3 +143,22 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: -0.0076174736}
   m_Size: {x: 1.4141151, y: 1.4899206}
   m_Direction: 0
+--- !u!95 &2030957359
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3517735850117212451}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ef31571bdb04ad14a908c01a92a53aac, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

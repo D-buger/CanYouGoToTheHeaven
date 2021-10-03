@@ -10,6 +10,12 @@ public class PlanktonAlienAI : HMonster
     bool playerInCursedPlatform = false;
 
     // Start is called before the first frame update
+
+    private void OnEnable()
+    {
+        OperateOnEnable();
+    }
+
     void Start()
     {
         OperateStart();

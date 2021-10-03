@@ -7,22 +7,45 @@ public class OctopusAlienAI : PatrolMonster
     [SerializeField] GameObject projectile;
     [SerializeField] int projectileDamage;
     [SerializeField] float projectileVelocity;
-    [SerializeField] int projectileCount = 1;
-    [SerializeField] float totalAngle = 0f;
+    [SerializeField] int projectileCount;
+    float projectileLifetime;
+    [SerializeField] float totalAngle;
     bool isAttacking;
     Coroutine attackCoroutine = null;
-    [SerializeField] float prepareAttackDelay;
+    [SerializeField] float attackDelay;
     WaitForSeconds waitPrepareAttackDelay;
+
+    private void Awake()
+    {
+        OperateAwake();
+        OperateOnEnable();
+    }
+
+    private void OnEnable()
+    {
+        OperateOnEnable();
+    }
 
     void Start()
     {
         OperateStart();
-        waitPrepareAttackDelay = new WaitForSeconds(prepareAttackDelay);
+    }
+
+    protected override void SettingVariables()
+    {
+        base.SettingVariables();
+        projectileDamage = StageManager.Instance.playerRoom <= 3 ? 1 : 2;
+        projectileVelocity = StringToFloat(GetDataWithVariableName("ProjectileVelocity"));
+        projectileCount = (int)StringToFloat(GetDataWithVariableName("ProjectileCount"));
+        totalAngle = StringToFloat(GetDataWithVariableName("TotalShotAngle"));
+        attackDelay = StringToFloat(GetDataWithVariableName("AttackDelay"));
+        projectileLifetime = StringToFloat(GetDataWithVariableName("ProjectileLifetime"));
     }
 
     void Update()
     {
         SearchPlayer();
+        OperateUpdate();
         if (!detectPlayer)
         {
             if (isAttacking)
@@ -59,27 +82,14 @@ public class OctopusAlienAI : PatrolMonster
     }
     [SerializeField] DebugOption debugOption;
 
-    WaitForSeconds wait100MilliSeconds = new WaitForSeconds(0.1f);
-
     IEnumerator Attack()
     {
         isAttacking = true;
-        animator.SetBool("isPrepareAttack", true);
-        yield return waitPrepareAttackDelay;
-        animator.SetBool("isPrepareAttack", false);
-        animator.SetBool("isDonePrepareAttack", true);
-        yield return wait100MilliSeconds;
-        animator.SetBool("isDonePrepareAttack", false);
-        while (animator.GetCurrentAnimatorStateInfo(0).normalizedTime <= 0.99f) //(공격을 발사하는)애니메이션이 완전히 끝났는가?
-        {
-            yield return waitForEndOfFrame;
-        }
-        ShotProjectile(projectile, projectileDamage, projectileCount, projectileVelocity, totalAngle); //발사
-        animator.SetBool("attackIsEnd", true);
-        yield return wait100MilliSeconds;
-        animator.SetBool("attackIsEnd", false);
-        attackCoroutine = null;
+        WaitForSeconds waitForAttackDelay = new WaitForSeconds(attackDelay);
+        yield return waitForAttackDelay;
+        ShotHomingProjectile(projectile, projectileDamage, projectileVelocity, projectileCount, totalAngle, projectileLifetime);
         isAttacking = false;
+        attackCoroutine = null;
     }
 
     private void OnDrawGizmos()

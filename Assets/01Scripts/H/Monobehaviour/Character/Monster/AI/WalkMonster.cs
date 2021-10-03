@@ -18,6 +18,13 @@ public class WalkMonster : HMonster
         movementSpeed = StringToFloat(GetDataWithVariableName("MovementSpeed"));
     }
 
+    protected override void OperateAwake()
+    {
+        base.OperateAwake();
+        rb2d = GetComponent<Rigidbody2D>();
+        sprite = GetComponent<SpriteRenderer>();
+    }
+
     protected override void OperateStart()
     {
         base.OperateStart();
