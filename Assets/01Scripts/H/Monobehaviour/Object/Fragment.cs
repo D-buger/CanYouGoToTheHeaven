@@ -12,6 +12,10 @@ public class Fragment : MonoBehaviour
     public void Initialize(int _damage, float _velocity)
     {
         damage = _damage; velocity = _velocity;
+        if (rb2d == null)
+        {
+            rb2d = GetComponent<Rigidbody2D>();
+        }
         rb2d = GetComponent<Rigidbody2D>();
         rb2d.velocity = new Vector2(velocity, 0);
     }
@@ -21,11 +25,11 @@ public class Fragment : MonoBehaviour
         if (_collision.gameObject.CompareTag(TagManager.PlayerTag))
         {
             StageManager.Instance.Stat.CurrentHp -= damage;
-            Destroy(gameObject);
+            MonsterPoolManager.instance.ReturnObject(gameObject);
         }
-        else if (_collision.gameObject.layer == LayerMask.NameToLayer("Tile"))
+        else if (_collision.gameObject.layer == LayerMask.NameToLayer("Wall"))
         {
-            Destroy(gameObject);
+            MonsterPoolManager.instance.ReturnObject(gameObject);
         }
     }
 }

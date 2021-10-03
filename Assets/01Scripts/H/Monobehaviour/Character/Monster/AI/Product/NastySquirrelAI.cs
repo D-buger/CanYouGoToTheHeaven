@@ -82,6 +82,11 @@ public class NastySquirrelAI : PatrolMonster
         isAttacking = false;
     }
 
+    private void OnCollisionEnter2D(Collision2D _collision)
+    {
+        OperateOnCollisionEnter2D(_collision);
+    }
+
     private void OnDrawGizmos()
     {
         if (debugOption.showVisualRange)

@@ -47,5 +47,14 @@ MonoBehaviour:
   - {fileID: 3665305679513349950, guid: 608e5fe13eeb2604ab879429f3ce6cda, type: 3}
   monsterList:
   - {fileID: 5042816215450494462, guid: 8ad1452451a7d8840a55afc859e53126, type: 3}
+  - {fileID: 2668540992419345484, guid: a633b5961e31be94da049ee02f5b7437, type: 3}
+  - {fileID: 1766384978965600496, guid: 38ba32348dc563145bfde2d603851c42, type: 3}
+  - {fileID: 2331454088833507680, guid: 43ce2caf4cebcbf48b3bf97c2a50b691, type: 3}
+  - {fileID: 8307769380026285632, guid: ba547abfbca143f4f953edfd1a00b518, type: 3}
+  - {fileID: 2185849960792005978, guid: e08cdeb2c7afce3499367d5f42eb16f1, type: 3}
+  - {fileID: 7279705893069921574, guid: 009070113de5d4146bacd34d53b6fba2, type: 3}
+  - {fileID: 2564883437134320648, guid: ea7cb037ade7b68479405fd5cc4b38dd, type: 3}
+  - {fileID: 5663213513209649837, guid: 49082eb5ac2008c41b158a51e09b20dc, type: 3}
+  - {fileID: 651090270845228537, guid: f1904ad4461ac2348929ba91b132572f, type: 3}
   TreasureRoomPortalPrefab: {fileID: 7219368410990909452, guid: 0f0c91ba0732f5c43be7c3cd2172ed1f, type: 3}
   goldenMonsterParticle: {fileID: 819845330895904774, guid: 7dfe37eb39198384480248a60ce33daf, type: 3}

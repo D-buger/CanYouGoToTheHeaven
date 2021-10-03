@@ -9,12 +9,15 @@ public class HolyMosquitoAI : HMonster
         OperateStart();
     }
 
+    protected override void OperateOnCollisionEnter2D(Collision2D _collision)
+    {
+        base.OperateOnCollisionEnter2D(_collision);
+        StealingJuice();
+    }
+
     private void OnCollisionEnter2D(Collision2D _collision)
     {
-        if (_collision.gameObject.CompareTag("Player"))
-        {
-            StealingJuice();
-        }
+        OperateOnCollisionEnter2D(_collision);
     }
 
     void StealingJuice()

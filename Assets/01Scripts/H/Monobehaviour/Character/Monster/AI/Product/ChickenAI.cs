@@ -56,17 +56,22 @@ public class ChickenAI : PatrolMonster
         while (true)
         {
             yield return SpawnDelayCount;
-            GameObject chick = Instantiate(chickPrefab);
+            GameObject chick = MonsterPoolManager.instance.GetObject("º´¾Æ¸®");
             chick.transform.position = transform.position;
         }
     }
 
-    private void OnDestroy()
+    private void OnDisable()
     {
         if (spawnChick != null)
         {
             StopCoroutine(spawnChick);
         }
+    }
+
+    private void OnCollisionEnter2D(Collision2D _collision)
+    {
+        OperateOnCollisionEnter2D(_collision);
     }
 
     [System.Serializable]

@@ -18,4 +18,9 @@ public class SquirrelAI : WalkMonster
     {
         MoveForward();
     }
+
+    private void OnCollisionEnter2D(Collision2D _collision)
+    {
+        OperateOnCollisionEnter2D(_collision);
+    }
 }

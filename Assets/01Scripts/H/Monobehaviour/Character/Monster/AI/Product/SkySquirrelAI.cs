@@ -94,4 +94,9 @@ public class SkySquirrelAI : PatrolMonster
             Gizmos.color = Color.blue;
         }
     }
+
+    private void OnCollisionEnter2D(Collision2D _collision)
+    {
+        OperateOnCollisionEnter2D(_collision);
+    }
 }

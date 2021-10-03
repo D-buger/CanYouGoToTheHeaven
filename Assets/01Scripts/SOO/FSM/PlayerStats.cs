@@ -42,6 +42,7 @@ public class PlayerStats
             soulCallback?.Invoke(soul);
         }
     }
+    public float chanceOfSpawnGoldenMonster { get; private set; } = 3f; //±âº» 3%
 
     public Watergun watergun;
 
@@ -55,5 +56,6 @@ public class PlayerStats
         MaxHp = 6;
         CurrentHp = MaxHp;
         Soul = 0;
+        chanceOfSpawnGoldenMonster = 3f;
     }
 }

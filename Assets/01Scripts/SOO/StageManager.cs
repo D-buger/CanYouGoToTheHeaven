@@ -13,7 +13,7 @@ public class StageManager : SingletonBehavior<StageManager>
 
     public Shop Shop { get; private set; }
 
-    private int playerRoom = 1;
+    public int playerRoom = 1; //현재 스테이지
 
     protected override void OnAwake()
     {

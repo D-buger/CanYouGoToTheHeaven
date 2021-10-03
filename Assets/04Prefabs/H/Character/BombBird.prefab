@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 7279705893069921574}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 13.98, y: -5.469, z: 0}
-  m_LocalScale: {x: 1.25, y: 1.25, z: 1}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -137,9 +137,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   monsterName: "\uD3ED\uD0C4\uC0C8"
   currentHitPoint: 0
-  explosionDelay: 0.2
+  explosionDelay: 0.14
   detectPlayerRange: 3
-  fragment: {fileID: 5877258647630904168, guid: c005c5d96968d7c4cac20e183845d6e2, type: 3}
   fragmentDamage: 2
   fragmentVelocity: 40
 --- !u!95 &1119017619

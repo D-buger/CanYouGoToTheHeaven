@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HMonster : MonoBehaviour
 {
-    [SerializeField] protected string monsterName;
+    public string monsterName;
     [SerializeField] protected int currentHitPoint;
     protected float damagedTime;
     protected int contactDamage = 2;
@@ -14,6 +14,7 @@ public class HMonster : MonoBehaviour
     protected Animator animator;
     MonsterManager monsterManager;
     protected WaitForSeconds waitFor1Seconds = new WaitForSeconds(1f);
+    protected GameObject particle = null;
 
     public virtual void InflictDamage()
     {
@@ -42,10 +43,9 @@ public class HMonster : MonoBehaviour
 
     protected virtual void SettingVariables()
     {
-        Debug.LogWarning("변경할 내용 있음");
-        int currentStage = 3; //직접 스테이지 매니저에서 가져올것
+        int currentStage = StageManager.Instance.playerRoom;
 
-        if (currentStage <= 3) //3스테이지면
+        if (currentStage <= 3) //3스테이지 이하면
         {
             contactDamage = 1;
         }
@@ -55,42 +55,45 @@ public class HMonster : MonoBehaviour
         }
 
         damagedTime = 0f;
+        int hh = (int)StringToFloat(GetDataWithVariableName("HitPoint"));
 
-        currentHitPoint = StringToInteger(GetDataWithVariableName("HitPoint"));
+        currentHitPoint = hh;
     }
 
     protected string GetDataWithVariableName(string _variableName) //변수명을 넣으면 해당 몬스터의 해당 변수명의 값을 제공
     {
-        if (monsterManager.GetDataWithMonsterName(monsterName) == null)
+        if (monsterManager == null)
         {
-            Debug.LogWarning("이런 몬스터는 없는데요");
-            return null;
+            monsterManager = MonsterManager.instance;
         }
         string ddd = monsterManager.GetDataWithMonsterName(monsterName)[_variableName];
-        Debug.Log($"{_variableName}: {ddd}");
+        if (ddd == null)
+        {
+            Debug.LogWarning($"{_variableName}은 존재하지 않는 변수명");
+        }
         return ddd;
     }
 
-    protected void OperateOnCollisionEnter2D(Collision2D _collision)
+    protected virtual void OperateOnCollisionEnter2D(Collision2D _collision)
     {
         if (_collision.gameObject.CompareTag("Player"))
         {
             Player player = _collision.gameObject.GetComponent<Player>();
             player.stats.CurrentHp -= contactDamage;
 
-            MonsterPoolManager.instance.ReturnObject(gameObject);
+            MonsterPoolManager.instance.ReturnObject(gameObject, monsterName);
         }
     }
 
-    protected int StringToInteger(string _string)
+    protected float StringToFloat(string _string)
     {
-        if (int.TryParse(_string, out int _int))
+        if (float.TryParse(_string, out float _float))
         {
-            return _int;
+            return _float;
         }
         else
         {
-            Debug.LogWarning($"{gameObject.name}: 정수형 변환에 실패하였습니다!");
+            Debug.LogWarning($"{gameObject.name}: 실수형 변환에 실패하였습니다!");
             return 0;
         }
     }
@@ -100,12 +103,16 @@ public class HMonster : MonoBehaviour
         SettingData();
     }
 
-    protected virtual void OperateStart()
+    protected virtual void OperateAwake()
     {
         animator = GetComponent<Animator>();
         monsterManager = MonsterManager.instance;
-        SettingData();
         player = monsterManager.player;
+    }
+
+    protected virtual void OperateStart()
+    {
+
     }
 
     protected void OperateUpdate()
@@ -113,9 +120,13 @@ public class HMonster : MonoBehaviour
         CheckDistanceFromPlayer();
     }
 
-    void DespawnMonster()
+    protected void DespawnMonster()
     {
-        MonsterPoolManager.instance.ReturnObject(gameObject);
+        MonsterPoolManager.instance.ReturnObject(gameObject, monsterName);
+        if (isGoldenMonster)
+        {
+            MonsterPoolManager.instance.ReturnObject(particle);
+        }
     }
 
     void CheckDistanceFromPlayer() //플레이어가 본인과 멀어지면 디스폰 시키는 역할
@@ -128,7 +139,12 @@ public class HMonster : MonoBehaviour
 
     public void MakeGoldenMonster()
     {
+        Debug.LogWarning("파티클 재생 안됨 ㅅㅂ");
         isGoldenMonster = true;
+        particle = MonsterPoolManager.instance.GetObject("GoldenMonsterParticle");
+        particle.transform.SetParent(transform);
+        ParticleSystem particleComp = particle.GetComponent<ParticleSystem>();
+        particleComp.Play();
     }
 
     protected WaitForEndOfFrame waitForEndOfFrame = new WaitForEndOfFrame();
@@ -169,7 +185,7 @@ public class HMonster : MonoBehaviour
 
     void InstantiateProjectile(GameObject _projectile, int _damage, float _rotZ, float _velocity)
     {
-        GameObject pj = Instantiate(_projectile);
+        GameObject pj = MonsterPoolManager.instance.GetObject(_projectile.name);
         pj.transform.position = transform.position;
         pj.GetComponent<MonsterProjectile>().Initialize(_damage, _velocity, _rotZ);
     }
@@ -187,7 +203,8 @@ public class HMonster : MonoBehaviour
         {
             GameObject goldenPortal = MonsterPoolManager.instance.GetObject("TreasureRoomPortal");
             goldenPortal.transform.position = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
+            MonsterPoolManager.instance.ReturnObject(particle);
         }
-        MonsterPoolManager.instance.ReturnObject(gameObject);
+        MonsterPoolManager.instance.ReturnObject(gameObject, monsterName);
     }
 }

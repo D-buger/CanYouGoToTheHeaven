@@ -53,10 +53,26 @@ public class MonsterPoolManager : MonoBehaviour
         }
     }
 
-    void CreateObjectPools(GameObject _objectToPooling, int _poolingCount)
+    void CreateObjectPools(GameObject _objectToPooling, int _poolingCount, string _keyName = null)
     {
+        string poolingObjectName;
+        if (_keyName == null)
+        {
+            poolingObjectName = _objectToPooling.name;
+        }
+        else
+        {
+            poolingObjectName = _keyName;
+        }
+
+        if (poolIndexDictionary.ContainsKey(poolingObjectName))
+        {
+            Debug.Log("이미 해당 키가 존재합니다!");
+            return;
+        }
+
         GameObject pool = Instantiate(objectPoolPrefab, transform);
-        string poolingObjectName = _objectToPooling.name;
+        
         pool.name = poolingObjectName + "Pool";
 
         poolIndexDictionary.Add(poolingObjectName, currentIndex);
@@ -66,28 +82,55 @@ public class MonsterPoolManager : MonoBehaviour
         currentIndex += 1;
     }
 
-    public void RequestAddObjectPool(GameObject _objectToPooling, int _poolingCount)
+    public void RequestAddObjectPool(GameObject _objectToPooling, int _poolingCount, string _customKeyName = null)
     {
-        string objectName = _objectToPooling.name;
-        Debug.Log($"{objectName}의 풀을 만들었습니다");
+        string objectName;
+        if (_customKeyName == null)
+        {
+            objectName = _objectToPooling.name;
+        }
+        else
+        {
+            objectName = _customKeyName;
+        }
+
         if (poolIndexDictionary.ContainsKey(objectName)) //해당 키가 있으면 = 해당 오브젝트가 이미 풀링되어 있으면
         {
-            Debug.Log($"이미 키가 있네요 쟌넨");
+            Debug.Log($"이미 동일한 키가 존재합니다!");
             return;
         }
-        CreateObjectPools(_objectToPooling, _poolingCount);
+        CreateObjectPools(_objectToPooling, _poolingCount, _customKeyName);
     }
 
     public GameObject GetObject(string _objectName)
     {
+        if (!poolIndexDictionary.ContainsKey(_objectName))
+        {
+            Debug.LogWarning($"'{_objectName}'오브젝트를 풀에서 찾지 못하였습니다.");
+            return null;
+        }
+
         int index = poolIndexDictionary[_objectName];
         GameObject obj = monsterPoolComponents[index].GetObject();
         return obj;
     }
 
-    public void ReturnObject(GameObject _object)
+    public void ReturnObject(GameObject _object, string _customObjectName = null)
     {
-        string objectName = _object.name;
+        string objectName;
+        if (_customObjectName == null)
+        {
+            objectName = _object.name;
+        }
+        else
+        {
+            objectName = _customObjectName;
+        }
+        if (!poolIndexDictionary.ContainsKey(objectName))
+        {
+            RequestAddObjectPool(_object, 3);
+        }
+
         int index = poolIndexDictionary[objectName];
         monsterPoolComponents[index].ReturnObject(_object);
     }

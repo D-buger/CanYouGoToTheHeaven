@@ -33,27 +33,26 @@ public class MonsterProjectile : MonoBehaviour
     {
         damage = (byte)_damage;
         velocity = _velocity;
-        transform.rotation = Quaternion.Euler(0, 0, _angle - 90f);
+        transform.rotation = Quaternion.Euler(0, 0, _angle);
     }
 
     void LookToDestination(Vector3 _destination)
     {
         Vector2 dir = _destination - transform.position;
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0, 0, angle - 90f);
+        transform.rotation = Quaternion.Euler(0, 0, angle);
     }
 
     private void OnCollisionEnter2D(Collision2D _collision)
     {
         if (_collision.gameObject.CompareTag("Player"))
         {
-            Debug.LogWarning($"{gameObject.name}: 수정해야할 내용이 있음! 주석 참고");
-            //여기에 플레이어에게 대미지를 가하는 메소드를 작성해야함
-            Destroy(gameObject);
+            _collision.gameObject.GetComponent<Player>().stats.CurrentHp -= damage;
+            MonsterPoolManager.instance.ReturnObject(gameObject);
         }
         else if (reflectCount <= 0)
         {
-            Destroy(gameObject);
+            MonsterPoolManager.instance.ReturnObject(gameObject);
         }
         else if (_collision.gameObject.layer == LayerMask.NameToLayer("Platform") || _collision.gameObject.layer == LayerMask.NameToLayer("Wall"))
         {

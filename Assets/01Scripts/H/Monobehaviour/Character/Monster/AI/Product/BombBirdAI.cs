@@ -8,7 +8,6 @@ public class BombBirdAI : HMonster
 
     [SerializeField, Range(0f, 2f), Tooltip("점화 애니메이션이 모두 완료된 후 폭발까지의 딜레이")] float explosionDelay;
     [SerializeField] float detectPlayerRange;
-    [SerializeField] GameObject fragment;
     [SerializeField] int fragmentDamage;
     [SerializeField] float fragmentVelocity;
 
@@ -19,7 +18,14 @@ public class BombBirdAI : HMonster
     protected override void SettingVariables()
     {
         base.SettingVariables();
-        detectPlayerRange = StringToInteger(GetDataWithVariableName("CognitiveRange"));
+        detectPlayerRange = StringToFloat(GetDataWithVariableName("CognitiveRange"));
+        fragmentVelocity = StringToFloat(GetDataWithVariableName("ProjectileVelocity"));
+        fragmentDamage = StageManager.Instance.playerRoom <= 3 ? 1 : 2;
+    }
+
+    private void Awake()
+    {
+        OperateAwake();
     }
 
     void Start()
@@ -76,19 +82,31 @@ public class BombBirdAI : HMonster
         }
         yield return waitForExplosionDelay;
         animator.SetBool("ignitionIsDone", true);
-        GameObject frag1 = Instantiate(fragment);
-        frag1.transform.position = transform.position;
-        frag1.GetComponent<Fragment>().Initialize(fragmentDamage, fragmentVelocity);
 
-        GameObject frag2 = Instantiate(fragment);
-        frag2.transform.position = transform.position;
-        frag2.GetComponent<Fragment>().Initialize(fragmentDamage, -fragmentVelocity);
-        frag2.GetComponent<SpriteRenderer>().flipX = true;
+        for (int i = 0; i < 2; i++)
+        {
+            GameObject fragment = MonsterPoolManager.instance.GetObject("BombBirdExplosionFragment");
+            fragment.transform.position = transform.position;
+            if (i == 1)
+            {
+                fragment.GetComponent<Fragment>().Initialize(fragmentDamage, fragmentVelocity);
+            }
+            else
+            {
+                fragment.GetComponent<Fragment>().Initialize(fragmentDamage, -fragmentVelocity);
+                fragment.GetComponent<SpriteRenderer>().flipX = true;
+            }
+        }
         yield return waitFor500MilliSecond;
         while (animator.GetCurrentAnimatorStateInfo(0).normalizedTime <= 1f)
         {
             yield return waitForEndOfFrame;
         }
-        Destroy(gameObject);
+        DespawnMonster();
+    }
+
+    private void OnCollisionEnter2D(Collision2D _collision)
+    {
+        OperateOnCollisionEnter2D(_collision);
     }
 }

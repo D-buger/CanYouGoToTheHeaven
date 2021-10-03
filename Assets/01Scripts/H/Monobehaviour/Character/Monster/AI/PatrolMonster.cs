@@ -15,8 +15,13 @@ public class PatrolMonster : WalkMonster
     protected override void SettingVariables()
     {
         base.SettingVariables();
-        visualRange = StringToInteger(GetDataWithVariableName("CognitiveRange"));
-        chasingTime = StringToInteger(GetDataWithVariableName("ChasingDuration"));
+        visualRange = StringToFloat(GetDataWithVariableName("CognitiveRange"));
+        chasingTime = StringToFloat(GetDataWithVariableName("ChasingDuration"));
+    }
+
+    protected override void OperateAwake()
+    {
+        base.OperateAwake();
     }
 
     protected override void OperateStart()

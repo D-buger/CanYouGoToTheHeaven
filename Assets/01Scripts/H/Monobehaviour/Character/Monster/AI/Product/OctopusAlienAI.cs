@@ -90,4 +90,9 @@ public class OctopusAlienAI : PatrolMonster
             Gizmos.color = Color.cyan;
         }
     }
+
+    private void OnCollisionEnter2D(Collision2D _collision)
+    {
+        OperateOnCollisionEnter2D(_collision);
+    }
 }

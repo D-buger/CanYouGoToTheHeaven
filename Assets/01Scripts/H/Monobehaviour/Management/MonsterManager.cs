@@ -54,10 +54,6 @@ public class MonsterManager : MonoBehaviour
         FindPlayer();
         RequestPoolingMonsters();
         CheckVariable();
-        foreach (var item in monsterIndexDictionary)
-        {
-            Debug.Log(item);
-        }
     }
 
     void CreatingManagers()
@@ -80,9 +76,8 @@ public class MonsterManager : MonoBehaviour
             {
                 break;
             }
-            Debug.Log($"{monsterList[i]}입니당");
 
-            MonsterPoolManager.instance.RequestAddObjectPool(monsterList[i], 5);
+            MonsterPoolManager.instance.RequestAddObjectPool(monsterList[i], 5, monsterList[i].GetComponent<HMonster>().monsterName);
         }
     }
 
@@ -94,13 +89,11 @@ public class MonsterManager : MonoBehaviour
 
         monsterInfoCSV = CSVReader.Read("MonsterData", out dataSize);
         dataSize -= 2;
-        Debug.Log($"{dataSize}사이즈");
         int currentReadRowIndex = 0;
         for (int i = 0; i < dataSize; i++)
         {
             string monsterName = monsterInfoCSV[i]["MonsterName"];
             string monsterGrade = monsterInfoCSV[i]["MonsterGrade"];
-            Debug.Log($"{i}번쨰는 {monsterGrade}등급인 {monsterName}의 차지입니다");
             monsterIndexDictionary.Add(monsterInfoCSV[i]["MonsterName"], i); //i번째 행의 몬스터 이름을 key로, i를 value로 딕셔너리에 추가
 
             if (monstersNameDivideAsGradeDic.ContainsKey(monsterGrade)) //해당 등급이 이미 있으면
@@ -126,7 +119,7 @@ public class MonsterManager : MonoBehaviour
     {
         if (!monsterIndexDictionary.ContainsKey(_name))
         {
-            Debug.LogWarning("해당 키는 없다!!!!!!!!!!!");
+            Debug.LogWarning("해당 몬스터는 등록되지 않은 몬스터입니다. CSV파일을 확인하세요");
             return null;
         }
         int index = monsterIndexDictionary[_name]; //해당 몬스터의 데이터가 몇 번째 행인지 구함
@@ -145,13 +138,13 @@ public class MonsterManager : MonoBehaviour
             Debug.LogWarning($"{gameObject.name}: '보물방 포탈 프리팹'이 할당되어있지 않습니다!");
             return;
         }
-        //MonsterPoolManager.instance.RequestAddObjectPool(TreasureRoomPortalPrefab, 2);
+        MonsterPoolManager.instance.RequestAddObjectPool(TreasureRoomPortalPrefab, 2);
 
         if (goldenMonsterParticle == null)
         {
             Debug.LogWarning($"{gameObject.name}: '황금 몬스터 파티클'이 할당되어있지 않습니다!");
             return;
         }
-        //MonsterPoolManager.instance.RequestAddObjectPool(goldenMonsterParticle, 10);
+        MonsterPoolManager.instance.RequestAddObjectPool(goldenMonsterParticle, 6);
     }
 }

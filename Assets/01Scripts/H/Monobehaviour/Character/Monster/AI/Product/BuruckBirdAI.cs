@@ -47,6 +47,11 @@ public class BuruckBirdAI : PatrolMonster
         isAttacking = false;
     }
 
+    private void OnCollisionEnter2D(Collision2D _collision)
+    {
+        OperateOnCollisionEnter2D(_collision);
+    }
+
     [System.Serializable]
     struct DebugOption
     {

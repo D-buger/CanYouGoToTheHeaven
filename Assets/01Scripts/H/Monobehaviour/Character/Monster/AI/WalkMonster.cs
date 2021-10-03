@@ -15,7 +15,7 @@ public class WalkMonster : HMonster
     protected override void SettingVariables()
     {
         base.SettingVariables();
-        movementSpeed = StringToInteger(GetDataWithVariableName("MovementSpeed"));
+        movementSpeed = StringToFloat(GetDataWithVariableName("MovementSpeed"));
     }
 
     protected override void OperateStart()
