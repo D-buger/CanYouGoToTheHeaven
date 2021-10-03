@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using System;
 
 public class TilemapGeneration : MonoBehaviour
 {
@@ -65,7 +66,7 @@ public class TilemapGeneration : MonoBehaviour
             Generation(
                 new Vector2Int(startX, i * MapGenerator.MapHeightTile), 
                 maps[
-                    Random.Range(
+                    UnityEngine.Random.Range(
                         (nowStage - 1) * MapGenerator.RoomsInStage, 
                         nowStage * MapGenerator.RoomsInStage - 1)]);
         }
@@ -99,7 +100,9 @@ public class TilemapGeneration : MonoBehaviour
                 monsterSpawn = GameObject.Instantiate(monsterSpawner, monstersParent.transform);
                 monsterSpawn.transform.position = spawnPoint;
 
-                monsterSpawn.GetComponent<MonsterSpawnPoint>().grade = "A";
+                int lowGrade = 68 - StageManager.Instance.playerRoom / levelInStage;
+                lowGrade += StageManager.Instance.playerRoom / levelInStage == 2 ? -1 : 0;
+                monsterSpawn.GetComponent<MonsterSpawnPoint>().grade = ((char)lowGrade).ToString();
             }
         }
 
