@@ -30,7 +30,7 @@ public class UFOAlienAI : WalkMonster
         laserComp.Initialize(projectileCount, totalShotAngle);
         for (int i = 0; i < laserComp.laserCollider.Count; i++)
         {
-            laserComp.laserCollider[i].rayDamage = StageManager.Instance.playerRoom <= 3 ? 1 : 2;
+            laserComp.laserCollider[i].rayDamage = StageManager.Instance.PlayerRoom <= 3 ? 1 : 2;
             laserComp.laserCollider[i].attackDelay = 1f / attackPerSecond;
         }
     }

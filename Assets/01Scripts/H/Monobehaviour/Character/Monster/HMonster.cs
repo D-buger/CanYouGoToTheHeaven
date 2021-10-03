@@ -43,7 +43,7 @@ public class HMonster : MonoBehaviour
 
     protected virtual void SettingVariables()
     {
-        int currentStage = StageManager.Instance.playerRoom;
+        int currentStage = StageManager.Instance.PlayerRoom;
 
         if (currentStage <= 3) //3스테이지 이하면
         {

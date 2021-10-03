@@ -22,7 +22,7 @@ public class NastySquirrelAI : PatrolMonster
     protected override void SettingVariables()
     {
         base.SettingVariables();
-        projectileDamage = StageManager.Instance.playerRoom <= 3 ? 1 : 2;
+        projectileDamage = StageManager.Instance.PlayerRoom <= 3 ? 1 : 2;
         projectileVelocity = StringToFloat(GetDataWithVariableName("ProjectileVelocity"));
         projectileCount = (int)StringToFloat(GetDataWithVariableName("ProjectileCount"));
         totalAngle = StringToFloat(GetDataWithVariableName("TotalShotAngle"));
