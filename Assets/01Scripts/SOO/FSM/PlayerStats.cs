@@ -53,9 +53,9 @@ public class PlayerStats
     {
         physicsStat.Set(_trans);
         watergun = _watergun;
-        MaxHp = 6;
-        CurrentHp = MaxHp;
         Soul = 0;
         chanceOfSpawnGoldenMonster = 3f;
+        MaxHp = 6;
+        CurrentHp = MaxHp;
     }
 }
