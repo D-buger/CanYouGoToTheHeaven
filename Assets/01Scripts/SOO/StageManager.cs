@@ -12,8 +12,9 @@ public class StageManager : SingletonBehavior<StageManager>
     public GameObject Player { get; private set; }
 
     public Shop Shop { get; private set; }
+    public GameObject BonusRoom { get; private set; }
 
-    public int playerRoom = 1; //현재 스테이지
+    public int playerRoom = 1; //현재 스테이지안의 방
 
     protected override void OnAwake()
     {
@@ -27,7 +28,10 @@ public class StageManager : SingletonBehavior<StageManager>
         }
 
         Shop = GameObject.FindGameObjectWithTag("Shop").GetComponent<Shop>();
-        Shop.enabled = false;
+        Shop.gameObject.SetActive(false);
+
+        BonusRoom = GameObject.FindGameObjectWithTag("BonusRoom");
+        BonusRoom.SetActive(false);
 
         CameraManager = Camera.main.gameObject.GetComponent<CameraManager>();
         PlayerInStage = true;
@@ -38,12 +42,18 @@ public class StageManager : SingletonBehavior<StageManager>
         if (PlayerInStage)
         {
             if (CameraManager.Screen2World(GameManager.ScreenSize).y
-                > MapManager.EndYPosition ||
-                CameraManager.Screen2World(GameManager.ScreenSize).y < 0)
+                > MapManager.EndYPosition)
             {
                 CameraManager.CameraLock = true;
             }
-            else if (CameraManager.Screen2World(GameManager.ScreenSize).y >= 0 && CameraManager.CameraLock)
+
+            if (CameraManager.Screen2World(GameManager.ScreenSize).y < 0)
+            {
+                CameraManager.CameraLock = true;
+                CameraManager.CamPositionChangeY(0);
+            }
+            if (CameraManager.TargetIsInRange() &&
+                CameraManager.gameObject.transform.position.y == 0)
             {
                 CameraManager.CameraLock = false;
             }
@@ -57,33 +67,40 @@ public class StageManager : SingletonBehavior<StageManager>
     }
 
     public static bool PlayerInStage { get; private set; } = true;
+    private Vector3 nextMovePosition;
     
     private void PlayerTeleportToShop()
     {
-        Shop.enabled = true;
+        nextMovePosition = new Vector3(MapManager.XPositions[playerRoom++], -MapManager.MapYSize / 2, 0);
+        Shop.gameObject.SetActive(true);
         PlayerInStage = false;
         Player.transform.position = Shop.DoorPosition;
-        playerRoom++;
 
         CameraManager.CameraLock = true;
         CameraManager.CamPositionChange(Shop.ShopPosition);
     }
 
-    public void PlayerTeleportToBonusRoom()
+    public void PlayerTeleportToBonusRoom(Vector3 originalPos)
     {
+        nextMovePosition = originalPos;
 
+        Player.transform.position = BonusRoom.transform.GetChild(2).position;
+        BonusRoom.gameObject.SetActive(true);
+        PlayerInStage = false;
+
+
+        CameraManager.CameraLock = true;
+        CameraManager.CamPositionChange(BonusRoom.transform.position);
     }
 
     public void PlayerTeleportToStage()
     {
-        Shop.enabled = false;
-        Vector3 stageStartPosition = new Vector3(MapManager.XPositions[playerRoom - 1] , -MapManager.MapYSize / 2, 0);
-        Player.transform.position = stageStartPosition;
+        Shop.gameObject.SetActive(false);
+        Player.transform.position = nextMovePosition;
         PlayerInStage = true;
-
-        stageStartPosition.y = 0;
-        stageStartPosition.z = CameraManager.transform.position.z;
-        CameraManager.CamPositionChange(stageStartPosition);
+        
+        nextMovePosition.z = CameraManager.transform.position.z;
+        CameraManager.CamPositionChange(nextMovePosition);
         CameraManager.CameraLock = false;
     }
 }

@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class Door : MonoBehaviour
 {
-    public Vector2 playerMoveTo;
-
     private void Teleport()
     {
-        StageManager.Instance.Player.transform.position = playerMoveTo;
-        StageManager.Instance.PlayerTeleportToStage();
+        if (!StageManager.PlayerInStage)
+            StageManager.Instance.PlayerTeleportToStage();
+        else
+        {
+            StageManager.Instance.PlayerTeleportToBonusRoom(transform.position);
+            gameObject.SetActive(false);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

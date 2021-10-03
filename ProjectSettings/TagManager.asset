@@ -10,6 +10,7 @@ TagManager:
   - Shop
   - Canvas
   - Door
+  - BonusRoom
   layers:
   - Default
   - TransparentFX
@@ -64,4 +65,7 @@ TagManager:
     locked: 0
   - name: Text
     uniqueID: 2281793517
+    locked: 0
+  - name: UI
+    uniqueID: 1177740819
     locked: 0
