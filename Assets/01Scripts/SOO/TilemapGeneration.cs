@@ -79,5 +79,23 @@ public class TilemapGeneration : MonoBehaviour
             tilemap.SetTile(new Vector3Int(startPosition.x + width, startPosition.y + MapGenerator.MapHeightTile - height, 0), 
                 map.tiles[height, width] == 0 ? null : tile[map.tiles[height, width]]);
         }
+        
+        if (map.MonsterSpawner != null)
+        {
+            Vector2 startPoint = tilemap.CellToWorld(new Vector3Int(startPosition.x, startPosition.y, 0));
+            Vector3Int spawnPoint;
+            GameObject monsterSpawn;
+            for (int i = 0; i < map.MonsterSpawner.Length; i++)
+            {
+                spawnPoint = new Vector3Int(
+                    (int)(map.MonsterSpawner[i].x / map.tileWidth * grid.cellSize.x + startPoint.x),
+                    (int)(MapYSize - map.MonsterSpawner[i].y / map.tileHeight * grid.cellSize.y + startPoint.y), 0);
+                monsterSpawn = GameObject.Instantiate(monsterSpawner);
+                monsterSpawn.transform.position = spawnPoint;
+
+                monsterSpawn.GetComponent<MonsterSpawnPoint>().grade = "A";
+            }
+        }
+
     }
 }
