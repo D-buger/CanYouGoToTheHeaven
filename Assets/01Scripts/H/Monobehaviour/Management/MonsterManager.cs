@@ -112,7 +112,6 @@ public class MonsterManager : MonoBehaviour
 
             currentReadRowIndex += 1;
         }
-        Debug.Log($"총 {currentReadRowIndex}줄을 읽었음");
     }
 
     public Dictionary<string, string> GetDataWithMonsterName(string _name) //몬스터의 string형 이름을 받으면(오브젝트 이름 X)

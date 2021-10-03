@@ -6,7 +6,7 @@ public class LaserCollider : MonoBehaviour
 {
     public int rayDamage = 2;
     public float attackDelay;
-    float delayCounter = 0f;
+    [SerializeField] float delayCounter = 0f;
 
     // Update is called once per frame
     void Update()
@@ -25,8 +25,8 @@ public class LaserCollider : MonoBehaviour
         }
         if (_collision.CompareTag("Player"))
         {
-            StageManager.Instance.Stat.CurrentHp -= rayDamage;
             delayCounter = attackDelay;
+            StageManager.Instance.Stat.CurrentHp -= rayDamage;
         }
     }
 }

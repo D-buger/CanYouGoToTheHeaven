@@ -19,13 +19,10 @@ public class HMonster : MonoBehaviour
     public virtual void InflictDamage()
     {
         damagedTime += Time.deltaTime;
-        Debug.Log($"damagedTime: {damagedTime}");
         if (damagedTime >= 0.5f)
         {
             damagedTime -= 0.5f;
             currentHitPoint -= StageManager.Instance.Stat.watergun.Model.Damage;
-            Debug.Log($"{StageManager.Instance.Stat.watergun.Model.Damage}대미지를 받음");
-            Debug.Log($"curr: {currentHitPoint}");
 
             if (currentHitPoint <= 0)
             {

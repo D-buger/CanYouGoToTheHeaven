@@ -48,6 +48,7 @@ public class UFOAlienAI : WalkMonster
         attackDuration = StringToFloat(GetDataWithVariableName("AttackDuration"));
         projectileCount = (int)StringToFloat(GetDataWithVariableName("ProjectileCount"));
         totalShotAngle = StringToFloat(GetDataWithVariableName("TotalShotAngle"));
+        visualRange = StringToFloat(GetDataWithVariableName("CognitiveRange"));
         isAlreadyDetectPlayer = false;
         isAttacking = false;
     }
