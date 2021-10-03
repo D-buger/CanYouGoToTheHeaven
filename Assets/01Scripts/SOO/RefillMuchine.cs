@@ -16,6 +16,7 @@ public class RefillMuchine : MonoBehaviour
         if (isWork) {
             StageManager.Instance.Stat.watergun.Model.WaterAmount =
                  StageManager.Instance.Stat.watergun.Model.MaxWaterAmount;
+            StageManager.data.RefillCount++;
             isWork = false;
         }
     }

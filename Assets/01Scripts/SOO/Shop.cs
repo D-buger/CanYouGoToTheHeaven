@@ -98,6 +98,8 @@ public class Shop : MonoBehaviour
     {
         if(StageManager.Instance.Stat.Soul >= itemShelves[itemIndex]?.Item.Price)
         {
+            if (!StageManager.data.isBuyInShop)
+                StageManager.data.isBuyInShop = true;
             StageManager.Instance.Stat.Soul -= itemShelves[itemIndex].Item.Price;
             itemShelves[itemIndex].CanBuy = true;
             itemShelves[itemIndex].gameObject.SetActive(false);

@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class StageManager : SingletonBehavior<StageManager>
 {
+    public static StageAchivementData data
+                        = new StageAchivementData(new Timer());
+
     public CameraManager CameraManager { get; private set; }
     public ItemManager ItemManager { get; private set; }
     public TilemapGeneration MapManager { get; private set; }
@@ -13,6 +16,8 @@ public class StageManager : SingletonBehavior<StageManager>
 
     public Shop Shop { get; private set; }
     public GameObject BonusRoom { get; private set; }
+
+    public int monsterCount;
 
     public static event System.Action<int> changeCurrentRoom;
     private int playerRoom = 1; //현재 스테이지안의 방
@@ -29,9 +34,15 @@ public class StageManager : SingletonBehavior<StageManager>
         }
     }
 
+    public static event System.Action clearEvent;
+
     protected override void OnAwake()
     {
         GameManager.Instance.input.Touch.ButtonExtent = 0.5f;
+        data = new StageAchivementData(new Timer());
+        clearEvent += () => GameManager.Data.SumDatas(data);
+        clearEvent += () => GameManager.Data.ClearCount++;
+
         ItemManager = new ItemManager();
         Player = GameObject.FindGameObjectWithTag("Player");
         Stat = Player.GetComponent<Player>().stats;
@@ -53,6 +64,7 @@ public class StageManager : SingletonBehavior<StageManager>
 
     private void Update()
     {
+        data.timer.TimerUpdate();
         if (PlayerInStage)
         {
             if (CameraManager.Screen2World(GameManager.ScreenSize).y
@@ -75,7 +87,10 @@ public class StageManager : SingletonBehavior<StageManager>
             if (Player.transform.position.y
                 >= MapManager.EndYPosition)
             {
-                PlayerTeleportToShop();
+                if (PlayerRoom >= MapManager.levelInStage * MapManager.stageCount)
+                    clearEvent.Invoke();
+                else
+                    PlayerTeleportToShop();
             }
         }
     }
