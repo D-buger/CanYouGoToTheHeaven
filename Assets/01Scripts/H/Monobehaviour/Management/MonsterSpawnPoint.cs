@@ -6,7 +6,7 @@ public class MonsterSpawnPoint : MonoBehaviour
 {
     MonsterManager monsterManager;
 
-    [SerializeField] string grade;
+    public string grade;
     [SerializeField, Tooltip("µð¹ö±ë¿ë")] string monsterToSpawn;
 
     private void OnTriggerEnter2D(Collider2D _collision)
