@@ -30,9 +30,13 @@ public class Joystick
         joystickImages = new FileLoader<Sprite>("Images/UI/Joystick", "UI_");
 
         GameObject Canvas = GameObject.FindGameObjectWithTag("GameController");
-        backgroundObject = GameObject.Instantiate(new GameObject(), Canvas.transform);
+
+        backgroundObject = new GameObject("Background");
+        backgroundObject.transform.SetParent(Canvas.transform);
         backgroundObject.transform.localScale = new Vector3(2, 2, 0);
-        handleObject = GameObject.Instantiate(new GameObject(), backgroundObject.transform);
+
+        handleObject = new GameObject("Handle");
+        handleObject.transform.SetParent(backgroundObject.transform);
         handleObject.transform.localScale = new Vector3(1.5f, 1.5f, 0);
 
         backgroundObject.AddComponent<Image>();
