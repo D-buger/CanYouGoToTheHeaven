@@ -16,6 +16,7 @@ public class TilemapGeneration : MonoBehaviour
 
     public int roomInStage;
     public int levelInStage;
+    public readonly int stageCount = 5;
 
     private float cellSize;
 
@@ -32,7 +33,7 @@ public class TilemapGeneration : MonoBehaviour
         monstersParent = new GameObject();
         monstersParent.name = "MonsterParent";
 
-        maps =  new MapGenerator(5, 6).Map;
+        maps =  new MapGenerator(stageCount, 6).Map;
         GameObject _mapParent = this.gameObject;
         grid = _mapParent.transform.GetChild(0).GetComponent<Grid>();
         tilemap = grid.transform.GetChild(0).GetComponent<Tilemap>();
@@ -100,9 +101,10 @@ public class TilemapGeneration : MonoBehaviour
                 monsterSpawn = GameObject.Instantiate(monsterSpawner, monstersParent.transform);
                 monsterSpawn.transform.position = spawnPoint;
 
-                int lowGrade = 68 - StageManager.Instance.playerRoom / levelInStage;
-                lowGrade += StageManager.Instance.playerRoom / levelInStage == 2 ? -1 : 0;
+                int lowGrade = 68 - StageManager.Instance.PlayerRoom / levelInStage;
+                lowGrade += StageManager.Instance.PlayerRoom / levelInStage == 2 ? -1 : 0;
                 monsterSpawn.GetComponent<MonsterSpawnPoint>().grade = ((char)lowGrade).ToString();
+                StageManager.Instance.monsterCount++;
             }
         }
 

@@ -38,6 +38,7 @@ public abstract class ItemModel : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+            StageManager.data.GottenItemCount++;
             ItemEffect(collision.gameObject);
             gameObject.SetActive(false);
         }

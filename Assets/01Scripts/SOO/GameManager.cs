@@ -3,6 +3,9 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : SingletonBehavior<GameManager>
 {
+    public AchievementManager achievement;
+    public static GameAchivementData Data { get; private set; }
+
     [SerializeField]
     public InputManager input;
 
@@ -24,6 +27,7 @@ public class GameManager : SingletonBehavior<GameManager>
 
     protected override void OnAwake()
     {
+        Data = Resources.Load<GameAchivementData>("Data");
         Input.simulateMouseWithTouches = true;
         input.SetFirst();
     }
@@ -34,7 +38,6 @@ public class GameManager : SingletonBehavior<GameManager>
     }
 
     public void ChangeScene(int i)
-    {
-        SceneManager.LoadScene(i);
-    }
+        => SceneManager.LoadScene(i);
+
 }

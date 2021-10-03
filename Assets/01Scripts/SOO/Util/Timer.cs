@@ -7,6 +7,8 @@ public struct Timer
     float timer;
     float endSec;
 
+    public float TimerTime => timer;
+
     public Timer(float sec)
     {
         endSec = sec;
