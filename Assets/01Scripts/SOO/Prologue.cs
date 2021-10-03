@@ -28,13 +28,14 @@ public class Prologue : MonoBehaviour
 
         prologue = CSVReader.Read("Prologue");
         SetTextEffects();
+
+        GameManager.Instance.input.Touch.ButtonExtent = 0;
+        GameManager.Instance.input.activeCallback += SetTextEffects;
     }
 
     private void Update()
     {
         textEffects.UpdateTexts();
-
-        Skip();
     }
 
     private void FixedUpdate()
@@ -45,6 +46,7 @@ public class Prologue : MonoBehaviour
     private void SetTextEffects()
     {
         StopAllCoroutines();
+
         imageComponent.sprite = prologueImage.files[prologue[index]["image"]];
         textDictionary = new TextSplit(prologue[index++]["story"]);
         ChangeText(textDictionary.TextWithoutTags);
@@ -58,14 +60,6 @@ public class Prologue : MonoBehaviour
                 TextEffects.customTags[tag](
                     textDictionary.TextEffect[tag]));
             }
-        }
-    }
-
-    public void Skip()
-    {
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            SetTextEffects();
         }
     }
 

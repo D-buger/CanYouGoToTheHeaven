@@ -32,7 +32,7 @@ public class Watergun : MonoBehaviour
 
     private void Start()
     {
-        Model = new WaterGunModel(500);
+        Model = new WaterGunModel(300);
     }
 
     public void Update()

@@ -18,6 +18,7 @@ public class StageManager : SingletonBehavior<StageManager>
 
     protected override void OnAwake()
     {
+        GameManager.Instance.input.Touch.ButtonExtent = 0.5f;
         ItemManager = new ItemManager();
         Player = GameObject.FindGameObjectWithTag("Player");
         Stat = Player.GetComponent<Player>().stats;
