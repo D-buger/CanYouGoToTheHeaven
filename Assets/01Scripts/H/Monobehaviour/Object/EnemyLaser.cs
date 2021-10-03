@@ -44,18 +44,4 @@ public class EnemyLaser : MonoBehaviour
             }
         }
     }
-
-    public bool isAttacking = false;
-
-    public void ShotRay()
-    {
-        if (isAttacking)
-        {
-
-        }
-        else
-        {
-
-        }
-    }
 }

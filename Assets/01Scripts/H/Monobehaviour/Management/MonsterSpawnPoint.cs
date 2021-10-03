@@ -31,6 +31,26 @@ public class MonsterSpawnPoint : MonoBehaviour
 
     void GetMonsterToSpawn()
     {
+        switch (StageManager.Instance.playerRoom)
+        {
+            case (1): grade = "D";
+                break;
+            case (2):
+                grade = "C";
+                break;
+            case (3):
+                grade = "C";
+                break;
+            case (4):
+                grade = "B";
+                break;
+            default:
+                if (StageManager.Instance.playerRoom >= 5)
+                {
+                    grade = "A";
+                }
+                break;
+        }
         List<string> monsterList = monsterManager.GetMonstersNameWithGrade(grade);
         int index = Random.Range(0, monsterList.Count);
 
@@ -39,6 +59,7 @@ public class MonsterSpawnPoint : MonoBehaviour
 
     void SpawnMonster()
     {
+        GetMonsterToSpawn();
         GameObject spawnedMonster = MonsterPoolManager.instance.GetObject(monsterToSpawn);
         if (spawnedMonster == null)
         {

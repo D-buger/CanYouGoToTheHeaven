@@ -99,7 +99,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 15
+  m_Radius: 20
 --- !u!114 &9192808721107845786
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -112,6 +112,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93c8d929fa153d34ebd8731eb1ff998d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnMonsterGradeType: 1
-  aChanceOfSpawningGoldenMonster: 7.558
-  monsterToCreat: {fileID: 0}
+  grade: 
+  monsterToSpawn: 

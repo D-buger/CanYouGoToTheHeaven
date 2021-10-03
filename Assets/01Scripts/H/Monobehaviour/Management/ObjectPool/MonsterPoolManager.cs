@@ -67,7 +67,7 @@ public class MonsterPoolManager : MonoBehaviour
 
         if (poolIndexDictionary.ContainsKey(poolingObjectName))
         {
-            Debug.Log("이미 해당 키가 존재합니다!");
+            Debug.LogWarning($"이미 '{poolingObjectName}'키가 존재합니다!");
             return;
         }
 

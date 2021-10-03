@@ -70,9 +70,9 @@ LineRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -160544459
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: -1866359379
+  m_SortingLayer: 5
+  m_SortingOrder: 1
   m_Positions:
   - {x: 0, y: 0, z: 0}
   - {x: 15, y: 0, z: 1}
@@ -170,3 +170,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rayDamage: 0
   attackDelay: 0
+  delayCounter: 0
