@@ -14,6 +14,8 @@ public class MonsterManager : MonoBehaviour
     Dictionary<string, int> monsterIndexDictionary; //key값으로 몬스터의 이름을 넣으면 value로 integer인 index를 반환
     Dictionary<string, List<string>> monstersNameDivideAsGradeDic; //key값으로 등급을 입력받으면 value로 해당 등급의 몬스터들의 배열을 반환
 
+    List<GameObject> spawnedMonsterList = new List<GameObject>(); //현재 스테이지에서 소환된 애들을 모아두는 곳. 스테이지가 넘어갈 때 마다 해당 리스트 안의 몬스터를 전부 풀로 돌려보낸다
+
     void MakeSingleton()
     {
         if (instance != null && instance != this)
@@ -40,6 +42,31 @@ public class MonsterManager : MonoBehaviour
         {
             Debug.LogWarning($"{gameObject.name}: 플레이어를 찾지 못함!");
         }
+    }
+
+    public void ReportMonsterSpawned(GameObject _monster)
+    {
+        spawnedMonsterList.Add(_monster);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Keypad7))
+        {
+            StageChanged();
+        }
+    }
+
+    public void StageChanged()
+    {
+        int count = 0;
+        for (int i = 0; i < spawnedMonsterList.Count; i++)
+        {
+            MonsterPoolManager.instance.ReturnObject(spawnedMonsterList[i]);
+            spawnedMonsterList.Remove(spawnedMonsterList[i]);
+            count += 1;
+        }
+        Debug.Log($"총{ count}만큼 돌려보냤으며, 리스트에는 현재 {spawnedMonsterList.Count}만큼 잔존합니다");
     }
 
     private void Awake()

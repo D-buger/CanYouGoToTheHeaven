@@ -31,25 +31,21 @@ public class MonsterSpawnPoint : MonoBehaviour
 
     void GetMonsterToSpawn()
     {
-        switch (StageManager.Instance.playerRoom)
+        if (StageManager.Instance.PlayerRoom <= 3) //1STAGE
         {
-            case (1): grade = "D";
-                break;
-            case (2):
-                grade = "C";
-                break;
-            case (3):
-                grade = "C";
-                break;
-            case (4):
-                grade = "B";
-                break;
-            default:
-                if (StageManager.Instance.playerRoom >= 5)
-                {
-                    grade = "A";
-                }
-                break;
+            grade = "D";
+        }
+        else if (StageManager.Instance.PlayerRoom <= 9)
+        {
+            grade = "C";
+        }
+        else if (StageManager.Instance.PlayerRoom <= 12)
+        {
+            grade = "B";
+        }
+        else if (StageManager.Instance.PlayerRoom > 12)
+        {
+            grade = "A";
         }
         List<string> monsterList = monsterManager.GetMonstersNameWithGrade(grade);
         int index = Random.Range(0, monsterList.Count);
@@ -61,11 +57,7 @@ public class MonsterSpawnPoint : MonoBehaviour
     {
         GetMonsterToSpawn();
         GameObject spawnedMonster = MonsterPoolManager.instance.GetObject(monsterToSpawn);
-        if (spawnedMonster == null)
-        {
-            Debug.LogWarning("몬스터를 받아오지 못했습니다");
-            return;
-        }
+        MonsterManager.instance.ReportMonsterSpawned(spawnedMonster);
         HMonster spawnedMonsterComp = spawnedMonster.GetComponent<HMonster>();
 
         spawnedMonster.transform.position = new Vector3(transform.position.x, transform.position.y, 0);

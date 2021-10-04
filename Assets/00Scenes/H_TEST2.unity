@@ -11718,7 +11718,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0421353a9be01f245b74441e8cc0954d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerRoom: 1
+  monsterCount: 0
 --- !u!4 &1725107043
 Transform:
   m_ObjectHideFlags: 0
