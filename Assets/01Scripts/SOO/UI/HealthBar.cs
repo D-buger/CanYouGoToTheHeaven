@@ -26,8 +26,8 @@ public class HealthBar : MonoBehaviour
         emptyHeart = hudImage.GetFile("EmptyLife");
         fullHeart = hudImage.GetFile("Life");
         MakeHalfHeart();
-        
-        image = gameObject.AddComponent<Image>();
+
+        image = gameObject.GetComponent<Image>();
         frameRect = image.rectTransform.rect;
         ratio = (int)(frameRect.width / frameRect.height);
 

@@ -33,49 +33,50 @@ public class TouchManager
             TouchFingerId[i] = -1;
     }
 
-//#if UNITY_EDITOR
+#if UNITY_EDITOR
 
-//    public void TouchUpdate()
-//    {
-//        Touch touch = default;
+    public void TouchUpdate()
+    {
+        Touch touch = default;
 
-//        Vector2 touchPos = new Vector2(Input.mousePosition.x / GameManager.ScreenSize.x,
-//                Input.mousePosition.y / GameManager.ScreenSize.y);
+        Vector2 touchPos = new Vector2(Input.mousePosition.x / GameManager.ScreenSize.x,
+                Input.mousePosition.y / GameManager.ScreenSize.y);
 
-//        if (Input.GetMouseButtonDown(0)
-//            && touchPos.x < buttonExtent)
-//        {
-//            touch.fingerId = 1;
-//            touch.position = Input.mousePosition;
-//            TouchBegin(0, touch, touch.position);
-//        }
-//        else if (Input.GetMouseButton(0)) {
-//            touch.fingerId = 1;
-//            touch.position = Input.mousePosition;
-//            TouchMove(0, touch, touch.position);
-//        }
-//        else if (Input.GetMouseButtonUp(0))
-//        {
-//            TouchEnd(0, touch, touch.position);
-//        }
+        if (Input.GetMouseButtonDown(0)
+            && touchPos.x < buttonExtent)
+        {
+            touch.fingerId = 1;
+            touch.position = Input.mousePosition;
+            TouchBegin(0, touch, touch.position);
+        }
+        else if (Input.GetMouseButton(0))
+        {
+            touch.fingerId = 1;
+            touch.position = Input.mousePosition;
+            TouchMove(0, touch, touch.position);
+        }
+        else if (Input.GetMouseButtonUp(0))
+        {
+            TouchEnd(0, touch, touch.position);
+        }
 
 
-//        if (Input.GetKeyDown(KeyCode.Space))
-//        {
-//            touch.fingerId = 2;
-//            TouchBegin(1, touch);
-//        }
-//        else if (Input.GetKey(KeyCode.Space))
-//        {
-//            TouchMove(1, touch);
-//        }
-//        else if (Input.GetKeyUp(KeyCode.Space))
-//        {
-//            TouchEnd(1, touch);
-//        }
-//    }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            touch.fingerId = 2;
+            TouchBegin(1, touch);
+        }
+        else if (Input.GetKey(KeyCode.Space))
+        {
+            TouchMove(1, touch);
+        }
+        else if (Input.GetKeyUp(KeyCode.Space))
+        {
+            TouchEnd(1, touch);
+        }
+    }
 
-//#else
+#else
     public void TouchUpdate()
     {
         for(int i = 0; i < Input.touchCount; i++)
@@ -123,7 +124,7 @@ public class TouchManager
             }
         }
     }
-//#endif
+#endif
 
     private void TouchBegin(int fingerId, Touch touch, Vector2 vec)
     {
