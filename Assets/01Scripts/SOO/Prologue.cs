@@ -23,7 +23,7 @@ public class Prologue : MonoBehaviour
         if (textComponent == null)
             textComponent = GetComponent<TMP_Text>();
 
-        textEffects = new TextEffects(textComponent);
+        //textEffects = new TextEffects(textComponent);
         prologueImage = new FileLoader<Sprite>("Images/Prologue");
 
         prologue = CSVReader.Read("Prologue");
@@ -35,12 +35,12 @@ public class Prologue : MonoBehaviour
 
     private void Update()
     {
-        textEffects.UpdateTexts();
+        //textEffects.UpdateTexts();
     }
 
     private void FixedUpdate()
     {
-        textEffects.GetTextElementsInFixedUpdate();
+        //textEffects.GetTextElementsInFixedUpdate();
     }
 
     private void SetTextEffects()
@@ -50,6 +50,7 @@ public class Prologue : MonoBehaviour
         imageComponent.sprite = prologueImage.files[prologue[index]["image"]];
         textDictionary = new TextSplit(prologue[index++]["story"]);
         ChangeText(textDictionary.TextWithoutTags);
+        /*
         textEffects.NewTextEffects();
         for (int i = 0; i < textDictionary.Tags.Count; i++)
         {
@@ -61,6 +62,7 @@ public class Prologue : MonoBehaviour
                     textDictionary.TextEffect[tag]));
             }
         }
+        */
     }
 
     public void Clear()
