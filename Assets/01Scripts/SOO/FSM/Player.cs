@@ -7,6 +7,7 @@ public enum ePlayerState
     Move,
     MovingAttack,
     Attack,
+    Dead,
 }
 
 public class Player : MonoBehaviour
@@ -31,6 +32,7 @@ public class Player : MonoBehaviour
         stateByEnum.Add(ePlayerState.Move , new PlayerMove());
         stateByEnum.Add(ePlayerState.Attack , new PlayerAttack());
         stateByEnum.Add(ePlayerState.MovingAttack , new PlayerMovingAttack());
+        stateByEnum.Add(ePlayerState.Dead, new PlayerDead());
 
         StateMachine = new StateMachine<Player>();
         StateMachine.Init(this, new PlayerIdle());

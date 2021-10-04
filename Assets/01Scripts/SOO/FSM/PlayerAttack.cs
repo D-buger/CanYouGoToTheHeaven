@@ -49,5 +49,8 @@ public class PlayerAttack : FsmState<Player>
                 target.ChangeState(ePlayerState.Idle);
             }
         }
+
+        if (target.stats.CurrentHp <= 0)
+            target.ChangeState(ePlayerState.Dead);
     }
 }
