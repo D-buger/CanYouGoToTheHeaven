@@ -33,6 +33,7 @@ public class MonsterManager : MonoBehaviour
     [Space, SerializeField] List<GameObject> monsterList = new List<GameObject>();
     [Space]
     public GameObject TreasureRoomPortalPrefab;
+    public GameObject tempPlatform;
     public GameObject goldenMonsterParticle;
 
     public void FindPlayer()

@@ -62,7 +62,7 @@ public class MonsterSpawnPoint : MonoBehaviour
 
         spawnedMonster.transform.position = new Vector3(transform.position.x, transform.position.y, 0);
         float chan = monsterManager.player.GetComponent<Player>().stats.chanceOfSpawnGoldenMonster;
-        chan = 80f;
+
         if (Probability(chan))
         {
             spawnedMonsterComp.MakeGoldenMonster();
@@ -76,6 +76,7 @@ public class MonsterSpawnPoint : MonoBehaviour
         int maxRange = 10000;
         int pickedValue = Random.Range(0, maxRange);
         int chance = (int)(((System.Math.Truncate(_percentage * 100f) * 0.01f) * 100f) + 1);
+        Debug.Log($"{pickedValue}, {chance}");
 
         return pickedValue < chance ? true : false;
     }
