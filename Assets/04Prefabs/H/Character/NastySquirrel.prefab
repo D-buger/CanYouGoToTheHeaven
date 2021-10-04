@@ -122,7 +122,7 @@ MonoBehaviour:
   monsterName: "\uC2EC\uC220\uB2E4\uB78C\uC950"
   currentHitPoint: 0
   movementSpeed: 3
-  checkRayAddLength: 0
+  checkRayAddLength: 0.35
   visualRange: 4
   chasingTime: 3
   projectile: {fileID: 3334731556816952437, guid: eb2aa381b4443c347af647c0956b65b6, type: 3}

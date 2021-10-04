@@ -122,7 +122,7 @@ MonoBehaviour:
   monsterName: "\uB300\uCC9C\uC0AC"
   currentHitPoint: 0
   movementSpeed: 9
-  checkRayAddLength: 0
+  checkRayAddLength: -0.1
   attackPerSecond: 2
   laser: {fileID: 1937419222498303268, guid: f05e2abb06cec9641ab767dd890b7f69, type: 3}
   height: 4

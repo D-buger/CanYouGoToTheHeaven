@@ -76,7 +76,7 @@ public class GameUX : MonoBehaviour
             float deltaTime = Time.deltaTime;
 
             timeCounter += deltaTime;
-            whiteScreen.color = new Color(whiteScreen.color.r, whiteScreen.color.g, whiteScreen.color.b, whiteScreen.color.a - (deltaTime * 0.45f));
+            whiteScreen.color = new Color(whiteScreen.color.r, whiteScreen.color.g, whiteScreen.color.b, whiteScreen.color.a - (deltaTime * 0.55f));
             if (timeCounter >= 3f)
             {
                 break;
