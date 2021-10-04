@@ -10,13 +10,22 @@ public class Soul : MonoBehaviour
     float velocity = 3f;
     Vector2 bounceDestination;
 
+    CircleCollider2D circleColl;
+
     private void OnEnable()
     {
-        startingBounceTime = 0.8f;
+        startingBounceTime = 1.4f;
         currentTime = 0f;
         velocity = 8f;
         bounceDestination = new Vector2(transform.position.x + Random.Range(1f, 4f), transform.position.y + Random.Range(1f, 4f));
         LookToDestination(bounceDestination);
+
+        circleColl.enabled = false;
+    }
+
+    private void Awake()
+    {
+        circleColl = GetComponent<CircleCollider2D>();
     }
 
     private void Update()
@@ -34,13 +43,17 @@ public class Soul : MonoBehaviour
             transform.Translate(transform.right * velocity * deltaTime);
             startingBounceTime -= deltaTime;
         }
-        else if (currentTime <= 7f)
+        else if (currentTime <= 6f)
         {
+            if (circleColl.enabled == false)
+            {
+                circleColl.enabled = true;
+            }
             velocity = velocity < 17f ? velocity + 5f * deltaTime : 17f;
             LookToDestination(MonsterManager.instance.player.transform.position);
             transform.Translate(transform.right * velocity * deltaTime);
         }
-        else if (currentTime <= 14f)
+        else if (currentTime <= 10f)
         {
             LookToDestination(MonsterManager.instance.player.transform.position);
             transform.Translate((MonsterManager.instance.player.transform.position - transform.position).normalized * velocity * 2f * deltaTime);

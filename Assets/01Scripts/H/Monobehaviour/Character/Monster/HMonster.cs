@@ -81,7 +81,7 @@ public class HMonster : MonoBehaviour
             Player player = _collision.gameObject.GetComponent<Player>();
             player.stats.CurrentHp -= contactDamage;
 
-            MonsterPoolManager.instance.ReturnObject(gameObject, monsterName);
+            ActionAfterDeath();
         }
     }
 
@@ -228,8 +228,12 @@ public class HMonster : MonoBehaviour
             tempPlat.transform.position = new Vector2(transform.position.x, transform.position.y + 0.45f);
             MonsterPoolManager.instance.ReturnObject(particle);
         }
-        GameObject droppedSoul = MonsterPoolManager.instance.GetObject("DroppedSoul");
-        droppedSoul.transform.position = transform.position;
+        int dropAmount = Random.Range(1, StageManager.Instance.PlayerRoom / 3);
+        for (int i = 0; i < dropAmount; i++)
+        {
+            GameObject droppedSoul = MonsterPoolManager.instance.GetObject("DroppedSoul");
+            droppedSoul.transform.position = transform.position;
+        }
         MonsterPoolManager.instance.ReturnObject(gameObject, monsterName);
     }
 }
