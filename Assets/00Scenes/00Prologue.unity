@@ -411,11 +411,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 820bd02904b3fe64e927cd5b22b9b7f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  input:
-    Joystick:
-      horizontalValue: 0
-      vecMove: {x: 0, y: 0}
-      vecNormal: {x: 0, y: 0}
 --- !u!4 &858847363
 Transform:
   m_ObjectHideFlags: 0
@@ -424,7 +419,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 858847361}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 663.6961, y: 694.26514, z: -365.71573}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1136,7 +1131,7 @@ GameObject:
   - component: {fileID: 1831177111}
   m_Layer: 5
   m_Name: Canvas
-  m_TagString: GameController
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1175,7 +1170,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 900, y: 1600}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0.8
+  m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96

@@ -18,7 +18,7 @@ public class Prologue : MonoBehaviour
 
     int index = 0;
 
-    private void Awake()
+    private void Start()
     {
         if (textComponent == null)
             textComponent = GetComponent<TMP_Text>();
