@@ -11,6 +11,13 @@ public class PlanktonAlienAI : HMonster
 
     // Start is called before the first frame update
 
+    protected override void SettingVariables()
+    {
+        base.SettingVariables();
+        damage = StageManager.Instance.PlayerRoom <= 9 ? 1 : 2;
+        playerInCursedPlatform = false;
+    }
+
     private void OnEnable()
     {
         OperateOnEnable();

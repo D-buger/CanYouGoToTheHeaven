@@ -45,7 +45,7 @@ public class HMonster : MonoBehaviour
     {
         int currentStage = StageManager.Instance.PlayerRoom;
 
-        if (currentStage <= 3) //3스테이지 이하면
+        if (currentStage <= 9) //3스테이지 이하면
         {
             contactDamage = 1;
         }
@@ -98,7 +98,7 @@ public class HMonster : MonoBehaviour
         }
     }
 
-    public void OperateOnEnable()
+    public virtual void OperateOnEnable()
     {
         SettingData();
         OperateStart();
@@ -121,18 +121,19 @@ public class HMonster : MonoBehaviour
         CheckDistanceFromPlayer();
     }
 
-    protected void DespawnMonster()
+    public void DespawnMonster()
     {
         MonsterPoolManager.instance.ReturnObject(gameObject, monsterName);
         if (isGoldenMonster)
         {
+            isGoldenMonster = false;
             MonsterPoolManager.instance.ReturnObject(particle);
         }
     }
 
     protected void CheckDistanceFromPlayer() //플레이어가 본인과 멀어지면 디스폰 시키는 역할
     {
-        if (MonsterManager.instance.player.transform.position.y - transform.position.y >= 20) //플레이어의 y좌표가 본인으로부터 20이상 올라가면
+        if (MonsterManager.instance.player.transform.position.y - transform.position.y >= 15) //플레이어의 y좌표가 본인으로부터 15이상 올라가면
         {
             DespawnMonster(); //풀로 반환시킴
         }
@@ -234,6 +235,7 @@ public class HMonster : MonoBehaviour
             GameObject droppedSoul = MonsterPoolManager.instance.GetObject("DroppedSoul");
             droppedSoul.transform.position = transform.position;
         }
+        isGoldenMonster = false;
         MonsterPoolManager.instance.ReturnObject(gameObject, monsterName);
     }
 }

@@ -36,15 +36,6 @@ public class BuruckBirdAI : PatrolMonster
     {
         isAttacking = true;
         yield return waitPrepareAttackDelay;
-        /*while (!(animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)) //던지는 모션 종료?
-        {
-            if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.7f) //던지는 모션이 거의 끝날 때 쯤
-            {
-                ShotProjectile(projectile, projectileDamage, projectileCount, projectileVelocity, shotAngle);
-            }
-            yield return waitForEndOfFrame;
-        }*/
-        //ShotProjectile(projectile, projectileDamage, projectileCount, projectileVelocity, shotAngle);
         isAttacking = false;
     }
 

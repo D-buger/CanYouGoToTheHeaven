@@ -55,10 +55,14 @@ public class MonsterManager : MonoBehaviour
         int count = 0;
         for (int i = 0; i < spawnedMonsterList.Count; i++)
         {
-            MonsterPoolManager.instance.ReturnObject(spawnedMonsterList[i]);
-            spawnedMonsterList.Remove(spawnedMonsterList[i]);
-            count += 1;
+            GameObject monster = spawnedMonsterList[i];
+            if (monster.activeSelf == true)
+            {
+                monster.GetComponent<HMonster>().DespawnMonster();
+                count += 1;
+            }
         }
+        spawnedMonsterList.RemoveAll(x => true);
         Debug.Log($"ÃÑ {count}¸¸Å­ µ¹·Áº¸³¿");
     }
 

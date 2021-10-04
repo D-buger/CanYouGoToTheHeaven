@@ -20,7 +20,8 @@ public class BombBirdAI : HMonster
         base.SettingVariables();
         detectPlayerRange = StringToFloat(GetDataWithVariableName("CognitiveRange"));
         fragmentVelocity = StringToFloat(GetDataWithVariableName("ProjectileVelocity"));
-        fragmentDamage = StageManager.Instance.PlayerRoom <= 3 ? 1 : 2;
+        fragmentDamage = StageManager.Instance.PlayerRoom <= 9 ? 1 : 2;
+        detectPlayer = false;
     }
 
     private void OnEnable()

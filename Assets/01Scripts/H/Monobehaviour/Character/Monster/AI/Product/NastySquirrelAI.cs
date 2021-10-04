@@ -22,12 +22,19 @@ public class NastySquirrelAI : PatrolMonster
     protected override void SettingVariables()
     {
         base.SettingVariables();
-        projectileDamage = StageManager.Instance.PlayerRoom <= 3 ? 1 : 2;
+        projectileDamage = StageManager.Instance.PlayerRoom <= 9 ? 1 : 2;
         projectileVelocity = StringToFloat(GetDataWithVariableName("ProjectileVelocity"));
         projectileCount = (int)StringToFloat(GetDataWithVariableName("ProjectileCount"));
         totalAngle = StringToFloat(GetDataWithVariableName("TotalShotAngle"));
         prepareAttackDelay = StringToFloat(GetDataWithVariableName("AttackDelay"));
         projectileLifetime = StringToFloat(GetDataWithVariableName("ProjectileLifetime"));
+        isAttacking = false;
+
+        if (attackCoroutine != null)
+        {
+            StopCoroutine(attackCoroutine);
+            attackCoroutine = null;
+        }
     }
 
     private void OnEnable()

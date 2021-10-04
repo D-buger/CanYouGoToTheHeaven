@@ -9,12 +9,13 @@ public class PatrolMonster : WalkMonster
     protected bool detectPlayer;
 
     protected WaitForSeconds waitForChasingTime;
-    protected WaitForEndOfFrame waitForEndOfFrame = new WaitForEndOfFrame();
     protected Coroutine chasingCoroutine = null;
 
     protected override void SettingVariables()
     {
         base.SettingVariables();
+        StopAllCoroutines();
+        detectPlayer = false;
         visualRange = StringToFloat(GetDataWithVariableName("CognitiveRange"));
         chasingTime = StringToFloat(GetDataWithVariableName("ChasingDuration"));
     }

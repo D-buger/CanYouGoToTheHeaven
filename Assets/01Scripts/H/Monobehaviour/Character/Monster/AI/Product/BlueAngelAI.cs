@@ -13,7 +13,6 @@ public class BlueAngelAI : PatrolMonster
     bool isAttacking;
     Coroutine attackCoroutine = null;
     [SerializeField] float attackDelay;
-    WaitForSeconds waitPrepareAttackDelay;
 
     private void Awake()
     {
@@ -34,7 +33,13 @@ public class BlueAngelAI : PatrolMonster
     protected override void SettingVariables()
     {
         base.SettingVariables();
-        projectileDamage = StageManager.Instance.PlayerRoom <= 3 ? 1 : 2;
+        projectileDamage = StageManager.Instance.PlayerRoom <= 9 ? 1 : 2;
+        isAttacking = false;
+        if (attackCoroutine != null)
+        {
+            StopCoroutine(attackCoroutine);
+            attackCoroutine = null;
+        }
         projectileVelocity = StringToFloat(GetDataWithVariableName("ProjectileVelocity"));
         projectileCount = (int)StringToFloat(GetDataWithVariableName("ProjectileCount"));
         totalAngle = StringToFloat(GetDataWithVariableName("TotalShotAngle"));
