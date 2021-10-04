@@ -23,6 +23,7 @@ public struct StageAchivementData
         set
         {
             monsterKill = value;
+            SumDatas();
         }
     }
 
@@ -32,11 +33,12 @@ public struct StageAchivementData
         get => goldMonsterKill;
         set
         {
+            goldMonsterKill = value;
             if (GameManager.Data.GoldMonsterKill == 0
                 && goldMonsterKill == 1)
                 AchievementManager.Achivement_1();
-
-            goldMonsterKill = value;
+            
+            SumDatas();
         }
     }
 
@@ -47,6 +49,7 @@ public struct StageAchivementData
         set
         {
             refillCount = value;
+            SumDatas();
         }
     }
 
@@ -59,7 +62,12 @@ public struct StageAchivementData
         set
         {
             gottenItemCount = value;
+            SumDatas();
         }
     }
 
+    public void SumDatas()
+    {
+        GameManager.Data.SumDatas(this);
+    }
 }

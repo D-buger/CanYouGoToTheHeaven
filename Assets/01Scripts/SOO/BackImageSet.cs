@@ -23,7 +23,6 @@ public class BackImageSet : MonoBehaviour
     private void ChangeBackImage(int currentRoom)
     {
         fileName = backImageSet[currentRoom / (StageManager.Instance.MapManager.levelInStage + 1)]["BackImage"].Split(',');
-        Debug.Log(fileName[0] + " " + fileName[1]);
         if(fileName.Length == 1)
         {
             backImageRenderer.sprite = backImages.GetFile(fileName[0]);

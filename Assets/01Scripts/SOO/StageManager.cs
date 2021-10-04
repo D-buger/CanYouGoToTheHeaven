@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class StageManager : SingletonBehavior<StageManager>
 {
-    public static StageAchivementData data
-                        = new StageAchivementData(new Timer());
+    public static StageAchivementData data;
 
     public CameraManager CameraManager { get; private set; }
     public ItemManager ItemManager { get; private set; }
