@@ -1,95 +1,106 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Data", menuName = "ScriptableObject/GameData", order =int.MaxValue)]
-public class GameAchivementData : ScriptableObject
+public class GameAchivementData
 {
-    public float shortestTime;
+    public GameAchivementData(Json_GameData data)
+    {
+        gameData = data;
+    }
 
-    private int monsterKill;
+    Json_GameData gameData;
+    
     public int MonsterKill
     {
-        get => monsterKill;
+        get => gameData.monsterKill;
         set
         {
-            monsterKill = value;
+            gameData.monsterKill = value;
             
         }
     }
-
-    private int refillCount;
+    
     public int RefillCount
     {
-        get => refillCount;
+        get => gameData.refillCount;
         set
         {
-            refillCount = value;
+            gameData.refillCount = value;
         }
     }
-
-    private int gottenItemCount;
+    
     public int GottenItemCount
     {
-        get => gottenItemCount;
+        get => gameData.gottenItemCount;
         set
         {
-            gottenItemCount = value;
+            gameData.gottenItemCount = value;
 
         }
     }
-
-    private int goldMonsterKill;
+    
     public int GoldMonsterKill
     {
-        get => goldMonsterKill;
+        get => gameData.goldMonsterKill;
         set
         {
-            goldMonsterKill = value;
+            gameData.goldMonsterKill = value;
         }
     }
-
-    private int clearCount;
+    
     public int ClearCount
     {
-        get => clearCount;
+        get => gameData.clearCount;
         set
         {
-            clearCount = value;
-            if (clearCount == 1)
+            gameData.clearCount = value;
+            if (gameData.clearCount == 1)
                 AchievementManager.CanGoHeaven();
         }
     }
-
-    private int gameOverCount;
+    
     public int GameOverCount
     {
-        get => gameOverCount;
+        get => gameData.gameOverCount;
         set
         {
-            gameOverCount = value;
-            if (gameOverCount <= 100)
-                AchievementManager.Achivement_3(gameOverCount);
+            gameData.gameOverCount = value;
+            if (gameData.gameOverCount <= 100)
+                AchievementManager.Achivement_3(gameData.gameOverCount);
         }
     }
-
-    private int achivementClear;
+    
     public int AchivementClear
     {
-        get => achivementClear;
+        get => gameData.achivementClear;
         set
         {
-            achivementClear = value;
-            if (achivementClear == 12)
+            gameData.achivementClear = value;
+            if (gameData.achivementClear == 12)
                 AchievementManager.CanMasterHEAVEN();
         }
     }
 
     public void SumDatas(StageAchivementData data)
     {
-        shortestTime = shortestTime > data.timer.TimerTime ?
-            data.timer.TimerTime : shortestTime;
+        gameData.shortestTime = gameData.shortestTime > data.timer.TimerTime ?
+            data.timer.TimerTime : gameData.shortestTime;
         MonsterKill += data.MonsterKill;
         GoldMonsterKill += data.GoldMonsterKill;
         GottenItemCount += data.GottenItemCount;
         RefillCount += data.RefillCount;
+
+        JsonManager.Save(gameData);
     }
+}
+
+public struct Json_GameData
+{
+    public double shortestTime;
+    public int monsterKill;
+    public int refillCount;
+    public int gottenItemCount;
+    public int goldMonsterKill;
+    public int clearCount;
+    public int gameOverCount;
+    public int achivementClear;
 }

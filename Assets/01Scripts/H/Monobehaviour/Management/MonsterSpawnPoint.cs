@@ -31,7 +31,7 @@ public class MonsterSpawnPoint : MonoBehaviour
 
     void GetMonsterToSpawn()
     {
-        switch (StageManager.Instance.playerRoom)
+        switch (StageManager.Instance.PlayerRoom)
         {
             case (1): grade = "D";
                 break;
@@ -45,7 +45,7 @@ public class MonsterSpawnPoint : MonoBehaviour
                 grade = "B";
                 break;
             default:
-                if (StageManager.Instance.playerRoom >= 5)
+                if (StageManager.Instance.PlayerRoom >= 5)
                 {
                     grade = "A";
                 }

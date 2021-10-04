@@ -27,7 +27,8 @@ public class GameManager : SingletonBehavior<GameManager>
 
     protected override void OnAwake()
     {
-        Data = Resources.Load<GameAchivementData>("Data");
+        achievement = new AchievementManager();
+        Data = new GameAchivementData(JsonManager.Load());
         Input.simulateMouseWithTouches = true;
         input.SetFirst();
     }
@@ -40,4 +41,6 @@ public class GameManager : SingletonBehavior<GameManager>
     public void ChangeScene(int i)
         => SceneManager.LoadScene(i);
 
+    public void ShowAchivement()
+        => achievement.OnShowAchievement();
 }
