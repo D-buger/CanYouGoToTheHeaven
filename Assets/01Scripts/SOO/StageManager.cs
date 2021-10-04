@@ -124,11 +124,12 @@ public class StageManager : SingletonBehavior<StageManager>
     public void PlayerTeleportToStage()
     {
         Shop.gameObject.SetActive(false);
+        BonusRoom.gameObject.SetActive(false);
         Player.transform.position = nextMovePosition;
         PlayerInStage = true;
         
         nextMovePosition.z = CameraManager.transform.position.z;
-        CameraManager.CamPositionChange(nextMovePosition);
+        CameraManager.CamPositionChangeY(nextMovePosition.y);
         CameraManager.CameraLock = false;
     }
 }
