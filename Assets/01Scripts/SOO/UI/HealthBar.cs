@@ -1,9 +1,10 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+using Image = UnityEngine.UI.Image;
+
 public class HealthBar : MonoBehaviour
 {
-    [SerializeField]
     private Image image;
 
     private Texture2D texture;
@@ -22,13 +23,13 @@ public class HealthBar : MonoBehaviour
         texture = new Texture2D(0, 0);
         texture.filterMode = FilterMode.Point;
 
-        image = GetComponent<Image>();
-        frameRect = image.rectTransform.rect;
-        ratio = (int)(frameRect.width / frameRect.height);
-
         emptyHeart = hudImage.GetFile("EmptyLife");
         fullHeart = hudImage.GetFile("Life");
         MakeHalfHeart();
+        
+        image = gameObject.AddComponent<Image>();
+        frameRect = image.rectTransform.rect;
+        ratio = (int)(frameRect.width / frameRect.height);
 
         maxShowSprite = ratio;
         textureWidth = emptyHeart.width * ratio;
