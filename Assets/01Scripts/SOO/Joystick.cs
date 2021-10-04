@@ -30,25 +30,27 @@ public class Joystick
         joystickImages = new FileLoader<Sprite>("Images/UI/Joystick", "UI_");
 
         GameObject Canvas = GameObject.FindGameObjectWithTag("GameController");
+        if (Canvas != null)
+        {
+            backgroundObject = new GameObject("Background");
+            backgroundObject.transform.SetParent(Canvas.transform);
+            backgroundObject.transform.localScale = new Vector3(2, 2, 0);
 
-        backgroundObject = new GameObject("Background");
-        backgroundObject.transform.SetParent(Canvas.transform);
-        backgroundObject.transform.localScale = new Vector3(2, 2, 0);
+            handleObject = new GameObject("Handle");
+            handleObject.transform.SetParent(backgroundObject.transform);
+            handleObject.transform.localScale = new Vector3(1.5f, 1.5f, 0);
 
-        handleObject = new GameObject("Handle");
-        handleObject.transform.SetParent(backgroundObject.transform);
-        handleObject.transform.localScale = new Vector3(1.5f, 1.5f, 0);
+            backgroundObject.AddComponent<Image>();
+            handleObject.AddComponent<Image>();
 
-        backgroundObject.AddComponent<Image>();
-        handleObject.AddComponent<Image>();
+            backGroundImage = joystickImages.GetFile("BackgroundImage");
+            handleImage = joystickImages.GetFile("HandleImage");
 
-        backGroundImage = joystickImages.GetFile("BackgroundImage");
-        handleImage = joystickImages.GetFile("HandleImage");
+            back = new JoystickPart(backgroundObject, backGroundImage);
+            handle = new JoystickPart(handleObject, handleImage);
 
-        back = new JoystickPart(backgroundObject, backGroundImage);
-        handle = new JoystickPart(handleObject, handleImage);
-
-        JoyStickSetActive(false);
+            JoyStickSetActive(false);
+        }
     }
 
     private void JoyStickSetActive(bool active)

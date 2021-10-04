@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
-using GooglePlayGames;
 
 public class AchievementManager
 {
@@ -16,6 +12,18 @@ public class AchievementManager
         StageManager.clearEvent += Achivement_8;
         StageManager.clearEvent += Achivement_9;
         StageManager.clearEvent += Achivement_10;
+    }
+
+    ~AchievementManager()
+    {
+        StageManager.clearEvent -= Achivement_2;
+        StageManager.clearEvent -= Achivement_4;
+        StageManager.clearEvent -= Achivement_5;
+        StageManager.clearEvent -= Achivement_6;
+        StageManager.clearEvent -= Achivement_7;
+        StageManager.clearEvent -= Achivement_8;
+        StageManager.clearEvent -= Achivement_9;
+        StageManager.clearEvent -= Achivement_10;
     }
 
     public void OnShowAchievement()

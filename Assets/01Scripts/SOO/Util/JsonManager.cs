@@ -33,8 +33,6 @@ public static class JsonManager
         achieveData.refillCount = int.Parse(data["refillCount"].ToString());
         achieveData.shortestTime = double.Parse(data["shortestTime"].ToString());
 
-        Debug.Log(achieveData.refillCount);
-
         return achieveData;
     }
 

@@ -45,24 +45,31 @@ public class Prologue : MonoBehaviour
 
     private void SetTextEffects()
     {
-        StopAllCoroutines();
-
-        imageComponent.sprite = prologueImage.files[prologue[index]["image"]];
-        textDictionary = new TextSplit(prologue[index++]["story"]);
-        ChangeText(textDictionary.TextWithoutTags);
-        /*
-        textEffects.NewTextEffects();
-        for (int i = 0; i < textDictionary.Tags.Count; i++)
+        if (index < prologue.Count)
         {
-            string tag = textDictionary.Tags[i];
-            if (TextEffects.customTags.ContainsKey(tag))
+            StopAllCoroutines();
+
+            imageComponent.sprite = prologueImage.files[prologue[index]["image"]];
+            textDictionary = new TextSplit(prologue[index++]["story"]);
+            ChangeText(textDictionary.TextWithoutTags);
+            /*
+            textEffects.NewTextEffects();
+            for (int i = 0; i < textDictionary.Tags.Count; i++)
             {
-                StartCoroutine(
-                TextEffects.customTags[tag](
-                    textDictionary.TextEffect[tag]));
+                string tag = textDictionary.Tags[i];
+                if (TextEffects.customTags.ContainsKey(tag))
+                {
+                    StartCoroutine(
+                    TextEffects.customTags[tag](
+                        textDictionary.TextEffect[tag]));
+                }
             }
+            */
         }
-        */
+        else
+        {
+            transform.parent.gameObject.SetActive(false);
+        }
     }
 
     public void Clear()

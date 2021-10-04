@@ -87,7 +87,7 @@ public class StageManager : SingletonBehavior<StageManager>
                 >= MapManager.EndYPosition)
             {
                 if (PlayerRoom >= MapManager.levelInStage * MapManager.stageCount)
-                    clearEvent.Invoke();
+                    clearEvent?.Invoke();
                 else
                     PlayerTeleportToShop();
             }
@@ -131,5 +131,11 @@ public class StageManager : SingletonBehavior<StageManager>
         nextMovePosition.z = CameraManager.transform.position.z;
         CameraManager.CamPositionChangeY(nextMovePosition.y);
         CameraManager.CameraLock = false;
+    }
+
+    private void OnDestroy()
+    {
+        clearEvent -= () => GameManager.Data.SumDatas(data);
+        clearEvent -= () => GameManager.Data.ClearCount++;
     }
 }
