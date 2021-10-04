@@ -20,6 +20,19 @@ public class UFOAlienAI : WalkMonster
 
     Coroutine attackCoroutine = null;
 
+    protected override void SettingVariables()
+    {
+        base.SettingVariables();
+        StopAllCoroutines();
+        attackDelay = StringToFloat(GetDataWithVariableName("AttackDelay"));
+        attackDuration = StringToFloat(GetDataWithVariableName("AttackDuration"));
+        projectileCount = (int)StringToFloat(GetDataWithVariableName("ProjectileCount"));
+        totalShotAngle = StringToFloat(GetDataWithVariableName("TotalShotAngle"));
+        visualRange = StringToFloat(GetDataWithVariableName("CognitiveRange"));
+        isAlreadyDetectPlayer = false;
+        isAttacking = false;
+    }
+
     private void Awake()
     {
         SettingData();
@@ -39,18 +52,6 @@ public class UFOAlienAI : WalkMonster
     {
         OperateStart();
         player = GameObject.FindWithTag("Player");
-    }
-
-    protected override void SettingVariables()
-    {
-        base.SettingVariables();
-        attackDelay = StringToFloat(GetDataWithVariableName("AttackDelay"));
-        attackDuration = StringToFloat(GetDataWithVariableName("AttackDuration"));
-        projectileCount = (int)StringToFloat(GetDataWithVariableName("ProjectileCount"));
-        totalShotAngle = StringToFloat(GetDataWithVariableName("TotalShotAngle"));
-        visualRange = StringToFloat(GetDataWithVariableName("CognitiveRange"));
-        isAlreadyDetectPlayer = false;
-        isAttacking = false;
     }
 
     private void OnEnable()

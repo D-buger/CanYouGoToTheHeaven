@@ -18,6 +18,17 @@ public class ChickenAI : PatrolMonster
         StartCoroutine(RemoveGravity());
     }
 
+    protected override void SettingVariables()
+    {
+        base.SettingVariables();
+        alreadyDetectPlayer = false;
+        if (spawnChick != null)
+        {
+            StopCoroutine(spawnChick);
+            spawnChick = null;
+        }
+    }
+
     private void Awake()
     {
         OperateAwake();
@@ -68,6 +79,7 @@ public class ChickenAI : PatrolMonster
         {
             yield return SpawnDelayCount;
             GameObject chick = MonsterPoolManager.instance.GetObject("º´¾Æ¸®");
+            MonsterManager.instance.ReportMonsterSpawned(chick);
             chick.transform.position = transform.position;
         }
     }

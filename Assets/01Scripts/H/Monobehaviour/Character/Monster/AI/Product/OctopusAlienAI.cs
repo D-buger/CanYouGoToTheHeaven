@@ -13,7 +13,24 @@ public class OctopusAlienAI : PatrolMonster
     bool isAttacking;
     Coroutine attackCoroutine = null;
     [SerializeField] float attackDelay;
-    WaitForSeconds waitPrepareAttackDelay;
+
+    protected override void SettingVariables()
+    {
+        base.SettingVariables();
+        projectileDamage = StageManager.Instance.PlayerRoom <= 9 ? 1 : 2;
+        projectileVelocity = StringToFloat(GetDataWithVariableName("ProjectileVelocity"));
+        projectileCount = (int)StringToFloat(GetDataWithVariableName("ProjectileCount"));
+        totalAngle = StringToFloat(GetDataWithVariableName("TotalShotAngle"));
+        attackDelay = StringToFloat(GetDataWithVariableName("AttackDelay"));
+        projectileLifetime = StringToFloat(GetDataWithVariableName("ProjectileLifetime"));
+        isAttacking = false;
+
+        if (attackCoroutine != null)
+        {
+            StopCoroutine(attackCoroutine);
+            attackCoroutine = null;
+        }
+    }
 
     private void Awake()
     {
@@ -29,17 +46,6 @@ public class OctopusAlienAI : PatrolMonster
     void Start()
     {
         OperateStart();
-    }
-
-    protected override void SettingVariables()
-    {
-        base.SettingVariables();
-        projectileDamage = StageManager.Instance.PlayerRoom <= 3 ? 1 : 2;
-        projectileVelocity = StringToFloat(GetDataWithVariableName("ProjectileVelocity"));
-        projectileCount = (int)StringToFloat(GetDataWithVariableName("ProjectileCount"));
-        totalAngle = StringToFloat(GetDataWithVariableName("TotalShotAngle"));
-        attackDelay = StringToFloat(GetDataWithVariableName("AttackDelay"));
-        projectileLifetime = StringToFloat(GetDataWithVariableName("ProjectileLifetime"));
     }
 
     void Update()

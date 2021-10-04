@@ -25,6 +25,14 @@ public class SleepyheadBirdAI : PatrolMonster
 
     WaitForSeconds waitFor1Seconds = new WaitForSeconds(1f);
 
+    protected override void SettingVariables()
+    {
+        base.SettingVariables();
+        isAlreadyAwake = false;
+        isDashing = false;
+        prepareDash = false;
+        StopAllCoroutines();
+    }
 
     [System.Serializable]
     struct DebugOption
@@ -34,16 +42,26 @@ public class SleepyheadBirdAI : PatrolMonster
     }
     [SerializeField] DebugOption debugOption;
 
-    // Start is called before the first frame update
-    void Start()
+    protected override void OperateAwake()
     {
-        OperateStart();
-        animator = GetComponent<Animator>();
-        animator.enabled = false;
+        base.OperateAwake();
         waitPrepareDashDelay = new WaitForSeconds(timeToPrepareDash);
         waitWakeUpFromSleep = new WaitForSeconds(wakeUpFromSleep);
         waitDashCooldownDelay = new WaitForSeconds(dashAfterCooldown);
         waitDashingDurationDelay = new WaitForSeconds(dashingDuration);
+        animator = GetComponent<Animator>();
+    }
+
+    private void Awake()
+    {
+        OperateAwake();
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        OperateStart();
+        animator.enabled = false;
         defaultSprite = sprite.sprite;
     }
 
