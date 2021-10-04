@@ -12,9 +12,12 @@ public struct StageAchivementData
         refillCount = 0;
         gottenItemCount = 0;
         isBuyInShop = false;
+        isKillMonster = false;
     }
 
     public Timer timer;
+
+    public bool isKillMonster;
 
     private int monsterKill;
     public int MonsterKill

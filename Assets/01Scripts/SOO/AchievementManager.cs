@@ -114,7 +114,7 @@ Social.ReportProgress(GPGSIds.achievement_8, 100f, AchivementClear);
     /// </summary>
     public static void Achivement_10()
     { 
-        if(StageManager.data.MonsterKill == 0)
+        if(!StageManager.data.isKillMonster)
             Social.ReportProgress(GPGSIds.achievement_10, 100f, AchivementClear);
     }
 
