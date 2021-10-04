@@ -8,9 +8,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/00Scenes/00Prologue.unity
     guid: 838698005b5ea5844a01899b2ada9ee0
-  - enabled: 0
-    path: Assets/00Scenes/H_TEST2.unity
-    guid: 192b267f75af01942a1957e1d730ed23
   - enabled: 1
     path: Assets/00Scenes/01Title.unity
     guid: 5ca8514b88503d144852a48cb128f920

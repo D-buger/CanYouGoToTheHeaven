@@ -20,16 +20,13 @@ public class GameManager : SingletonBehavior<GameManager>
     } 
     public int GameSetting { get; private set; } = 0x00000000;
 
-    private void Reset()
-    {
-        input = new InputManager();
-    }
-
     protected override void OnAwake()
     {
+        input = new InputManager();
         achievement = new AchievementManager();
         Data = new GameAchivementData(JsonManager.Load());
         Input.simulateMouseWithTouches = true;
+        Input.multiTouchEnabled = true;
         input.SetFirst();
     }
 

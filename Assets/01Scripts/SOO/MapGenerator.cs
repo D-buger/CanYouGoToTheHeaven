@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Xml;
 
-public class MapGenerator : MonoBehaviour
+public class MapGenerator
 {
     public static int MapTileWidth { get; private set; } = -1;
     public static int MapTileHeight { get; private set; } = -1;

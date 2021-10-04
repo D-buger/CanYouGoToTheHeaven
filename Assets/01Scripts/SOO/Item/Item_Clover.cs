@@ -6,6 +6,6 @@ public class Item_Clover : ItemModel
 {
     protected override void ItemEffect(GameObject player)
     {
-
+        player.GetComponent<Player>().stats.chanceOfSpawnGoldenMonster += option;
     }
 }
