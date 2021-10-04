@@ -132,7 +132,7 @@ public class HMonster : MonoBehaviour
 
     protected void CheckDistanceFromPlayer() //플레이어가 본인과 멀어지면 디스폰 시키는 역할
     {
-        if (MonsterManager.instance.player.transform.position.y - transform.position.y >= 25) //플레이어의 y좌표가 본인으로부터 25이상 올라가면
+        if (MonsterManager.instance.player.transform.position.y - transform.position.y >= 20) //플레이어의 y좌표가 본인으로부터 20이상 올라가면
         {
             DespawnMonster(); //풀로 반환시킴
         }
@@ -222,8 +222,10 @@ public class HMonster : MonoBehaviour
     {
         if (isGoldenMonster) //만약 황금몬스터였을 경우
         {
-            GameObject goldenPortal = MonsterPoolManager.instance.GetObject("TreasureRoomPortal");
-            goldenPortal.transform.position = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
+            GameObject goldenPortal = MonsterPoolManager.instance.GetObject(MonsterManager.instance.TreasureRoomPortalPrefab.name);
+            goldenPortal.transform.position = new Vector2(transform.position.x, transform.position.y - 0.4f);
+            GameObject tempPlat = Instantiate(MonsterManager.instance.tempPlatform);
+            tempPlat.transform.position = new Vector2(transform.position.x, transform.position.y + 0.45f);
             MonsterPoolManager.instance.ReturnObject(particle);
         }
         GameObject droppedSoul = MonsterPoolManager.instance.GetObject("DroppedSoul");
