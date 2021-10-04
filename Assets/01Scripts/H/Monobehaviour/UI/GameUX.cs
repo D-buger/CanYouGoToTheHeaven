@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 public class GameUX : MonoBehaviour
 {
@@ -22,6 +23,11 @@ public class GameUX : MonoBehaviour
         MakeSingleton();
         gameClearScreenComp = gameClearScreen.GetComponent<GameClearScreen>();
         gameOverScreenComp = gameOverScreen.GetComponent<GameOverScreen>();
+    }
+
+    private void Start()
+    {
+        StageManager.clearEvent += new System.Action(GameHasCleared); //게임 클리어를 클리어 이벤트에 추가
     }
 
     private void Update()

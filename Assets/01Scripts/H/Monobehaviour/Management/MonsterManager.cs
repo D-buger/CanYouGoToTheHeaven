@@ -50,14 +50,6 @@ public class MonsterManager : MonoBehaviour
         spawnedMonsterList.Add(_monster);
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Keypad7))
-        {
-            StageChanged();
-        }
-    }
-
     public void StageChanged()
     {
         int count = 0;
@@ -67,7 +59,12 @@ public class MonsterManager : MonoBehaviour
             spawnedMonsterList.Remove(spawnedMonsterList[i]);
             count += 1;
         }
-        Debug.Log($"총{ count}만큼 돌려보냤으며, 리스트에는 현재 {spawnedMonsterList.Count}만큼 잔존합니다");
+        Debug.Log($"총 {count}만큼 돌려보냄");
+    }
+
+    void AddEventHandler()
+    {
+        StageManager.changeCurrentRoom += (int _value) => StageChanged();
     }
 
     private void Awake()
@@ -82,6 +79,7 @@ public class MonsterManager : MonoBehaviour
         FindPlayer();
         RequestPoolingMonsters();
         CheckVariable();
+        AddEventHandler();
     }
 
     void CreatingManagers()

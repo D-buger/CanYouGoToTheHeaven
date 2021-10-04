@@ -19,7 +19,7 @@ public class GameClearScreen : MonoBehaviour
     
     void MakeInformationText()
     {
-        infoString = $"Total Time {SecondsParseTimer(33921)}\n\n처치한 적의 수: 33\n음료 리필 횟수: 09\n총 아이템 획득 수: 33";
+        infoString = $"Total Time {SecondsParseTimer(9988821)}\n\n처치한 적의 수: {GameManager.Data.MonsterKill}\n음료 리필 횟수: {GameManager.Data.RefillCount}\n총 아이템 획득 수: {GameManager.Data.GottenItemCount}";
     }
 
     string SecondsParseTimer(float _totalSecond)
@@ -69,7 +69,7 @@ public class GameClearScreen : MonoBehaviour
         informationText.gameObject.SetActive(true);
 
         StartCoroutine(TypingEffect(informationText, infoString, 0.076f));
-        WaitForSeconds waitDelay01 = new WaitForSeconds(infoString.Length * 0.076f + 1f);
+        WaitForSeconds waitDelay01 = new WaitForSeconds(infoString.Length * 0.076f + 2f);
 
         yield return waitDelay01;
 
