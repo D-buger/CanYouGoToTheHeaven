@@ -71,6 +71,7 @@ public class HMonster : MonoBehaviour
         {
             Debug.LogWarning($"{_variableName}은 존재하지 않는 변수명");
         }
+
         return ddd;
     }
 
