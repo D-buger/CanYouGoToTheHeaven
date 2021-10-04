@@ -22,6 +22,7 @@ public class GameManager : SingletonBehavior<GameManager>
 
     protected override void OnAwake()
     {
+        DontDestroyOnLoad(this);
         input = new InputManager();
         achievement = new AchievementManager();
         Data = new GameAchivementData(JsonManager.Load());
