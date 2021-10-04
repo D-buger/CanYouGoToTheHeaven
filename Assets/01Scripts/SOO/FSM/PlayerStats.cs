@@ -42,7 +42,7 @@ public class PlayerStats
             soulCallback?.Invoke(soul);
         }
     }
-    public float chanceOfSpawnGoldenMonster { get; private set; } = 3f; //기본 3%
+    public float chanceOfSpawnGoldenMonster { get; set; } = 3f; //기본 3%
 
     public Watergun watergun;
 

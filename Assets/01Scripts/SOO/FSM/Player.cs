@@ -22,6 +22,8 @@ public class Player : MonoBehaviour
 
     public Animator anim;
 
+    public event System.Action playerBuffs;
+
     private void Awake()
     {
         physics = new PlayerPhysics(stats.physicsStat);
@@ -48,6 +50,7 @@ public class Player : MonoBehaviour
     private void Update()
     {
         StateMachine.Update();
+        playerBuffs?.Invoke();
     }
 
     private void FixedUpdate()

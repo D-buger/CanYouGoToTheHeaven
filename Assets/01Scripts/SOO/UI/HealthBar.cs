@@ -26,14 +26,15 @@ public class HealthBar : MonoBehaviour
         emptyHeart = hudImage.GetFile("EmptyLife");
         fullHeart = hudImage.GetFile("Life");
         MakeHalfHeart();
-
-        image = gameObject.GetComponent<Image>();
-        frameRect = image.rectTransform.rect;
+        
+        frameRect = GetComponent<RectTransform>().rect;
         ratio = (int)(frameRect.width / frameRect.height);
 
         maxShowSprite = ratio;
         textureWidth = emptyHeart.width * ratio;
         textureHeight = emptyHeart.height;
+
+        image = gameObject.GetComponent<Image>();
     }
     
     //하트 반 칸 + 빈 하트 반칸으로 반하트 미리 만들어두기
