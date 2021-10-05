@@ -31,6 +31,8 @@ public class Prologue : MonoBehaviour
 
         GameManager.Instance.input.Touch.ButtonExtent = 0;
         GameManager.Instance.input.activeCallback += SetTextEffects;
+
+        parent = transform.parent.gameObject;
     }
 
     private void Update()
@@ -43,11 +45,12 @@ public class Prologue : MonoBehaviour
         //textEffects.GetTextElementsInFixedUpdate();
     }
 
+    GameObject parent;
     private void SetTextEffects()
     {
         if (index < prologue.Count)
         {
-            StopAllCoroutines();
+            //StopAllCoroutines();
 
             imageComponent.sprite = prologueImage.files[prologue[index]["image"]];
             textDictionary = new TextSplit(prologue[index++]["story"]);
@@ -68,7 +71,8 @@ public class Prologue : MonoBehaviour
         }
         else
         {
-            transform.parent.gameObject.SetActive(false);
+            GameManager.Instance.input.activeCallback -= SetTextEffects;
+            parent.SetActive(false);
         }
     }
 

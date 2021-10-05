@@ -24,7 +24,6 @@ public class GameManager : SingletonBehavior<GameManager>
     {
         DontDestroyOnLoad(this);
         input = new InputManager();
-        Debug.Log(input);
         achievement = new AchievementManager();
         Data = new GameAchivementData(JsonManager.Load());
         Input.simulateMouseWithTouches = true;

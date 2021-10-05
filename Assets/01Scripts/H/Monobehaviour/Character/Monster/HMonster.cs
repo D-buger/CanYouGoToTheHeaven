@@ -16,12 +16,22 @@ public class HMonster : MonoBehaviour
     protected WaitForSeconds waitFor1Seconds = new WaitForSeconds(1f);
     protected GameObject particle = null;
 
+    protected SpriteRenderer renderer;
+
+    private IEnumerator colorChange;
+
     public virtual void InflictDamage()
     {
+        if (colorChange != null)
+            StopCoroutine(colorChange);
+
+        colorChange = ColorChange();
+        StartCoroutine(ColorChange());
+
         damagedTime += Time.deltaTime;
-        if (damagedTime >= 0.5f)
+        if (damagedTime >= 0.3f)
         {
-            damagedTime -= 0.5f;
+            damagedTime -= 0.3f;
             currentHitPoint -= StageManager.Instance.Stat.watergun.Model.Damage;
 
             if (currentHitPoint <= 0)
@@ -29,6 +39,16 @@ public class HMonster : MonoBehaviour
                 ActionAfterDeath();
             }
         }
+    }
+
+    public IEnumerator ColorChange()
+    {
+        if (renderer == null)
+            renderer = GetComponent<SpriteRenderer>();
+        renderer.color = Color.red;
+        yield return waitFor1Seconds;
+        renderer.color = Color.white;
+        colorChange = null;
     }
 
     protected virtual void SettingData()
@@ -56,7 +76,6 @@ public class HMonster : MonoBehaviour
 
         damagedTime = 0f;
         int hh = (int)StringToFloat(GetDataWithVariableName("HitPoint"));
-
         currentHitPoint = hh;
     }
 
@@ -110,6 +129,7 @@ public class HMonster : MonoBehaviour
         animator = GetComponent<Animator>();
         monsterManager = MonsterManager.instance;
         player = monsterManager.player;
+        renderer = gameObject.GetComponent<SpriteRenderer>();
     }
 
     protected virtual void OperateStart()

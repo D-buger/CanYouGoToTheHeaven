@@ -56,7 +56,6 @@ public class HealthBar : MonoBehaviour
 
     int textureWidth;
     int textureHeight;
-    
     /// <summary>
     /// 목숨 최대치 변경시 텍스처 크기 변경
     /// </summary>

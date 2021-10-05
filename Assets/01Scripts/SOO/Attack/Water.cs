@@ -85,11 +85,11 @@ public class Water : MonoBehaviour
         }
     }
 
+    Vector2 inNormal = Vector2.right;
     private void Reflect(Point point)
     {
         if (point.maxReflection-- > 0)
         {
-            Vector2 inNormal = Vector2.right;
             point.Direction = Vector2.Reflect(point.Direction, inNormal);
         }
         else

@@ -8,6 +8,7 @@ public class TextSplit : MonoBehaviour
     {
         TextEffect = new Dictionary<string, SplittedText>();
         Tags = new List<string>();
+
         DivideWithTags(str);
         TextWithoutTags = removeTags.Replace(str, "");
     }

@@ -1,9 +1,9 @@
 ﻿Index,ItemName,ItemID,ItemPrice,Option,Icon,Effective
-1,붉은하트1,Item_RedHeart,5,1,heart1,하트를 한 칸 회복합니다
-2,붉은하트2,Item_RedHeart,10,2,heart2,하트를 두 칸 회복합니다
-3,붉은하트3,Item_RedHeart,15,3,heart3,하트를 세 칸 회복합니다
-4,푸른하트,Item_BlueHeart,30,1,blueheart,빈 하트를 하나 추가로 획득합니다.
-5,음료증가,Item_IncreaseMaxWater,25,10,pluscan,음료의 최대 저장량을 증가시킵니다.
-6,파워 업,Item_PowerUp,25,10,powerup,음료의 대미지를 증가시킵니다.
-7,핏방울,Item_Blood,35,10,bloodtear,일정횟수만큼 적을 처치 할 시 일정량의 체력을 회복합니다.
-8,네잎클로버,Item_Clover,20,5%,clover,황금몬스터의 등장 확률을 증가시킵니다.
+1,붉은하트1,Item_RedHeart,3,1,heart1,하트를 한 칸 회복합니다
+2,붉은하트2,Item_RedHeart,6,2,heart2,하트를 두 칸 회복합니다
+3,붉은하트3,Item_RedHeart,9,3,heart3,하트를 세 칸 회복합니다
+4,푸른하트,Item_BlueHeart,15,1,blueheart,빈 하트를 하나 추가로 획득합니다.
+5,음료증가,Item_IncreaseMaxWater,12,100,pluscan,음료의 최대 저장량을 증가시킵니다.
+6,파워 업,Item_PowerUp,12,10,powerup,음료의 대미지를 증가시킵니다.
+7,핏방울,Item_Blood,20,10,bloodtear,일정횟수만큼 적을 처치 할 시 일정량의 체력을 회복합니다.
+8,네잎클로버,Item_Clover,10,5%,clover,황금몬스터의 등장 확률을 증가시킵니다.

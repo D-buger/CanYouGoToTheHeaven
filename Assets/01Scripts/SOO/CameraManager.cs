@@ -40,7 +40,10 @@ public class CameraManager : MonoBehaviour
     private void Awake()
     {
         mainCamera = Camera.main;
+    }
 
+    private void Start()
+    {
         targetTransform = StageManager.Instance.Player.transform;
         previousPos = targetTransform.position;
     }

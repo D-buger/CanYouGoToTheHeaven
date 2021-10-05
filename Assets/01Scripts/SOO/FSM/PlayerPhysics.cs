@@ -24,12 +24,8 @@ public class PlayerPhysics
             stat.trans.rotation = Quaternion.Euler(0, 0, stat.aVelocity);
 
         stat.body.velocity = stat.velocity;
-        stat.onGround = false;
-        stat.limitLeft = false;
-        stat.limitRight = false;
+        stat.onGround = stat.limitLeft = stat.limitRight = false;
     }
-
-    public bool IsOnGround() => stat.onGround;
 
     public void Shot()
     {
@@ -51,5 +47,6 @@ public class PlayerPhysics
             stat.desiredVelocity.x = Mathf.Min(0, stat.desiredVelocity.x);
         }
     }
-    
+
+    public bool IsOnGround() => stat.onGround;
 }

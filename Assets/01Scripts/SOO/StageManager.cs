@@ -38,6 +38,7 @@ public class StageManager : SingletonBehavior<StageManager>
     protected override void OnAwake()
     {
         GameManager.Instance.input.Touch.ButtonExtent = 0.5f;
+        GameManager.Instance.input.Joystick.SetFirst();
         data = new StageAchivementData(new Timer());
         clearEvent += () => GameManager.Data.SumDatas(data);
         clearEvent += () => GameManager.Data.ClearCount++;
@@ -111,6 +112,7 @@ public class StageManager : SingletonBehavior<StageManager>
     public void PlayerTeleportToBonusRoom(Vector3 originalPos)
     {
         nextMovePosition = originalPos;
+        nextMovePosition.x = 0;
 
         Player.transform.position = BonusRoom.transform.GetChild(2).position;
         BonusRoom.gameObject.SetActive(true);
@@ -129,7 +131,7 @@ public class StageManager : SingletonBehavior<StageManager>
         PlayerInStage = true;
         
         nextMovePosition.z = CameraManager.transform.position.z;
-        CameraManager.CamPositionChangeY(nextMovePosition.y);
+        CameraManager.CamPositionChange(nextMovePosition);
         CameraManager.CameraLock = false;
     }
 
