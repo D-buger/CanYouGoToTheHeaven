@@ -28,13 +28,14 @@ public class GameUX : MonoBehaviour
     private void Start()
     {
         StageManager.clearEvent += new System.Action(GameHasCleared); //게임 클리어를 클리어 이벤트에 추가
+        PlayerDead.deadCallback += new System.Action(PlayerIsDead); //플레이어 사망 시 이벤트 추가
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Keypad8))
         {
-            StartCoroutine(AdjustWhiteScreen(gameClearScreen));
+            PlayerIsDead();
         }
     }
 
@@ -54,6 +55,12 @@ public class GameUX : MonoBehaviour
     public void GameHasCleared()
     {
         AdjustWhiteScreen(gameClearScreen);
+    }
+
+    public void PlayerIsDead()
+    {
+        gameOverScreen.SetActive(true);
+        gameOverScreen.GetComponent<GameOverScreen>().MethodStart();
     }
 
     WaitForEndOfFrame waitForEndOfFrame = new WaitForEndOfFrame();
